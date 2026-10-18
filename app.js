@@ -189,12 +189,20 @@
   // ссылка с визитки (#works) при возврате из примера — сразу к работам
   if (location.hash === '#works') { root.style.scrollBehavior = 'auto'; requestAnimationFrame(() => { $('#works').scrollIntoView(); root.style.scrollBehavior = ''; }); }
 
-  // ---------- заявка: текст собирается на глазах и открывается в WhatsApp; сайт ничего не хранит
-  const form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]');
-  const text = () => { const n = form.name.value.trim(), b = form.biz.value.trim(); return `Здравствуйте! ${n ? 'Меня зовут ' + n + '. ' : ''}Хочу сайт${b ? ': ' + b : ''}.`; };
-  const upd = () => { prev.textContent = text(); }; form.addEventListener('input', upd); upd();
+  // ---------- заявка: тариф, компания, адрес и имя обязательны; текст собирается на глазах и открывается в WhatsApp; сайт ничего не хранит.
+  // Кнопки «Хочу визитку» / «Хочу сайт с записью» в ценах ведут сюда с уже выбранным тарифом.
+  const form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]'), pick = $('.pick', form);
+  const tierEl = () => $('input[name="tier"]:checked', form), val = n => form[n].value.trim();
+  const text = () => { const t = tierEl(), lines = ['Здравствуйте! Хочу заказать сайт.'];
+    lines.push('Тариф: ' + (t ? `${t.dataset.title} — ${t.dataset.sum} сом` : '…'), 'Компания: ' + (val('company') || '…'), 'Адрес: ' + (val('address') || '…'));
+    if (val('biz')) lines.push('Чем занимаемся: ' + val('biz')); lines.push('Меня зовут: ' + (val('name') || '…')); return lines.join('\n'); };
+  const upd = () => { prev.textContent = text(); }; form.addEventListener('input', ev => { ev.target.classList.remove('bad'); err.textContent = ''; if (ev.target.name === 'tier') pick.classList.remove('bad'); upd(); }); upd();
+  $$('[data-tier]').forEach(a => a.addEventListener('click', () => { const r = $(`input[name="tier"][value="${a.dataset.tier}"]`, form); r.checked = true; pick.classList.remove('bad'); upd(); }));
+  const need = [['company', 'Напишите название компании'], ['address', 'Напишите адрес: город и улицу'], ['name', 'Напишите, как к вам обращаться']];
   form.addEventListener('submit', ev => {
-    ev.preventDefault(); if (form.name.value.trim().length < 2) { err.textContent = 'Напишите, как к вам обращаться'; form.name.focus(); return; }
+    ev.preventDefault();
+    if (!tierEl()) { err.textContent = 'Выберите, какой сайт нужен: визитка или с записью'; pick.classList.remove('bad'); void pick.offsetWidth; pick.classList.add('bad'); $('input[name="tier"]', form).focus(); return; }
+    for (const [n, msg] of need) if (val(n).length < 2) { err.textContent = msg; form[n].classList.remove('bad'); void form[n].offsetWidth; form[n].classList.add('bad'); form[n].focus(); return; }
     err.textContent = ''; window.open('https://wa.me/' + form.dataset.wa + '?text=' + encodeURIComponent(text()), '_blank', 'noopener');
   });
   $('[data-vcf]').addEventListener('click', ev => { const v = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:Seinokojii Project', 'ORG:Seinokojii Project', 'TITLE:Сайты для бизнеса', 'TEL;TYPE=CELL:' + ev.currentTarget.dataset.tel, 'URL:' + location.origin, 'END:VCARD'].join('\r\n'), a = document.createElement('a');

@@ -37,7 +37,7 @@ button, input { font: inherit; color: inherit; } button { cursor: pointer; borde
 .btn.inv { background: var(--ink); color: var(--bg); }
 .btn.solid { background: var(--bg-3); }
 .btn.sm { min-height: 40px; padding: 0 14px; font-size: 10px; gap: 9px; } .btn.sm .i { width: 15px; height: 15px; }
-.btn.wide { width: calc(100% - 2 * var(--b)); }
+.btn.wide { width: calc(100% - 2 * var(--b)); white-space: normal; text-align: center; padding-block: 12px; line-height: 1.7; }
 @media (hover: hover) { .btn:hover { translate: 0 -3px; background: var(--ink); color: var(--bg); } .btn.inv:hover { background: var(--bg); color: var(--ink); } }
 .btn:active { translate: 0 2px; }
 
@@ -229,11 +229,24 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
 .tel a { font: 800 clamp(48px, 5.6vw, 84px)/.9 var(--hand); letter-spacing: .01em; }
 .tel a:hover { background: var(--ink); color: var(--bg); }
 .tel > span { color: var(--mut); font-size: 19px; margin-bottom: 14px; }
-.box { --c: var(--ink); margin: var(--b); background: var(--bg); padding: clamp(24px, 3vw, 36px); display: grid; gap: 18px; position: relative; }
+.box { --c: var(--ink); margin: var(--b); background: var(--bg); padding: clamp(24px, 3vw, 36px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; position: relative; }
 .form label { display: grid; gap: 8px; font: 400 10px/1.4 var(--game); text-transform: uppercase; color: var(--mut); }
 .form input { width: 100%; min-height: 54px; padding: 10px 16px; border: 0; border-radius: 0; background: var(--bg-3); box-shadow: inset 0 0 0 var(--b) var(--line-2); font: 600 22px/1 var(--hand); color: var(--ink); }
 .form input::placeholder { color: var(--dim); } .form input:focus { outline: none; box-shadow: inset 0 0 0 var(--b) var(--ink); }
-.preview { position: relative; padding: 18px 18px 20px; background: var(--ink); color: var(--bg); font-size: 22px; font-weight: 600; line-height: 1.2; min-height: 104px; }
+.form label b, .pick legend b { color: var(--ink); } .form label small { text-transform: none; font: 500 16px/1 var(--hand); color: var(--dim); }
+/* выбор тарифа — две пиксельные плашки; выбранная инвертируется */
+.pick { min-width: 0; border: 0; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pick legend { padding: 0; margin-bottom: 10px; font: 400 10px/1.4 var(--game); text-transform: uppercase; color: var(--mut); }
+.pk { --c: var(--line-2); display: flex !important; align-items: center; gap: 12px !important; margin: var(--b); padding: 14px; background: var(--bg-3); box-shadow: 0 calc(-1 * var(--b)) var(--c), 0 var(--b) var(--c), calc(-1 * var(--b)) 0 var(--c), var(--b) 0 var(--c); cursor: pointer; text-transform: none !important; }
+.pk input { position: absolute; opacity: 0; pointer-events: none; }
+.pk-i { width: 26px !important; height: 26px !important; flex: none; color: var(--ink); }
+.pk span { display: grid; gap: 6px; } .pk b { font: 700 21px/1 var(--hand); color: var(--ink); } .pk small { font: 400 10px/1 var(--game); color: var(--mut); }
+.pk:has(input:checked) { --c: var(--ink); background: var(--ink); } .pk:has(input:checked) .pk-i, .pk:has(input:checked) b { color: var(--bg); } .pk:has(input:checked) small { color: #4a4a52; }
+.pk:has(input:focus-visible) { outline: 3px solid var(--ink); outline-offset: 6px; }
+.pick.bad .pk, .form input.bad { --c: var(--ink); animation: shake .3s steps(3); } .form input.bad { box-shadow: inset 0 0 0 var(--b) var(--ink); }
+@keyframes shake { 33% { translate: -4px 0; } 66% { translate: 4px 0; } }
+@media (max-width: 420px) { .pick { grid-template-columns: 1fr; } }
+.preview { white-space: pre-line; position: relative; padding: 18px 18px 20px; background: var(--ink); color: var(--bg); font-size: 22px; font-weight: 600; line-height: 1.2; min-height: 104px; }
 .preview small { display: block; margin-bottom: 8px; font: 400 9px/1 var(--game); text-transform: uppercase; color: #555; }
 .caret { display: inline-block; width: 10px; height: 20px; margin-left: 4px; background: var(--bg); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
 .preview::after { content: ""; position: absolute; right: 16px; bottom: 12px; border: 7px solid transparent; border-top: 9px solid var(--bg); animation: hop .8s steps(2) infinite; }
