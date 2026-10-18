@@ -1,134 +1,131 @@
-// Seinokojii Project (четвёртая версия, 16.10.2026): заставка из частиц, смена примеров в «устройствах», сцена записи (живой сайт «Кайчы» в телефоне клиента и уведомление владельцу),
-// сцена сборки сайта от прокрутки, линии по течению, колода примеров с живой пробой, курсор, магнитные кнопки, наклон, заявка в WhatsApp. Примерка, проба кабинета и калькуляторы убраны.
+// Seinokojii Project, пятая версия (19.10.2026) — пиксельная, как Instagram. Заставка (логотип из пикселей → название печатается → экран рассыпается квадратами),
+// звёзды, первый экран «из пикселя в сайт» (логотип разбегается от курсора и проявляется в примеры), примеры проявляются из крупных блоков,
+// сцена «Как это работает» (живой «Кайчы» в телефоне — перенесена из четвёртой версии без изменений логики), полоса загрузки, слово в подвале, заявка в WhatsApp.
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const root = document.documentElement, calm = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v)), lerp = (a, b, k) => a + (b - a) * k;
   const now = () => (window.__ft !== undefined ? window.__ft : performance.now());        // при съёмке ролика время двигает сценарий
-  const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const INK = '#F4F4EF', BG = '#0A0A0F', LINE = '#24242C', LINE2 = '#3A3A45';
+  // логотип — та же карта, что в сторис Instagram (reels-v2/src/px/Stories.tsx)
+  const LOGO = ['..wwwwwwwwwwww..', '.w............w.', 'w..............w', 'w.w.w.w........w', 'wwwwwwwwwwwwwwww', 'w..............w', 'w..wwwww.......w',
+    'w..............w', 'w..www...wwwww.w', 'w........wwwww.w', 'w........wwwww.w', 'w........wwwww.w', '.w............w.', '..wwwwwwwwwwww..'];
+  const cells = m => { const out = []; m.forEach((row, y) => [...row].forEach((ch, x) => { if (ch !== '.') out.push([x, y]); })); return out; };
+  const seeded = sd => () => (sd = (sd * 16807) % 2147483647) / 2147483647;     // свой генератор с зерном: один и тот же рисунок при каждой перенастройке холста
+  const hidpi = (cv, w, h) => { const d = Math.min(2, devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(h * d); const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); c.imageSmoothingEnabled = false; return c; };
+  const fontsReady = () => Promise.race([Promise.all([document.fonts.load('8px PS2P', 'SEINOKOJII'), document.fonts.load('800 40px Handjet', 'Project')]), new Promise(r => setTimeout(r, 1200))]).catch(() => {});
 
-  // ---------- счётчики (цена)
-  function count(el) {
-    const to = +el.dataset.count; if (calm || el.dataset.done) { el.textContent = fmt(to); return; } el.dataset.done = 1;
-    const t0 = now(), dur = 1500, tick = () => { const k = clamp((now() - t0) / dur); el.textContent = fmt(to * (1 - Math.pow(1 - k, 4))); if (k < 1) requestAnimationFrame(tick); };
+  // ---------- картинка крупными блоками: n блоков по ширине; серая, пока блоки крупные
+  const off = document.createElement('canvas'), oc = off.getContext('2d');
+  const pixelate = (c, img, n, W, H, gray) => {
+    const w = Math.max(1, Math.round(n)), h = Math.max(1, Math.round(n * H / W)); off.width = w; off.height = h; oc.imageSmoothingEnabled = true; oc.drawImage(img, 0, 0, w, h);
+    c.save(); c.imageSmoothingEnabled = false; if (gray) c.filter = 'grayscale(1) contrast(1.15) brightness(1.05)'; c.drawImage(off, 0, 0, W, H); c.restore(); };
+
+  // ---------- заставка
+  const intro = $('.intro'), hasIntro = !root.classList.contains('no-intro');
+  const ready = () => { root.classList.remove('intro-on'); root.classList.add('ready'); intro && intro.remove(); };
+  async function playIntro() {
+    const cv = $('.intro-c'), W = innerWidth, H = innerHeight, c = hidpi(cv, W, H); await fontsReady();
+    const S = Math.floor(Math.min(W * (W < 700 ? .36 : .2) / 16, H * .24 / 14)), lx = Math.round((W - 16 * S) / 2), ly = Math.round(H * .42 - 14 * S), px = cells(LOGO), rnd = seeded(2026);
+    const at = px.map(() => rnd() * .75), fs = Math.round(clamp(W * .04, 16, 40) / 4) * 4, word = 'SEINOKOJII', ty = ly + 14 * S + fs * 1.6;
+    const CELL = Math.ceil(Math.max(W, H) / 22), cols = Math.ceil(W / CELL), rows = Math.ceil(H / CELL), gone = Array.from({ length: cols * rows }, () => rnd());
+    const T_TYPE = .85, T_OUT = 2.05, T_END = 2.65, t0 = performance.now();
+    const tick = () => { const t = (performance.now() - t0) / 1000; c.fillStyle = BG; c.fillRect(0, 0, W, H);
+      c.fillStyle = INK; px.forEach(([x, y], i) => { if (t > at[i]) c.fillRect(lx + x * S, ly + y * S, S, S); });
+      const n = clamp(Math.floor((t - T_TYPE) / .07), 0, word.length); c.font = `${fs}px PS2P`; c.textBaseline = 'top'; c.textAlign = 'left';
+      const tw = c.measureText(word).width, tx = Math.round((W - tw) / 2); c.fillText(word.slice(0, n), tx, ty);
+      if (t > T_TYPE && Math.floor(t * 5) % 2 === 0) c.fillRect(tx + c.measureText(word.slice(0, n)).width + fs * .2, ty, fs * .7, fs);
+      if (t > T_TYPE + .75) { c.font = `600 ${Math.round(fs * .9)}px Handjet`; c.fillStyle = '#A2A2AB'; c.textAlign = 'center'; try { c.letterSpacing = (fs * .5) + 'px'; } catch (e) {} c.fillText('PROJECT', W / 2 + fs * .25, ty + fs * 1.8); try { c.letterSpacing = '0px'; } catch (e) {} }
+      if (t > T_OUT) { const k = (t - T_OUT) / (T_END - T_OUT); if (!root.classList.contains('ready')) root.classList.add('ready');
+        for (let i = 0; i < gone.length; i++) if (gone[i] < k * 1.05) c.clearRect((i % cols) * CELL, Math.floor(i / cols) * CELL, CELL, CELL); }
+      if (t < T_END) requestAnimationFrame(tick); else ready(); };
     requestAnimationFrame(tick);
   }
-  // ---------- заставка: знак рисуется, слово поднимается по буквам, занавес уходит вверх; первый экран появляется уже под уходящим занавесом.
-  // Всё движение — transform и opacity (плюс короткая дорисовка тонких линий), поэтому идёт на частоте экрана. По ссылке с якорем (QR → #works) заставки нет.
-  const intro = $('.intro'), hasIntro = intro && !root.classList.contains('no-intro'), start = wait => setTimeout(() => { root.classList.add('ready'); setTimeout(() => $$('.hero [data-count]').forEach(count), 350); }, wait);
-  // Заставка из частиц. Знак и слово рисуются на обычном холсте (он же потом проявляется поверх чёткой надписью), с него снимаются точки-цели.
-  // Весь полёт считает вершинный шейдер по одному числу — времени: слёт по завихрению → дрожащий контур → унос течением вправо. JS каждый кадр только передаёт время.
-  const glIntro = async () => {
-    const W = innerWidth, H = innerHeight, dpr = Math.min(2, devicePixelRatio || 1), gc = $('.intro-g'), xc = $('.intro-x'), gl = gc.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true }); if (!gl) throw new Error('no webgl');
-    if (document.fonts && document.fonts.load) await Promise.race([Promise.all([document.fonts.load('900 80px Unbounded', 'Seinokojii'), document.fonts.load('500 20px JBMono', 'PROJECT')]), new Promise(r => setTimeout(r, 900))]);
-    xc.width = W * dpr; xc.height = H * dpr; const c = xc.getContext('2d', { willReadFrequently: true }); c.scale(dpr, dpr);
-    const fs = clamp(W * (W < 700 ? .14 : .1), 42, 144), ms = clamp(W * .074, 58, 104), ps = clamp(W * .019, 13.5, 24), by = H * .47 + fs * .36, GR = [[0, '#8FE0C2'], [.45, '#9CC8EC'], [1, '#B9A5F2']];
-    c.font = `900 ${fs}px Unbounded, sans-serif`; try { c.letterSpacing = (-.05 * fs) + 'px'; } catch (e) {} const tw = c.measureText('Seinokojii').width, x0 = (W - tw) / 2, g = c.createLinearGradient(x0, 0, x0 + tw, 0); GR.forEach(s => g.addColorStop(s[0], s[1]));
-    c.fillStyle = g; c.fillText('Seinokojii', x0, by);
-    const k = ms / 40; c.save(); c.translate(W / 2 - ms / 2, by - fs * .8 - ms * 1.34); c.scale(k, k); c.lineWidth = 3; c.strokeStyle = c.fillStyle = '#E9E6EA'; c.beginPath(); c.roundRect(3, 5, 34, 30, 7); c.moveTo(3, 14); c.lineTo(37, 14); c.stroke(); c.beginPath(); c.arc(10, 9.6, 1.6, 0, 7); c.fill(); c.fillStyle = '#84A8CD'; c.beginPath(); c.roundRect(20, 19, 12, 11, 2.5); c.fill(); c.restore();
-    c.font = `500 ${ps}px JBMono, monospace`; try { c.letterSpacing = (.62 * ps) + 'px'; } catch (e) {} c.fillStyle = '#84A8CD'; c.textAlign = 'center'; c.fillText('PROJECT', W / 2 + .31 * ps, by + fs * .3 + ps);
-    const lw = Math.min(W * .46, 420), lg = c.createLinearGradient(W / 2 - lw / 2, 0, W / 2 + lw / 2, 0); GR.forEach(s => lg.addColorStop(s[0], s[1])); c.fillStyle = lg; c.fillRect(W / 2 - lw / 2, by + fs * .3 + ps * 2.1, lw, 2);
-    // точки-цели: каждый закрашенный пиксель с шагом; цвет точки — цвет пикселя
-    const img = c.getImageData(0, 0, xc.width, xc.height).data, step = Math.max(1, Math.round((W < 700 ? 1.5 : 2) * dpr)), pts = [];
-    for (let y = 0; y < xc.height; y += step) for (let x = 0; x < xc.width; x += step) { const i = (y * xc.width + x) * 4; if (img[i + 3] > 110) pts.push(x / dpr, y / dpr, img[i] / 255, img[i + 1] / 255, img[i + 2] / 255); }
-    const all = pts.length / 5, N = Math.min(all, W < 700 ? 11000 : 24000), buf = new Float32Array(N * 9); if (N < 500) throw new Error('no text');
-    for (let n = 0; n < N; n++) { const s = (all === N ? n : Math.floor(Math.random() * all)) * 5, o = n * 9; buf[o] = pts[s] + (Math.random() - .5) * step / dpr; buf[o + 1] = pts[s + 1] + (Math.random() - .5) * step / dpr; buf[o + 2] = Math.random(); buf[o + 3] = Math.random(); buf[o + 4] = Math.random(); buf[o + 5] = Math.random(); buf[o + 6] = pts[s + 2]; buf[o + 7] = pts[s + 3]; buf[o + 8] = pts[s + 4]; }
-    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }, pr = gl.createProgram();
-    gl.attachShader(pr, sh(gl.VERTEX_SHADER, `precision highp float; attribute vec2 aT; attribute vec4 aR; attribute vec3 aC; uniform float uT, uOut, uDim, uDpr; uniform vec2 uRes; varying vec4 vC;
-      void main() { float a = clamp((uT - aR.x * .5) / .95, 0., 1.); a = 1. - pow(1. - a, 3.); float w = 1. - a;
-        vec2 s = vec2(aR.y * 1.5 - .75, aR.z) * uRes + vec2(0., sin(aR.y * 9. + aR.w * 6.283) * uRes.y * .12);
-        vec2 p = mix(s, aT, a) + vec2(sin(aT.y * .011 + uT * 2.2 + aR.w * 6.283), cos(aT.x * .009 + uT * 1.8 + aR.y * 6.283)) * w * (40. + aR.z * 120.);
-        p += vec2(sin(uT * 3.1 + aR.w * 40.), cos(uT * 2.7 + aR.z * 40.)) * (.7 + aR.x * 1.3) * a;
-        float e = clamp((uT - uOut - aR.y * .32) / .95, 0., 1.), ee = e * e;
-        p += vec2(uRes.x * (.45 + aR.x * .9), (sin(aT.x * .007 + aR.w * 6.283) * .2 + (aR.z - .5) * .34) * uRes.y) * ee; p.y += sin(p.x * .006 + aR.w * 6.283) * 46. * e;
-        gl_Position = vec4(p.x / uRes.x * 2. - 1., 1. - p.y / uRes.y * 2., 0., 1.); gl_PointSize = (1.1 + aR.w * 1.9) * uDpr * (1. + ee * 1.6 + w * 1.2);
-        vC = vec4(aC, a * (1. - e) * mix(uDim, 1., max(w, min(1., e * 4.))) * (.72 + aR.z * .28)); }`));
-    gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, `precision mediump float; varying vec4 vC; void main() { float m = smoothstep(.5, .08, length(gl_PointCoord - .5)) * vC.a; gl_FragColor = vec4(vC.rgb * m, m); }`));
-    gl.linkProgram(pr); if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error('link'); gl.useProgram(pr);
-    gc.width = W * dpr; gc.height = H * dpr; gl.viewport(0, 0, gc.width, gc.height); gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, buf, gl.STATIC_DRAW);
-    [['aT', 2, 0], ['aR', 4, 8], ['aC', 3, 24]].forEach(([n, size, off]) => { const l = gl.getAttribLocation(pr, n); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, size, gl.FLOAT, false, 36, off); });
-    const U = n => gl.getUniformLocation(pr, n), uT = U('uT'), uDim = U('uDim'), OUT = 2.15; gl.uniform2f(U('uRes'), W, H); gl.uniform1f(U('uDpr'), dpr); gl.uniform1f(U('uOut'), OUT); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.clearColor(0, 0, 0, 0);
-    intro.classList.add('gl', 'go'); start((OUT + .1) * 1000); setTimeout(() => intro.remove(), 5200);      // страховка: на медленном телефоне кадры могут идти реже — заставка всё равно уйдёт
-    const t0 = performance.now(); let on = false, off = false;
-    const tick = () => { const t = (performance.now() - t0) / 1000;
-      if (!on && t > 1.05) { on = true; xc.classList.add('on'); } if (!off && t > OUT - .05) { off = true; xc.classList.add('off'); intro.classList.add('out'); }
-      gl.uniform1f(uT, t); gl.uniform1f(uDim, 1 - clamp((t - 1.1) / .5) * .62); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.POINTS, 0, N);
-      if (t < OUT + 1.35) requestAnimationFrame(tick); else { const x = gl.getExtension('WEBGL_lose_context'); x && x.loseContext(); intro.remove(); } };
-    requestAnimationFrame(tick);
-  };
-  if (hasIntro) { scrollTo(0, 0); addEventListener('load', () => scrollTo(0, 0), { once: true });      // заставка всегда открывает сайт с самого начала, даже если браузер помнил место или в ссылке был якорь
-    const go = () => { if (intro.classList.contains('go')) return; intro.classList.add('go'); start(1750); setTimeout(() => intro.remove(), 3000); };      // запасной вариант без WebGL
-    glIntro().catch(() => (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => requestAnimationFrame(go))); }
-  else { intro && intro.remove(); requestAnimationFrame(() => start(0)); }
+  if (hasIntro) { scrollTo(0, 0); addEventListener('load', () => scrollTo(0, 0), { once: true });       // заставка всегда открывает сайт с самого начала (QR с визитки, ссылка из Instagram)
+    playIntro().catch(ready); setTimeout(() => { if (!root.classList.contains('ready') || $('.intro')) ready(); }, 4500); }
+  else { intro && intro.remove(); requestAnimationFrame(() => root.classList.add('ready')); }
 
-  // ---------- появление блоков
-  const io = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) return; en.target.classList.add('in'); $$('[data-count]', en.target).forEach(count); io.unobserve(en.target); }), { rootMargin: '0px 0px -8% 0px', threshold: .1 });
-  $$('.rv').forEach(el => io.observe(el));
+  // ---------- звёзды: редкие пиксели на фоне, мигают ступеньками три раза в секунду. Перенастройка только при смене ширины окна:
+  // на телефоне прячущаяся адресная строка меняет высоту — если на это пересоздавать рисунок, звёзды прыгают.
+  const sky = $('.stars'); let skyW = 0, stars = [], sc;
+  const skySize = () => { if (innerWidth === skyW) return; skyW = innerWidth; const H = Math.max(innerHeight, screen.height || 0); sc = hidpi(sky, skyW, H); sky.style.height = H + 'px'; const r = seeded(77);
+    stars = Array.from({ length: Math.round(skyW * H / 16000) }, () => ({ x: Math.floor(r() * skyW / 2) * 2, y: Math.floor(r() * H / 2) * 2, s: r() < .12 ? 3 : 2, a: .08 + r() * .22, ph: r() })); };
+  const skyDraw = t => { sc.clearRect(0, 0, sky.width, sky.height); for (const s of stars) { const on = calm ? 1 : (Math.floor(t * 3 + s.ph * 7) % 5 === 0 ? 2.4 : 1); sc.fillStyle = `rgba(244,244,239,${Math.min(.75, s.a * on)})`; sc.fillRect(s.x, s.y, s.s, s.s); } };
+  skySize(); skyDraw(0); addEventListener('resize', () => { skySize(); skyDraw(now() / 1000); });
+  if (!calm) setInterval(() => skyDraw(now() / 1000), 333);
 
-  // ---------- первый экран: работы сменяют друг друга в ноутбуке и телефоне
-  const big = $$('.frame.big .shots img', $('.stage')), small = $$('.mob.big .shots img'), nameEl = $('.now [data-name]'), hostEl = $('.stage [data-host]');
-  let shot = 0, shotAt = now();
-  const nextShot = () => { shot = (shot + 1) % big.length; big.forEach((im, i) => im.classList.toggle('on', i === shot)); small.forEach((im, i) => im.classList.toggle('on', i === shot)); nameEl.textContent = big[shot].dataset.name; hostEl.textContent = big[shot].dataset.host; };
-
-  // ---------- сцена сборки сайта: общий прогресс p делится на три отрезка — каркас (a), дизайн (b), запуск (c)
-  const how = $('[data-pin="how"]'), steps = $$('.step', how); let hp = 0, stepOn = -1;
-  const paintHow = () => {
-    const a = clamp(hp / .3), b = clamp((hp - .3) / .3), c = clamp((hp - .64) / .3);
-    how.style.setProperty('--p', hp.toFixed(4)); how.style.setProperty('--a', a.toFixed(3)); how.style.setProperty('--b', b.toFixed(3)); how.style.setProperty('--c', c.toFixed(3));
-    const i = hp < .3 ? 0 : hp < .64 ? 1 : 2; if (i !== stepOn) { stepOn = i; steps.forEach((s, k) => { s.classList.toggle('on', k === i); s.classList.toggle('past', k < i); }); }
-  };
-
-  // ---------- линии по течению: длинные струи идут через весь экран по плавному полю направлений; поле медленно меняется — струи колышутся,
-  // а по каждой бегут светящиеся импульсы (штрих со сдвигом). Каждый кадр линии строятся заново, поэтому следов и дымки не остаётся.
-  const hero = $('.hero'); let mx = innerWidth * .7, my = innerHeight * .4; const flows = [];
-  function flow(cv, pal, dir, amp) {
-    const host = cv.parentElement, ctx = cv.getContext('2d'), STEP = 9; let W = 0, H = 0, dpr = 1, lines = [], grad = null, on = false;
-    // Линии задаются один раз и одним и тем же «случайным» рядом: при повторной настройке холста рисунок не перескакивает.
-    // На телефоне адресная строка браузера при прокрутке прячется и меняет высоту окна — это событие resize. Раньше холст на каждое такое
-    // событие пересоздавался с новыми линиями, и они дёргались. Теперь холст перенастраивается только при смене ШИРИНЫ (поворот экрана, окно).
-    const small = () => W < 700;
-    const build = () => { let sd = 20261011; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647, n = Math.round(clamp(H / (small() ? 20 : 11), 22, 96));
-      lines = Array.from({ length: n }, (_, k) => ({ y: (k + rnd() * .8) / n * 1.5 - .25, w: .6 + rnd() * 1.3, a: .1 + rnd() * .22, sp: 60 + rnd() * 130, dash: 40 + rnd() * 110, gap: 380 + rnd() * 700, ph: rnd() * 2000 })); };
-    const size = force => { const w = cv.clientWidth, h = cv.clientHeight; if (!force && w === W) return;
-      dpr = Math.min(small() ? 2 : 1.5, devicePixelRatio || 1); W = w; H = h; cv.style.height = h + 'px'; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; build();
-      grad = ctx.createLinearGradient(0, 0, W, 0); pal.forEach((c, k) => grad.addColorStop(k / (pal.length - 1), `rgb(${c})`)); };
-    size(true); addEventListener('load', () => { cv.style.height = ''; size(true); }); addEventListener('resize', () => { cv.style.height = ''; size(false); if (!cv.style.height) cv.style.height = H + 'px'; }); new IntersectionObserver(es => { on = es[0].isIntersecting; }, { rootMargin: '80px' }).observe(host);
-    const ang = (x, y, t) => dir + (Math.sin(x * .0016 + t * .16) * .34 + Math.cos(y * .0027 - t * .11 + x * .0006) * .4 + Math.sin((x * .55 + y) * .0013 + t * .07) * .3) * amp * (W < 700 ? .42 : 1);      // на узком экране течение положе: иначе струи идут почти отвесно и похожи на дождь
-    flows.push(() => {
-      if (!on) return; const t = now() / 1000, r = host.getBoundingClientRect(), cx = mx - r.left, cy = my - r.top, max = Math.ceil((W + 160) / STEP * 1.25);
-      ctx.clearRect(0, 0, W, H); ctx.strokeStyle = grad;
-      for (const l of lines) {
-        let x = -60, y = l.y * H; ctx.beginPath(); ctx.moveTo(x, y);
-        for (let k = 0; k < max && x < W + 60; k++) {
-          let a = ang(x, y, t); const dx = x - cx, dy = y - cy, d2 = dx * dx + dy * dy;
-          if (fine && d2 < 48000) a += (1 - d2 / 48000) * .9 * (dy > 0 ? 1 : -1);          // у курсора течение расступается, как у камня в ручье
-          x += Math.cos(a) * STEP; y += Math.sin(a) * STEP; ctx.lineTo(x, y);
-        }
-        ctx.setLineDash([]); ctx.globalAlpha = l.a; ctx.lineWidth = l.w; ctx.stroke();
-        ctx.setLineDash([l.dash, l.gap]); ctx.lineDashOffset = -(t * l.sp + l.ph); ctx.globalAlpha = Math.min(1, l.a * 3.4); ctx.lineWidth = l.w + .7; ctx.stroke();
+  // ---------- первый экран: «из пикселя в сайт». Логотип из пикселей (каждый — четыре кусочка) пружинит и разбегается от курсора.
+  // Раз в несколько секунд кусочки разлетаются по экрану, на их месте проявляется пример: блоки мельчают, серый становится цветным. Потом обратно в логотип.
+  // Пока виден пример, вокруг курсора — «пиксельная лупа»: картинка там снова крупными блоками.
+  const forge = $('.forge'), hostEl = $('[data-host]'), modeEl = $('[data-mode]'), WORKS = JSON.parse(forge.dataset.works);
+  const imgs = WORKS.map(([k]) => { const im = new Image(); im.decoding = 'async'; im.src = `img/${k}-d.webp`; return im; });
+  let fc, FW = 0, FH = 0, parts = [], S = 0, fOn = true, fm = { x: -1e4, y: -1e4, on: false };
+  const forgeSize = () => { const w = forge.clientWidth; if (!w || w === FW) return; FW = w; FH = forge.clientHeight; fc = hidpi(forge, FW, FH);
+    S = Math.floor(Math.min(FW * .58 / 16, FH * .66 / 14) / 2) * 2; const ox = Math.round((FW - 16 * S) / 2), oy = Math.round((FH - 14 * S) / 2), h = S / 2, r = seeded(11);
+    parts = []; cells(LOGO).forEach(([x, y]) => { for (let k = 0; k < 4; k++) { const hx = ox + x * S + (k % 2) * h, hy = oy + y * S + (k >> 1) * h; parts.push({ hx, hy, x: hx, y: hy, vx: 0, vy: 0, rx: Math.floor(r() * FW / h) * h, ry: Math.floor(r() * FH / h) * h, d: r() }); } }); };
+  forgeSize(); addEventListener('resize', forgeSize); addEventListener('load', forgeSize);
+  new IntersectionObserver(es => { fOn = es[0].isIntersecting; }).observe(forge);
+  const fmove = ev => { const r = forge.getBoundingClientRect(); fm.x = ev.clientX - r.left; fm.y = ev.clientY - r.top; fm.on = true; };
+  forge.addEventListener('pointermove', fmove); forge.addEventListener('pointerdown', fmove); forge.addEventListener('pointerleave', () => { fm.on = false; fm.x = fm.y = -1e4; });
+  // сценарий: logo → burst → resolve → hold → coarsen → gather → logo; длительности в секундах
+  const PH = { logo: 3.4, burst: .55, resolve: .9, hold: 2.8, coarsen: .5, gather: .75 }, ORDER = ['logo', 'burst', 'resolve', 'hold', 'coarsen', 'gather'], STEPS = [5, 8, 13, 21, 34, 55, 90, 150, 0];
+  let ph = 'logo', phAt = now(), wi = -1, last = now();
+  const setMode = (host, mode) => { if (hostEl.textContent !== host) hostEl.textContent = host; if (modeEl.textContent !== mode) modeEl.textContent = mode; };
+  const ease = k => 1 - Math.pow(1 - k, 3);
+  const drawGrid = () => { fc.fillStyle = '#16161D'; const g = S / 2; for (let y = g / 2; y < FH; y += g) for (let x = g / 2; x < FW; x += g) fc.fillRect(Math.round(x) - 1, Math.round(y) - 1, 2, 2); };
+  const forgeFrame = () => {
+    if (!fOn || !fc || !root.classList.contains('ready')) return;
+    const t = now(), dt = Math.min(.05, (t - last) / 1000); last = t; let k = (t - phAt) / 1000 / PH[ph];
+    if (k >= 1 && !(ph === 'logo' && calm)) { ph = ORDER[(ORDER.indexOf(ph) + 1) % ORDER.length]; phAt = t; k = 0; if (ph === 'burst') wi = (wi + 1) % WORKS.length;
+      if (ph === 'burst' && !(imgs[wi].complete && imgs[wi].naturalWidth)) { ph = 'logo'; phAt = t - PH.logo * 600; } }
+    const img = imgs[Math.max(0, wi)], h = S / 2, gap = Math.max(1, Math.round(h * .1));
+    fc.fillStyle = BG; fc.fillRect(0, 0, FW, FH);
+    if (ph === 'logo' || ph === 'gather' || ph === 'burst') {
+      drawGrid(); setMode('seinokojii.project', 'логотип');
+      if (ph === 'burst' && k > .4) { fc.globalAlpha = clamp((k - .4) * 2.5); pixelate(fc, img, STEPS[0], FW, FH, true); fc.globalAlpha = 1; }    // под разлетающимися кусочками уже проступает пример
+      fc.fillStyle = INK;
+      for (const p of parts) {
+        if (ph === 'logo') { // пружина к своему месту + отталкивание от курсора
+          let ax = (p.hx - p.x) * 90, ay = (p.hy - p.y) * 90; const dx = p.x + h / 2 - fm.x, dy = p.y + h / 2 - fm.y, d2 = dx * dx + dy * dy, R = S * 3.2;
+          if (d2 < R * R) { const d = Math.sqrt(d2) || 1, f = (1 - d / R) * 26000; ax += dx / d * f; ay += dy / d * f; }
+          p.vx = (p.vx + ax * dt) * Math.pow(.0009, dt); p.vy = (p.vy + ay * dt) * Math.pow(.0009, dt); p.x += p.vx * dt; p.y += p.vy * dt;
+        } else { const q = ease(clamp((ph === 'burst' ? k : 1 - k) * 1.3 - p.d * .3)); p.x = lerp(p.hx, p.rx, q); p.y = lerp(p.hy, p.ry, q); p.vx = p.vy = 0; }
+        const sz = ph === 'burst' ? h * (1 - ease(k) * .5) : ph === 'gather' ? h * (.5 + ease(k) * .5) : h;
+        fc.globalAlpha = ph === 'burst' ? 1 - clamp(k * 1.4 - .4) : ph === 'gather' ? clamp(k * 3) : 1;
+        fc.fillRect(Math.round(p.x / 2) * 2, Math.round(p.y / 2) * 2, Math.max(2, sz - gap), Math.max(2, sz - gap));
       }
-      ctx.globalAlpha = 1; ctx.setLineDash([]);
-    });
-  }
-  if (!calm) { const PAL = { hero: ['96,140,190', '132,168,205', '185,165,242', '242,179,125'], foot: ['143,224,194', '150,200,230', '185,165,242'] };
-    $$('[data-flow]').forEach(cv => { const h = cv.dataset.flow === 'hero'; flow(cv, PAL[cv.dataset.flow], h ? -.06 : 0, h ? 1 : .4); }); }
-  const draw = () => { if (!root.classList.contains('ready')) return; flows.forEach(f => f()); };      // пока идёт заставка, линии под ней не рисуются — кадры достаются заставке
+      fc.globalAlpha = 1; return;
+    }
+    setMode(WORKS[wi][1] + '.com', 'пример');
+    if (ph === 'resolve' || ph === 'coarsen') { const kk = ph === 'resolve' ? k : 1 - k, i = Math.min(STEPS.length - 1, Math.floor(kk * STEPS.length)), n = STEPS[i];
+      if (n) pixelate(fc, img, n, FW, FH, i < 4); else fc.drawImage(img, 0, 0, FW, FH); return; }
+    fc.drawImage(img, 0, 0, FW, FH);
+    if (fm.on) { const L = Math.round(Math.min(FW, FH) * .2), x = clamp(fm.x - L, 0, FW - 2 * L), y = clamp(fm.y - L, 0, FH - 2 * L);   // пиксельная лупа
+      fc.save(); fc.beginPath(); fc.rect(x, y, 2 * L, 2 * L); fc.clip(); pixelate(fc, img, 24, FW, FH, true); fc.restore();
+      fc.strokeStyle = INK; fc.lineWidth = 3; fc.strokeRect(x + 1.5, y + 1.5, 2 * L - 3, 2 * L - 3); phAt += dt * 1000 * .7; }    // пока лупа на картинке, пример держится дольше
+  };
 
-  // ---------- колода работ: карточка, на которую наезжает следующая, уменьшается и темнеет. «Попробовать прямо здесь» ставит в рамку живой сайт
-  // (страница 1440×900, уменьшенная до ширины рамки); проба закрывается сама, когда карточку перекрыли или она ушла с экрана.
-  const works = $$('.work'), wide = matchMedia('(min-width: 1001px)');
-  const shut = w => { if (!w.classList.contains('trying')) return; w.classList.remove('trying'); const f = $('iframe', w); f && f.remove(); };
-  works.forEach(w => { const v = $('.view', w);
-    $('.touch', w).addEventListener('click', () => { works.forEach(shut); const f = document.createElement('iframe'); f.src = v.dataset.live; f.title = 'Живой концепт'; f.loading = 'eager'; v.style.setProperty('--k', (v.clientWidth / 1440).toFixed(4)); v.append(f); w.classList.add('trying'); });
-    $('.shut', w).addEventListener('click', () => shut(w)); });
-  addEventListener('resize', () => works.forEach(w => { const v = $('.view', w); v.style.setProperty('--k', (v.clientWidth / 1440).toFixed(4)); }));
-  const deck = vh => { if (!wide.matches) return; works.forEach((w, i) => { const r = w.getBoundingClientRect(); if (r.bottom < -50 || r.top > vh + 50) { shut(w); return; }
-    const n = works[i + 1], q = n ? clamp(1 - n.getBoundingClientRect().top / vh) : 0, st = $('.work-in', w).style; st.setProperty('--s', (1 - q * .07).toFixed(4)); st.setProperty('--d', (1 - q * .6).toFixed(3)); if (q > .45) shut(w); }); };
+  // ---------- примеры: картинка проявляется из крупных блоков, когда карточка на экране; при наведении — ещё раз, быстро
+  const runPix = (cv, img, steps, ms) => { const r = cv.getBoundingClientRect(), c = hidpi(cv, r.width, r.height); cv.classList.remove('gone'); let i = 0; clearInterval(cv._t);
+    const go = () => { if (i >= steps.length) { clearInterval(cv._t); cv.classList.add('gone'); return; } pixelate(c, img, steps[i], r.width, r.height, i < steps.length * .45); i++; };
+    go(); cv._t = setInterval(go, ms); };
+  $$('.pxl').forEach(cv => { const img = cv.nextElementSibling; if (calm) { cv.classList.add('gone'); return; }
+    const ok = () => img.complete && img.naturalWidth ? Promise.resolve() : new Promise(r => { img.addEventListener('load', r, { once: true }); img.addEventListener('error', r, { once: true }); });
+    const io = new IntersectionObserver(es => { if (!es[0].isIntersecting) return; io.disconnect(); img.loading = 'eager'; ok().then(() => setTimeout(() => runPix(cv, img, [4, 7, 11, 17, 26, 40, 62, 96, 150, 240], 85), 250)); }, { threshold: .35 });
+    io.observe(cv);
+    if (fine) cv.closest('.work').addEventListener('pointerenter', () => { if (img.naturalWidth && cv.classList.contains('gone')) runPix(cv, img, [18, 30, 52, 90, 160], 55); }); });
+
+  // ---------- появление блоков (ступенчатая шторка в CSS) и полоса загрузки под шагами. Не IntersectionObserver: Chrome считает видимость с учётом clip-path
+  // самого блока, а закрытый шторкой блок — это нулевая полоска у его верхнего края; если перейти по ссылке в середину высокого блока, он бы так и не появился.
+  // getBoundingClientRect шторку не учитывает — блок открывается, как только его верх поднялся выше 92% окна (в том числе если он уже выше экрана).
+  let pending = $$('.rv');
+  const fill = el => { let v = 0; const bar = $('i', el), id = setInterval(() => { v = Math.min(1, v + 1 / 18); bar.style.setProperty('--lp', v.toFixed(3)); if (v >= 1) { clearInterval(id); el.classList.add('full'); } }, calm ? 1 : 85); };
+  const reveal = vh => { if (!pending.length) return; pending = pending.filter(el => { if (el.getBoundingClientRect().top > vh * .92) return true; el.classList.add('in'); if (el.classList.contains('load')) fill(el); return false; }); };
 
   // ---------- сцена «Как это работает»: прокрутка выбирает шаг (s1–s4). В телефоне клиента — НАСТОЯЩИЙ сайт «Кайчы» (тот же адрес, что в примерах),
   // и «палец» нажимает в нём настоящие кнопки: услугу, время, «Записаться». Выбранное попадает в уведомление на телефоне владельца.
-  const story = $('[data-story]'), scr = $('.cli .scr', story), tap = $('.tap', story), fr = $('.site iframe', story), K = 390 / 272;   // 390 — ширина страницы в окне, 272 — экран телефона
+  const story = $('[data-story]'), scr = $('.cli .scr', story), tap = $('.tap', story), fr = $('.site iframe', story);
   let beat = 0, run = 0, dirty = false, loaded = null, pos = ['70%', '92%'];
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const load = () => loaded || (loaded = new Promise(res => { fr.addEventListener('load', () => setTimeout(res, 500), { once: true }); fr.src = fr.dataset.src; }));
@@ -138,7 +135,7 @@
   const tapAt = async (x, y, id, press = true) => { const to = [x.toFixed(1) + '%', y.toFixed(1) + '%'];
     tap.style.opacity = 1; await tap.animate([{ left: pos[0], top: pos[1] }, { left: to[0], top: to[1] }], { duration: calm ? 1 : 700, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }).finished;
     pos = to; tap.style.left = to[0]; tap.style.top = to[1]; if (id !== run) return false;
-    if (press) await tap.animate([{ scale: 1 }, { scale: .68 }, { scale: 1 }], { duration: 320 }).finished; return id === run; };
+    if (press) await tap.animate([{ scale: 1 }, { scale: .75 }, { scale: 1 }], { duration: 300, easing: 'steps(2)' }).finished; return id === run; };
   // нажать на элемент внутри сайта: сначала прокрутить страницу сайта так, чтобы он был на экране, потом подвести палец
   const tapEl = async (el, id) => { if (!el) return false; const w = fw(), H = 852, r0 = el.getBoundingClientRect();
     if (r0.top < 90 || r0.bottom > H - 70) { w.scrollTo({ top: w.scrollY + r0.top - H * .45, behavior: calm ? 'auto' : 'smooth' }); await wait(calm ? 50 : 900); if (id !== run) return false; }
@@ -155,51 +152,41 @@
     if (b === 4) { tap.style.opacity = 0; const s1 = $f('[data-s1]').textContent, s3 = $f('[data-s3]').textContent, tm = s3.split(', ').pop();
       if (s3 !== '—') { $('[data-nt]', story).textContent = `${s1} · ${s3}`; $('[data-nt2]', story).textContent = tm; $('[data-nt3]', story).textContent = `${s1} · с сайта`; } }
   };
-  const aim = () => {};
   const paintStory = vh => { const r = story.getBoundingClientRect(), span = story.offsetHeight - vh, p = span > 0 ? clamp(-r.top / span) : 1, b = calm ? 4 : Math.min(4, 1 + Math.floor(p * 4.02));
     if (r.top > vh || r.bottom < 0 || b === beat) return; beat = b; story.classList.remove('s1', 's2', 's3', 's4'); void story.offsetWidth; story.classList.add('s' + b); act(b, ++run).catch(() => {}); };
-
-  // телефоны в сцене рисуются в одном размере (290×612) и целиком масштабируются под место — содержимое не разваливается на узком экране
-  const phones = $('.phones', story), fit = () => { const W = innerWidth, H = innerHeight, w = W <= 1000 ? phones.clientHeight / 612 * 290 : Math.min(clamp(W * .21, 230, 330), H * .39);
+  // телефоны рисуются в одном размере (290×612) и целиком масштабируются под место — содержимое не разваливается на узком экране
+  const phones = $('.phones', story), fit = () => { const W = innerWidth, H = innerHeight, w = W <= 1000 ? phones.clientHeight / 640 * 290 : Math.min(clamp(W * .2, 220, 320), H * .37);
     phones.style.setProperty('--z', (w / 290).toFixed(3)); };
   fit(); addEventListener('resize', fit); addEventListener('load', fit);
 
+  // ---------- слово в подвале: SEINOKOJII шрифтом 8×8, каждый пиксель буквы — блок. Блоки загораются в случайном (но всегда одном) порядке
+  // по мере прокрутки; у самого низа страницы закрашены ВСЕ — слово целиком белое.
+  const wcv = $('.word'); let wc, wpx = [], wcols = 80, wrows = 8, wW = 0, wp = -1;
+  const wordSize = () => { const w = wcv.clientWidth; if (!w || w === wW) return; wW = w; wc = hidpi(wcv, w, w * wrows / wcols); wp = -1; };
+  fontsReady().then(() => { const o = document.createElement('canvas'), c = o.getContext('2d'); o.width = 100; o.height = 12; c.font = '8px PS2P'; c.textBaseline = 'top'; c.fillStyle = '#fff'; c.fillText('SEINOKOJII', 0, 0);
+    const d = c.getImageData(0, 0, 100, 12).data, pts = []; let mx = 0, my = 0;
+    for (let y = 0; y < 12; y++) for (let x = 0; x < 100; x++) if (d[(y * 100 + x) * 4 + 3] > 120) { pts.push([x, y]); mx = Math.max(mx, x); my = Math.max(my, y); }
+    if (pts.length < 40) return; wcols = mx + 1; wrows = my + 1; wcv.style.aspectRatio = `${wcols} / ${wrows}`; const r = seeded(19);
+    wpx = pts.map(p => [p[0], p[1], r()]).sort((a, b) => a[2] - b[2]).map((p, i, a) => [p[0], p[1], (i + 1) / a.length]); wW = 0; wordSize(); });
+  addEventListener('resize', wordSize);
+  const wordDraw = p => { if (!wc || !wpx.length || p === wp) return; wp = p; const cs = wW / wcols, g = Math.max(1, cs * .08);
+    wc.clearRect(0, 0, wW, wW); for (const [x, y, th] of wpx) { if (th <= p) { wc.fillStyle = INK; wc.fillRect(x * cs, y * cs, cs - g, cs - g); } else { wc.strokeStyle = LINE2; wc.lineWidth = 1; wc.strokeRect(x * cs + .5, y * cs + .5, cs - g - 1, cs - g - 1); } } };
+
   // ---------- общий кадр
-  const top = $('.top'), fl = $('.float'), contact = $('#contact'), read = $('.read'), footW = $('.foot-w span'), stageIn = $('.stage-in'), cursor = $('.cursor');
-  let lastY = scrollY, cx = mx, cy = my;
-  if (fine && !calm) {
-    addEventListener('pointermove', ev => { mx = ev.clientX; my = ev.clientY; }, { passive: true });
-    document.addEventListener('pointerover', ev => { const lab = ev.target.closest('[data-cur]'), act = ev.target.closest('a, button, .pick label'); cursor.classList.toggle('lbl', !!lab); cursor.classList.toggle('big', !lab && !!act); $('span', cursor).textContent = lab ? lab.dataset.cur : ''; });
-    $$('.mag').forEach(b => {
-      b.addEventListener('pointermove', ev => { const r = b.getBoundingClientRect(); b.style.setProperty('--mx', ((ev.clientX - r.left - r.width / 2) * .24).toFixed(1) + 'px'); b.style.setProperty('--my', ((ev.clientY - r.top - r.height / 2) * .34).toFixed(1) + 'px'); });
-      b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
-    });
-    $$('[data-tilt]').forEach(el => {
-      const k = +el.dataset.tilt || 5, host = el === stageIn ? hero : el;
-      host.addEventListener('pointermove', ev => { const r = el.getBoundingClientRect(), x = clamp((ev.clientX - r.left) / r.width, -.6, 1.6) - .5, y = clamp((ev.clientY - r.top) / r.height, -.6, 1.6) - .5;
-        el.style.setProperty('--ry', (x * k).toFixed(2) + 'deg'); el.style.setProperty('--rx', (-y * k).toFixed(2) + 'deg'); el.style.setProperty('--gx', ((x + .5) * 100).toFixed(1) + '%'); el.style.setProperty('--gy', ((y + .5) * 100).toFixed(1) + '%'); });
-      host.addEventListener('pointerleave', () => { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
-    });
-  }
+  const top = $('.top'), fl = $('.float'), contact = $('#contact'), read = $('.read');
+  let lastY = scrollY;
   const frame = () => {
     const y = scrollY, vh = innerHeight, doc = root.scrollHeight - vh, down = y > lastY + 2, up = y < lastY - 2; lastY = y;
     top.classList.toggle('solid', y > 30); if (down && y > vh) top.classList.add('hide'); else if (up || y < vh) top.classList.remove('hide');
     read.style.setProperty('--read', clamp(y / doc).toFixed(4)); fl.classList.toggle('off', y < vh * .6 || contact.getBoundingClientRect().top < vh * .8);
-    const r = how.getBoundingClientRect(), span = how.offsetHeight - vh, target = span > 0 ? clamp(-r.top / span) : 1;
-    hp = calm ? target : lerp(hp, target, .14); if (Math.abs(hp - target) < .0005) hp = target; paintHow(); paintStory(vh);
-    if (!calm) {
-      if (y < vh * 1.2) stageIn.style.setProperty('--py', (y * -.06).toFixed(1) + 'px');
-      footW.style.setProperty('--fp', doc - y < 3 ? 1 : clamp((1 - (doc - y) / (vh * .55)) * 1.18).toFixed(3));        // слово в подвале заливается целиком чуть раньше конца страницы; у самого низа — всегда ровно 1
-      deck(vh);
-      if (fine) { cx = lerp(cx, mx, .25); cy = lerp(cy, my, .25); cursor.style.setProperty('--x', cx.toFixed(1) + 'px'); cursor.style.setProperty('--y', cy.toFixed(1) + 'px'); }
-      if (now() - shotAt > 3400 && y < vh) { shotAt = now(); nextShot(); }
-      draw && draw();
-    }
+    paintStory(vh); reveal(vh);
+    wordDraw(calm || doc - y < 3 ? 1 : Math.round(clamp((1 - (doc - y) / (vh * .6)) * 1.15) * 400) / 400);
+    forgeFrame();
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
 
-  // ссылка с визитки (#works) — сразу к работам, без плавной прокрутки через весь первый экран
+  // ссылка с визитки (#works) при возврате из примера — сразу к работам
   if (location.hash === '#works') { root.style.scrollBehavior = 'auto'; requestAnimationFrame(() => { $('#works').scrollIntoView(); root.style.scrollBehavior = ''; }); }
 
   // ---------- заявка: текст собирается на глазах и открывается в WhatsApp; сайт ничего не хранит
