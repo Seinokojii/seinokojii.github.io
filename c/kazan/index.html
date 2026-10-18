@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Казан — ресторан национальной кухни — концепт сайта · Seinokojii Project</title><meta name="robots" content="noindex"><meta name="theme-color" content="#1A1210"><link rel="icon" href="/img/icon.svg">
+<script>if (self !== top) document.documentElement.classList.add('emb')</script><script>(function(){var d=document.documentElement;if(self!==top||matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('intro');d.style.setProperty('--intro','1450ms')})()</script>
+<style>
+@font-face { font-family: Oswald; font-weight: 400 700; font-display: swap; src: url(../fonts/oswald-cyrillic.woff2) format("woff2"); unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: Oswald; font-weight: 400 700; font-display: swap; src: url(../fonts/oswald-cyrillic-ext.woff2) format("woff2"); unicode-range: U+0460-052F; }
+@font-face { font-family: Oswald; font-weight: 400 700; font-display: swap; src: url(../fonts/oswald-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2212; }
+@font-face { font-family: Onest; font-weight: 400 800; font-display: swap; src: url(../fonts/onest-cyrillic.woff2) format("woff2"); unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: Onest; font-weight: 400 800; font-display: swap; src: url(../fonts/onest-cyrillic-ext.woff2) format("woff2"); unicode-range: U+0460-052F; }
+@font-face { font-family: Onest; font-weight: 400 800; font-display: swap; src: url(../fonts/onest-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2212; }
+*, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; -webkit-font-smoothing: antialiased; overflow-x: clip; } h1, h2, h3, p, ul, fieldset { margin: 0; padding: 0; border: 0; } ul { list-style: none; } img { display: block; max-width: 100%; } a { color: inherit; text-decoration: none; } button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; } [hidden] { display: none !important; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.up { opacity: 0; translate: 0 28px; animation: up 1s cubic-bezier(.16, 1, .3, 1) forwards; animation-delay: calc(var(--i, 0) * 110ms + 150ms); } @keyframes up { to { opacity: 1; translate: 0 0; } }
+.ribbon { position: fixed; z-index: 90; left: 50%; bottom: 14px; translate: -50% 0; display: flex; align-items: center; gap: 10px; padding: 9px 9px 9px 16px; border-radius: 99px; background: rgba(16, 21, 31, .9); backdrop-filter: blur(10px); color: #E9E6EA; font: 500 12.5px/1.2 system-ui, sans-serif; white-space: nowrap; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.ribbon a { padding: 7px 13px; border-radius: 99px; background: #84A8CD; color: #10151F; font-weight: 700; } @media (max-width: 520px) { .ribbon span i { display: none; } .ribbon { font-size: 11.5px; } }
+.emb .ribbon { display: none; }
+@media (prefers-reduced-motion: reduce) { .up { animation: none; opacity: 1; translate: none; } }
+
+:root { --soot: #1A1210; --saf: #F0A830; --pom: #B8322A; --dough: #F3E7D3; --pad: clamp(18px, 4.5vw, 64px); }
+body { background: var(--soot); color: var(--dough); font: 400 16px/1.6 Onest, sans-serif; }
+.o { font-family: Oswald, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: -.01em; }
+nav { position: absolute; z-index: 6; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px var(--pad); font-size: 14px; font-weight: 600; }
+nav b { font: 700 24px/1 Oswald; letter-spacing: .08em; text-transform: uppercase; color: var(--saf); } nav ul { display: flex; gap: 28px; } nav ul a:hover { color: var(--saf); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 28px; border-radius: 99px; background: var(--saf); color: var(--soot); font-weight: 800; font-size: 15px; transition: background .3s, scale .3s; } .btn:hover { background: var(--dough); scale: 1.03; }
+nav .btn { padding: 11px 20px; font-size: 14px; }
+/* первый экран: плов и пар */
+.hero { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; scale: 1.1; animation: zoom 14s ease-out both; } @keyframes zoom { from { scale: 1.25; } }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26, 18, 16, .55), rgba(26, 18, 16, .1) 30%, rgba(26, 18, 16, .3) 55%, rgba(26, 18, 16, .96) 92%); }
+.steam { position: absolute; z-index: 1; left: 30%; bottom: 30%; width: 40%; height: 70%; pointer-events: none; }
+.steam i { position: absolute; bottom: 0; left: var(--l); width: 26%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, .5), transparent 65%); filter: blur(18px); opacity: 0; animation: steam var(--d, 7s) ease-in infinite; animation-delay: var(--w, 0s); }
+@keyframes steam { 0% { opacity: 0; translate: 0 0; scale: .6; } 25% { opacity: .55; } 100% { opacity: 0; translate: var(--dx, 30px) -120%; scale: 1.8; } }
+.ht { position: relative; z-index: 3; padding: 0 var(--pad) clamp(64px, 8vh, 90px); }
+.ht .k { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; font-size: 14.5px; } .ht .k b { padding: 7px 14px; border-radius: 99px; background: var(--pom); color: var(--dough); font-size: 13px; font-weight: 800; letter-spacing: .04em; } .ht .k span { color: rgba(243, 231, 211, .85); }
+.ht h1 { font-size: clamp(6rem, 31vw, 30rem); line-height: .78; letter-spacing: -.03em; color: var(--saf); margin-left: -.03em; }
+.ht .row { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; flex-wrap: wrap; margin-top: 22px; } .ht .row p { max-width: 42ch; font-size: 1.1rem; color: rgba(243, 231, 211, .88); }
+/* меню едет вбок при прокрутке */
+.menu { position: relative; height: 360vh; } .stk { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+.mh { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding: 0 var(--pad); } .mh h2 { font-size: clamp(2.6rem, 6.4vw, 5.6rem); line-height: .9; } .mh h2 em { font-style: normal; color: var(--saf); } .mh p { color: rgba(243, 231, 211, .6); font-size: 14px; display: flex; align-items: center; gap: 10px; }
+.mh p i { display: block; width: 120px; height: 3px; background: rgba(243, 231, 211, .18); } .mh p i::after { content: ""; display: block; height: 100%; width: calc(var(--p, 0) * 100%); background: var(--saf); }
+.trk { display: flex; gap: 22px; padding: 0 var(--pad); width: max-content; will-change: transform; }
+.dish { position: relative; width: clamp(280px, 30vw, 440px); flex: none; }
+.dish .ph { aspect-ratio: 4 / 4.6; overflow: hidden; border-radius: 220px 220px 18px 18px; } .dish img { width: 100%; height: 100%; object-fit: cover; transition: scale 1s cubic-bezier(.16, 1, .3, 1); } .dish:hover img { scale: 1.07; }
+.dish .tx { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 16px; } .dish h3 { font: 700 clamp(1.4rem, 2vw, 1.9rem)/1.05 Oswald; text-transform: uppercase; } .dish .pr { font: 700 1.3rem/1 Oswald; color: var(--saf); white-space: nowrap; } .dish p { color: rgba(243, 231, 211, .66); font-size: 15px; margin-top: 6px; }
+.dish .tag { position: absolute; top: 16px; right: 16px; padding: 7px 13px; border-radius: 99px; background: var(--saf); color: var(--soot); font-size: 12.5px; font-weight: 800; }
+.dish.big { width: clamp(300px, 40vw, 600px); } .dish.big .ph { aspect-ratio: 4 / 3.5; border-radius: 18px; }
+/* бронь */
+.book { padding: clamp(80px, 10vw, 140px) var(--pad); background: var(--dough); color: var(--soot); } .in { max-width: 1260px; margin: 0 auto; }
+.book h2 { font-size: clamp(2.6rem, 6.4vw, 5.6rem); line-height: .9; } .book h2 em { font-style: normal; color: var(--pom); } .book .sub { max-width: 50ch; color: #6A5A50; margin-top: 16px; font-size: 1.05rem; }
+.zones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 44px; }
+.zones button { position: relative; text-align: left; border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 3.3; color: var(--dough); outline: 4px solid transparent; outline-offset: -4px; transition: outline-color .3s; }
+.zones img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: scale 1s cubic-bezier(.16, 1, .3, 1); } .zones button:hover img { scale: 1.06; }
+.zones button::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(26, 18, 16, .9)); } .zones span { position: absolute; z-index: 1; left: 22px; right: 22px; bottom: 20px; } .zones b { display: block; font: 700 1.6rem/1 Oswald; text-transform: uppercase; } .zones small { font-size: 14px; color: rgba(243, 231, 211, .82); }
+.zones button.on { outline-color: var(--pom); } .zones button.on::before { content: "Выбрано"; position: absolute; z-index: 2; top: 16px; left: 16px; padding: 6px 12px; border-radius: 99px; background: var(--pom); font-size: 12.5px; font-weight: 800; }
+.form { display: grid; grid-template-columns: auto 1fr; gap: 16px 30px; align-items: center; margin-top: 34px; padding: 30px; border-radius: 18px; background: #fff; }
+.form > b { font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #8A766A; }
+.ppl { display: inline-flex; align-items: center; gap: 16px; font: 700 1.6rem/1 Oswald; } .ppl button { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--soot); font: 800 18px/1 Onest; } .ppl button:hover { background: var(--soot); color: var(--dough); }
+.ch { display: flex; flex-wrap: wrap; gap: 8px; } .ch button { padding: 11px 16px; border-radius: 99px; border: 2px solid #E3D6C3; font-weight: 700; font-size: 14.5px; transition: .2s; } .ch button:hover:not(:disabled) { border-color: var(--soot); } .ch button.on { background: var(--soot); border-color: var(--soot); color: var(--saf); } .ch button:disabled { opacity: .35; text-decoration: line-through; cursor: default; }
+.fl { display: flex; gap: 10px; flex-wrap: wrap; } .fl input { flex: 1 1 200px; padding: 14px 18px; border-radius: 99px; border: 2px solid #E3D6C3; font: inherit; } .fl input:focus { outline: none; border-color: var(--soot); }
+.go { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding-top: 18px; border-top: 1px solid #EFE4D4; } .go p { color: #6A5A50; } .go .btn { background: var(--pom); color: var(--dough); } .go .btn:hover { background: var(--soot); }
+.okb { display: none; grid-column: 1 / -1; padding: 22px; border-radius: 14px; background: var(--soot); color: var(--dough); } .okb b { display: block; font: 700 1.8rem/1.1 Oswald; text-transform: uppercase; color: var(--saf); margin-bottom: 6px; } .form.sent .okb { display: block; } .form.sent .go { display: none; }
+.end { background: var(--pom); color: var(--dough); padding: clamp(90px, 12vw, 160px) var(--pad) 120px; overflow: hidden; }
+.end h2 { font-size: clamp(3.4rem, 15vw, 17rem); line-height: .8; letter-spacing: -.03em; white-space: nowrap; } .end h2 span { color: var(--saf); }
+.info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 46px; padding-top: 24px; border-top: 1px solid rgba(243, 231, 211, .3); } .info b { display: block; font: 700 13px/1 Oswald; letter-spacing: .14em; text-transform: uppercase; color: var(--saf); margin-bottom: 8px; }
+.rv { opacity: 0; translate: 0 36px; transition: opacity .9s, translate 1s cubic-bezier(.16, 1, .3, 1); } .rv.vis { opacity: 1; translate: 0 0; }
+@media (max-width: 900px) { nav ul { display: none; } .steam { left: 10%; width: 80%; }
+  .menu { height: auto; } .stk { position: static; height: auto; padding: 90px 0; } .mh p { display: none; } .trk { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: none; transform: none !important; } .dish, .dish.big { width: 78vw; scroll-snap-align: center; }
+  .zones { grid-template-columns: 1fr; } .zones button { aspect-ratio: 16 / 9; } .form { grid-template-columns: 1fr; padding: 22px; gap: 10px; } .form > b:not(:first-child) { margin-top: 12px; } .info { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .hero > img, .steam i { animation: none; } .rv { opacity: 1; translate: none; } }
+
+.up { animation-delay: calc(var(--intro, 0ms) + var(--i, 0) * 110ms + 150ms); }
+.intro-ov { display: none; }
+.intro .intro-ov { display: block; position: fixed; inset: 0; z-index: 300; pointer-events: none; overflow: hidden; }
+.intro-ov * { position: absolute; }
+.mrv:not(.mrv-in) { opacity: 0; }
+.mrv.mrv-in { animation: rvin .95s cubic-bezier(.16, 1, .3, 1) backwards; animation-delay: calc(var(--k, 0) * 80ms); }
+@keyframes rvin { from { opacity: 0; translate: 0 30px; } to { opacity: 1; translate: 0 0; } }
+button, [role=button] { transition: scale .18s cubic-bezier(.3, 1.4, .5, 1); -webkit-tap-highlight-color: transparent; }
+button:active, [role=button]:active { scale: .955; }
+.tapk { animation: tapk .42s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes tapk { 0% { scale: .93; } 60% { scale: 1.04; } 100% { scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .mrv:not(.mrv-in) { opacity: 1; } .mrv.mrv-in, .tapk { animation: none; } }
+@keyframes sx { from { scale: 0 1; } to { scale: 1 1; } } @keyframes fi { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+@keyframes fo { to { opacity: 0; } } @keyframes dr { to { stroke-dashoffset: 0; } }
+.intro-ov.z { background: #1A1210; animation: z-out .7s cubic-bezier(.65, 0, .35, 1) 1.4s forwards; }
+.z svg { left: 50%; top: calc(42% - 70px); width: 150px; height: 120px; margin-left: -75px; overflow: visible; }
+.z .pot { fill: none; stroke: #F0A830; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: dr 1s cubic-bezier(.65, 0, .35, 1) forwards; }
+.z .st { fill: none; stroke: #F3E7D3; stroke-width: 2.5; stroke-linecap: round; opacity: .7; stroke-dasharray: 50; stroke-dashoffset: 50; animation: n-steam 1s cubic-bezier(.16, 1, .3, 1) forwards; }
+.z .w { left: 0; right: 0; top: calc(42% + 70px); text-align: center; font: 700 44px/1 Oswald, sans-serif; letter-spacing: .3em; text-indent: .3em; color: #F3E7D3; animation: t-word 1s cubic-bezier(.16, 1, .3, 1) .45s both; }
+.z .s { left: 0; right: 0; top: calc(42% + 128px); text-align: center; font: 600 11px/1 Onest, sans-serif; letter-spacing: .26em; text-transform: uppercase; color: #F0A830; animation: fi .7s cubic-bezier(.16, 1, .3, 1) .8s both; }
+@keyframes n-steam { to { stroke-dashoffset: 0; translate: 0 -8px; } }
+@keyframes t-word { from { opacity: 0; letter-spacing: .6em; filter: blur(6px); } to { opacity: 1; letter-spacing: .3em; filter: blur(0); } }
+@keyframes z-out { to { opacity: 0; scale: 1.06; } }
+</style></head>
+<body>
+<div class="intro-ov z" aria-hidden="true"><svg viewBox="0 0 150 120"><path class="pot" d="M20 62 H130 M28 62 C28 104 122 104 122 62 M20 62 C10 62 8 52 16 50 M130 62 C140 62 142 52 134 50"/><path class="st" d="M55 52 c-7 -9 7 -15 0 -24 c-5 -7 5 -12 0 -18" style="animation-delay:0.55s"/><path class="st" d="M75 52 c-7 -9 7 -15 0 -24 c-5 -7 5 -12 0 -18" style="animation-delay:0.67s"/><path class="st" d="M95 52 c-7 -9 7 -15 0 -24 c-5 -7 5 -12 0 -18" style="animation-delay:0.79s"/></svg><b class="w">КАЗАН</b><b class="s">ресторан национальной кухни</b></div>
+<main>
+<section class="hero">
+  <img src="../img/kz-hero.webp" alt="Плов с бараниной и изюмом">
+  <div class="steam" aria-hidden="true"><i style="--l:10%; --d:7s"></i><i style="--l:38%; --d:8s; --w:1.6s; --dx:-40px"></i><i style="--l:62%; --d:6.5s; --w:3s"></i><i style="--l:24%; --d:9s; --w:4.4s; --dx:60px"></i><i style="--l:50%; --d:7.5s; --w:5.6s; --dx:-20px"></i></div>
+  <nav class="up"><b>Казан</b><ul><li><a href="#menu">Меню</a></li><li><a href="#book">Бронь</a></li><li><a href="#end">Адрес</a></li></ul><a class="btn" href="#book">Забронировать стол</a></nav>
+  <div class="ht">
+    <p class="k up" style="--i:1"><b data-plov>Плов готов</b><span>Национальная кухня · Бишкек</span></p>
+    <h1 class="o up" style="--i:2">Казан</h1>
+    <div class="row"><p class="up" style="--i:3">Плов из казана на сорок человек, шашлык на углях и чай с набатом. Готовим на живом огне с одиннадцати утра.</p><a class="btn up" style="--i:4" href="#book">Забронировать стол</a></div>
+  </div>
+</section>
+<section class="menu" id="menu" data-menu><div class="stk">
+  <div class="mh"><h2 class="o">Что сегодня<br><em>в казане</em></h2><p>листайте вниз<i data-bar></i></p></div>
+  <div class="trk" data-trk>
+    <article class="dish big"><div class="ph"><img src="../img/kz-hero.webp" alt="Плов" loading="lazy" style="object-position: 30% 50%"></div><span class="tag">Хит</span><div class="tx"><h3>Ош-плов</h3><span class="pr">390 с</span></div><p>Девзира, баранина, жёлтая морковь и изюм</p></article>
+    <article class="dish"><div class="ph"><img src="../img/kz-fire.webp" alt="Шашлык на углях" loading="lazy"></div><div class="tx"><h3>Шашлык из баранины</h3><span class="pr">320 с</span></div><p>На углях из урюка, с луком и уксусом</p></article>
+    <article class="dish"><div class="ph"><img src="../img/kz-kebab.webp" alt="Шашлык из курицы" loading="lazy"></div><div class="tx"><h3>Шашлык из курицы</h3><span class="pr">260 с</span></div><p>Бедро в кефире с зирой и луком</p></article>
+    <article class="dish big"><div class="ph"><img src="../img/kz-shash.webp" alt="Ассорти шашлыков" loading="lazy"></div><span class="tag">На компанию</span><div class="tx"><h3>Ассорти на четверых</h3><span class="pr">1 650 с</span></div><p>Баранина, курица, рёбрышки и овощи на углях</p></article>
+    <article class="dish"><div class="ph"><img src="../img/kz-tea.webp" alt="Чайник и пиалы" loading="lazy"></div><div class="tx"><h3>Чай с набатом</h3><span class="pr">150 с</span></div><p>Зелёный или чёрный, чайник на троих</p></article>
+  </div>
+</div></section>
+<section class="book" id="book"><div class="in">
+  <h2 class="o rv">Где <em>посадить</em> вас?</h2><p class="sub rv">Выберите место, число гостей и время. Подтвердим звонком за 10 минут.</p>
+  <div class="zones rv" data-zones></div>
+  <div class="form rv" data-form>
+    <b>Гостей</b><span class="ppl"><button type="button" data-p="-1" aria-label="Меньше гостей">−</button><span data-ppl>4</span><button type="button" data-p="1" aria-label="Больше гостей">+</button></span>
+    <b>День</b><div class="ch" data-days></div>
+    <b>Время</b><div class="ch" data-times></div>
+    <b>Контакты</b><div class="fl"><input data-nm placeholder="Ваше имя" autocomplete="name"><input data-ph placeholder="+996 ___ ___ ___" inputmode="tel" autocomplete="tel"></div>
+    <div class="go"><p data-hint>Выберите время</p><button class="btn" type="button" data-go>Забронировать</button></div>
+    <div class="okb"><b>Стол ждёт вас</b><p data-okt></p><p style="opacity:.6; margin-top:6px; font-size:14px">Это концепт: бронь никуда не ушла.</p></div>
+  </div>
+</div></section>
+<section class="end" id="end"><div class="in">
+  <h2 class="o rv">Ош <span>болсун!</span></h2>
+  <div class="info rv"><p><b>Адрес</b>пр. Чуй, 155 · вход с Тоголок Молдо</p><p><b>Часы</b>Каждый день 11:00 — 23:00</p><p><b>Связь</b>+996 555 000 000 · WhatsApp</p></div>
+</div></section>
+</main>
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)], calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // плашка «плов»: до полудня — «будет готов к 12:30», после — сколько порций осталось (убывает к вечеру)
+  const h = new Date().getHours(), left = Math.max(6, Math.round(120 - (h - 12.5) * 11)); $('[data-plov]').textContent = h < 11 || h >= 23 ? 'Плов будет готов к 12:30' : h < 12.5 ? 'Плов дойдёт к 12:30' : `Плов готов · осталось ${left} порций`;
+  // меню: вертикальная прокрутка двигает ленту вбок
+  const menu = $('[data-menu]'), trk = $('[data-trk]'), bar = $('[data-bar]'), wide = matchMedia('(min-width: 901px)');
+  const move = () => { if (!wide.matches) return; const r = menu.getBoundingClientRect(), span = menu.offsetHeight - innerHeight, p = Math.max(0, Math.min(1, -r.top / span)), dx = trk.scrollWidth - innerWidth;
+    trk.style.transform = `translateX(${(-p * dx).toFixed(1)}px)`; bar.parentElement.style.setProperty('--p', p.toFixed(3)); };
+  addEventListener('scroll', move, { passive: true }); addEventListener('resize', move); move();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), { threshold: .12 }); $$('.rv').forEach(el => io.observe(el));
+  // бронь
+  const Z = [['Зал', 'До 8 гостей за столом', 'kz-hall', 8], ['Топчан на террасе', 'Сидим по-домашнему, до 10 гостей', 'kz-fire', 10], ['Отдельная комната', 'Для праздника, от 8 до 20 гостей', 'kz-tea', 20]];
+  const T = ['12:00', '13:30', '15:00', '17:00', '18:30', '19:30', '20:30', '21:30'];
+  let z = 0, ppl = 4, day = 0, time = null;
+  Z.forEach(([n, d, img], i) => { const b = document.createElement('button'); b.type = 'button'; b.className = i ? '' : 'on'; b.innerHTML = `<img src="../img/${img}.webp" alt="" loading="lazy"><span><b>${n}</b><small>${d}</small></span>`; b.addEventListener('click', () => { z = i; if (i === 2 && ppl < 8) ppl = 8; ppl = Math.min(ppl, Z[i][3]); draw(); }); $('[data-zones]').append(b); });
+  $$('[data-p]').forEach(b => b.addEventListener('click', () => { ppl = Math.max(z === 2 ? 8 : 1, Math.min(Z[z][3], ppl + +b.dataset.p)); draw(); }));
+  const busy = (d, t) => ((d + 2) * (t + 3) * (z + 1)) % 5 === 0;
+  const chips = (box, items, cur, cb) => { box.textContent = ''; items.forEach((x, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = x; b.className = i === cur ? 'on' : ''; b.addEventListener('click', () => cb(i)); box.append(b); }); return box; };
+  const dayLbl = k => { const d = new Date(); d.setDate(d.getDate() + k); return k === 0 ? 'Сегодня' : k === 1 ? 'Завтра' : d.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric' }); };
+  function draw() { $$('[data-zones] button').forEach((b, i) => b.classList.toggle('on', i === z)); $('[data-ppl]').textContent = ppl;
+    chips($('[data-days]'), Array.from({ length: 5 }, (_, k) => dayLbl(k)), day, i => { day = i; time = null; draw(); });
+    const tb = chips($('[data-times]'), T, time, i => { time = i; draw(); }); $$('button', tb).forEach((b, i) => b.disabled = busy(day, i));
+    $('[data-hint]').textContent = time === null ? 'Выберите время' : `${Z[z][0]}, ${ppl} ${ppl % 10 === 1 && ppl !== 11 ? 'гость' : ppl % 10 >= 2 && ppl % 10 <= 4 && (ppl < 12 || ppl > 14) ? 'гостя' : 'гостей'} · ${dayLbl(day).toLowerCase()}, ${T[time]}`; }
+  $('[data-go]').addEventListener('click', () => { if (time === null) { $('[data-hint]').textContent = 'Сначала выберите время — без него стол не закрепить'; return; }
+    const nm = $('[data-nm]').value.trim(); $('[data-okt]').textContent = `${nm ? nm + ', ' : ''}${$('[data-hint]').textContent}. Позвоним, чтобы подтвердить.`; $('[data-form]').classList.add('sent'); });
+  draw();
+})();
+</script>
+<p class="ribbon"><span>Концепт Seinokojii Project<i> · заведение вымышленное</i></span><a href="/#works">К работам</a></p>
+<script>(function(){
+var d=document.documentElement, ov=document.querySelector('.intro-ov');
+if(ov&&d.classList.contains('intro')){var done=function(){ov.remove();d.classList.remove('intro')};ov.addEventListener('animationend',function(e){if(e.target===ov)done()});if(!window.__film)setTimeout(done,3000)}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+// появление: дети секций ниже первого экрана выезжают снизу, по очереди внутри одного родителя
+var secs=[].slice.call(document.querySelectorAll('main > section, body > section, section')).filter(function(s,i,a){return a.indexOf(s)===i&&s.getBoundingClientRect().top>innerHeight*.9});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('mrv-in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+secs.forEach(function(s){var kids=[].slice.call(s.children);if(kids.length===1&&kids[0].children.length>1)kids=[].slice.call(kids[0].children);
+  kids.forEach(function(el,k){var cs=getComputedStyle(el);if(cs.position==='fixed'||cs.position==='sticky'||el.classList.contains('up')||el.classList.contains('rv')||el.querySelector('.rv')||el.offsetHeight<8)return;el.classList.add('mrv');el.style.setProperty('--k',Math.min(k,6));io.observe(el)})});
+// отклик на нажатие: кнопка коротко «щёлкает»
+document.addEventListener('click',function(e){var b=e.target.closest('button,[role=button]');if(!b)return;b.classList.remove('tapk');void b.offsetWidth;b.classList.add('tapk')},true);
+})()</script>
+</body></html>

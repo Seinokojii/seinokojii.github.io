@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Жалт — детейлинг — концепт сайта · Seinokojii Project</title><meta name="robots" content="noindex"><meta name="theme-color" content="#0A0B0D"><link rel="icon" href="/img/icon.svg">
+<script>if (self !== top) document.documentElement.classList.add('emb')</script><script>(function(){var d=document.documentElement;if(self!==top||matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('intro');d.style.setProperty('--intro','1450ms')})()</script>
+<style>
+@font-face { font-family: Tektur; font-weight: 500 800; font-display: swap; src: url(../fonts/tektur-cyrillic.woff2) format("woff2"); unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: Tektur; font-weight: 500 800; font-display: swap; src: url(../fonts/tektur-cyrillic-ext.woff2) format("woff2"); unicode-range: U+0460-052F; }
+@font-face { font-family: Tektur; font-weight: 500 800; font-display: swap; src: url(../fonts/tektur-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2212; }
+@font-face { font-family: Manrope; font-weight: 400 800; font-display: swap; src: url(../fonts/manrope-cyrillic.woff2) format("woff2"); unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: Manrope; font-weight: 400 800; font-display: swap; src: url(../fonts/manrope-cyrillic-ext.woff2) format("woff2"); unicode-range: U+0460-052F; }
+@font-face { font-family: Manrope; font-weight: 400 800; font-display: swap; src: url(../fonts/manrope-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2212; }
+*, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; -webkit-font-smoothing: antialiased; overflow-x: clip; } h1, h2, h3, p, ul, fieldset { margin: 0; padding: 0; border: 0; } ul { list-style: none; } img { display: block; max-width: 100%; } a { color: inherit; text-decoration: none; } button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; } [hidden] { display: none !important; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.up { opacity: 0; translate: 0 28px; animation: up 1s cubic-bezier(.16, 1, .3, 1) forwards; animation-delay: calc(var(--i, 0) * 110ms + 150ms); } @keyframes up { to { opacity: 1; translate: 0 0; } }
+.ribbon { position: fixed; z-index: 90; left: 50%; bottom: 14px; translate: -50% 0; display: flex; align-items: center; gap: 10px; padding: 9px 9px 9px 16px; border-radius: 99px; background: rgba(16, 21, 31, .9); backdrop-filter: blur(10px); color: #E9E6EA; font: 500 12.5px/1.2 system-ui, sans-serif; white-space: nowrap; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.ribbon a { padding: 7px 13px; border-radius: 99px; background: #84A8CD; color: #10151F; font-weight: 700; } @media (max-width: 520px) { .ribbon span i { display: none; } .ribbon { font-size: 11.5px; } }
+.emb .ribbon { display: none; }
+@media (prefers-reduced-motion: reduce) { .up { animation: none; opacity: 1; translate: none; } }
+
+:root { --car: #0A0B0D; --red: #E5202E; --wh: #F5F6F7; --steel: #8C939C; --line: rgba(245, 246, 247, .12); --pad: clamp(18px, 4.5vw, 64px); }
+body { background: var(--car); color: var(--wh); font: 400 16px/1.55 Manrope, sans-serif; }
+.t { font-family: Tektur, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; }
+nav { position: absolute; z-index: 6; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px var(--pad); font-size: 13.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+nav b { font: 800 22px/1 Tektur; letter-spacing: .04em; display: flex; align-items: center; gap: 8px; } nav b i { width: 10px; height: 22px; background: var(--red); transform: skewX(-18deg); }
+nav ul { display: flex; gap: 28px; } nav ul a:hover { color: var(--red); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 26px; background: var(--red); color: var(--wh); font: 800 14px/1 Tektur; letter-spacing: .06em; text-transform: uppercase; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); transition: background .25s, color .25s; } .btn:hover { background: var(--wh); color: var(--car); }
+nav .btn { padding: 12px 22px; font-size: 13px; }
+/* до / после: одно фото в двух состояниях, граница тянется */
+.ba { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; touch-action: pan-y; cursor: ew-resize; user-select: none; --x: 50%; }
+.ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; pointer-events: none; }
+.after img { filter: contrast(1.18) saturate(1.25) brightness(1.06); }
+.after::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .28) 48%, rgba(255, 255, 255, .05) 52%, transparent 60%) no-repeat; background-size: 250% 100%; mix-blend-mode: overlay; animation: glint 4.5s ease-in-out infinite; } @keyframes glint { 0% { background-position: 120% 0; } 60%, 100% { background-position: -40% 0; } }
+.before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--x)) 0 0); }
+.before img { filter: sepia(.5) saturate(.35) contrast(.68) brightness(.92) blur(.7px); }
+.before svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .38; }
+.shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(10, 11, 13, .7), transparent 25%, transparent 50%, rgba(10, 11, 13, .92)); }
+.hdl { position: absolute; z-index: 4; top: 0; bottom: 0; left: var(--x); width: 2px; translate: -1px 0; background: var(--wh); box-shadow: 0 0 18px rgba(255, 255, 255, .6); }
+.hdl b { position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--wh); color: var(--car); box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
+.hdl b svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 2.4; fill: none; }
+.lab { position: absolute; z-index: 4; top: 50%; font: 800 13px/1 Tektur; letter-spacing: .2em; padding: 8px 12px; background: rgba(10, 11, 13, .6); backdrop-filter: blur(6px); } .lab.l { left: var(--pad); } .lab.r { right: var(--pad); background: var(--red); }
+.ba input { position: absolute; z-index: 5; inset: auto 0 0; width: 100%; opacity: 0; height: 1px; }
+.ba:has(input:focus-visible) .hdl b { outline: 3px solid var(--red); outline-offset: 4px; }
+.ht { position: absolute; z-index: 5; left: 0; right: 0; bottom: 0; padding: 0 var(--pad) clamp(70px, 9vh, 100px); display: flex; align-items: flex-end; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; pointer-events: none; }
+.ht h1 { font-size: clamp(3rem, 8.6vw, 8.6rem); line-height: .86; max-width: 11ch; } .ht h1 em { font-style: normal; color: var(--red); }
+.ht .r { max-width: 34ch; pointer-events: auto; } .ht .r p { color: rgba(245, 246, 247, .82); margin-bottom: 18px; }
+/* услуги */
+section { padding: clamp(80px, 10vw, 140px) var(--pad); } .in { max-width: 1280px; margin: 0 auto; }
+.h2 { font-size: clamp(2.2rem, 5.4vw, 4.6rem); line-height: .92; } .h2 em { font-style: normal; color: var(--red); }
+.sub { color: rgba(245, 246, 247, .66); max-width: 50ch; margin-top: 16px; font-size: 1.05rem; }
+.sv { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 50px; }
+.sv article { position: relative; aspect-ratio: 3 / 4.4; overflow: hidden; }
+.sv img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.4) brightness(.6); transition: filter .7s, scale 1.2s cubic-bezier(.16, 1, .3, 1); } .sv article:hover img { filter: none; scale: 1.06; }
+.sv article::before { content: ""; position: absolute; z-index: 1; left: 0; top: 0; width: 100%; height: 4px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.16, 1, .3, 1); } .sv article:hover::before { transform: scaleX(1); }
+.sv .c { position: absolute; inset: auto 0 0; padding: 22px; background: linear-gradient(180deg, transparent, rgba(10, 11, 13, .95) 40%); }
+.sv h3 { font: 800 1.3rem/1.05 Tektur; text-transform: uppercase; } .sv p { color: rgba(245, 246, 247, .72); font-size: 14.5px; margin-top: 8px; } .sv strong { display: block; margin-top: 12px; font: 800 1.05rem/1 Tektur; color: var(--red); }
+/* калькулятор */
+.calc { background: var(--wh); color: var(--car); } .calc .sub { color: #555B62; }
+.cg { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr); gap: 40px; margin-top: 46px; align-items: start; }
+.q + .q { margin-top: 30px; } .q h3 { font: 800 13px/1 Tektur; letter-spacing: .14em; text-transform: uppercase; color: #6A7078; margin-bottom: 12px; }
+.opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.opts button { text-align: left; padding: 18px; border: 2px solid #D9DCE0; transition: border-color .25s, background .25s; } .opts button:hover { border-color: var(--car); } .opts button.on { border-color: var(--red); background: rgba(229, 32, 46, .05); }
+.opts b { display: block; font: 800 1.05rem/1.1 Tektur; text-transform: uppercase; } .opts span { display: block; font-size: 13.5px; color: #6A7078; margin-top: 6px; }
+.opts svg { width: 46px; height: 24px; margin-bottom: 10px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.xs { display: flex; flex-wrap: wrap; gap: 8px; } .xs label { cursor: pointer; } .xs input { position: absolute; opacity: 0; } .xs span { display: inline-block; padding: 12px 16px; border: 2px solid #D9DCE0; font-weight: 700; font-size: 14.5px; transition: .25s; } .xs input:checked + span { background: var(--car); color: var(--wh); border-color: var(--car); } .xs input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+.res { position: sticky; top: 20px; background: var(--car); color: var(--wh); padding: 30px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+.res small { font: 800 12px/1 Tektur; letter-spacing: .16em; color: var(--steel); text-transform: uppercase; } .res .big { display: block; font: 800 clamp(2.8rem, 5vw, 4rem)/1 Tektur; margin: 10px 0 4px; font-variant-numeric: tabular-nums; } .res .hrs { color: var(--steel); }
+.res ul { margin: 20px 0; padding: 16px 0; border-block: 1px solid var(--line); font-size: 14.5px; display: grid; gap: 8px; } .res li { display: flex; justify-content: space-between; gap: 12px; } .res li span:last-child { color: var(--steel); white-space: nowrap; }
+.dys { display: flex; gap: 6px; margin-bottom: 16px; } .dys button { flex: 1; padding: 10px 0; border: 1px solid var(--line); font-size: 13px; font-weight: 700; } .dys button.on { background: var(--wh); color: var(--car); }
+.res .btn { width: 100%; } .res .okm { display: none; margin-top: 14px; padding: 14px; background: rgba(229, 32, 46, .14); border-left: 3px solid var(--red); font-size: 14.5px; } .res.sent .okm { display: block; }
+.end { position: relative; min-height: 86vh; display: grid; align-items: end; padding: 0; overflow: hidden; }
+.end img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; } .end::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 11, 13, .92), rgba(10, 11, 13, .3)); }
+.end .in { position: relative; z-index: 2; width: 100%; padding: 0 var(--pad) 110px; } .end h2 { font-size: clamp(2.8rem, 8vw, 7.4rem); line-height: .88; max-width: 10ch; } .end h2 em { font-style: normal; color: var(--red); }
+.info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 15px; color: rgba(245, 246, 247, .82); max-width: 900px; } .info b { display: block; font: 800 12px/1 Tektur; letter-spacing: .16em; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+.rv { opacity: 0; translate: 0 36px; transition: opacity .9s, translate 1s cubic-bezier(.16, 1, .3, 1); } .rv.vis { opacity: 1; translate: 0 0; }
+@media (max-width: 960px) { nav ul { display: none; } .sv { grid-template-columns: 1fr 1fr; } .cg { grid-template-columns: 1fr; } .res { position: static; } .info { grid-template-columns: 1fr; } .ba img { object-position: 58% 60%; } .lab { top: 34%; } }
+@media (max-width: 560px) { .ba img { inset: -24% 0 auto; height: 100%; object-position: 64% 50%; } .opts { grid-template-columns: 1fr; } .opts button { display: grid; grid-template-columns: 54px 1fr; align-items: center; column-gap: 10px; } .opts svg { grid-row: span 2; margin: 0; } .sv { grid-template-columns: 1fr; } .sv article { aspect-ratio: 4 / 3.4; } }
+@media (prefers-reduced-motion: reduce) { .after::after { animation: none; } .rv { opacity: 1; translate: none; } }
+
+.up { animation-delay: calc(var(--intro, 0ms) + var(--i, 0) * 110ms + 150ms); }
+.intro-ov { display: none; }
+.intro .intro-ov { display: block; position: fixed; inset: 0; z-index: 300; pointer-events: none; overflow: hidden; }
+.intro-ov * { position: absolute; }
+.mrv:not(.mrv-in) { opacity: 0; }
+.mrv.mrv-in { animation: rvin .95s cubic-bezier(.16, 1, .3, 1) backwards; animation-delay: calc(var(--k, 0) * 80ms); }
+@keyframes rvin { from { opacity: 0; translate: 0 30px; } to { opacity: 1; translate: 0 0; } }
+button, [role=button] { transition: scale .18s cubic-bezier(.3, 1.4, .5, 1); -webkit-tap-highlight-color: transparent; }
+button:active, [role=button]:active { scale: .955; }
+.tapk { animation: tapk .42s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes tapk { 0% { scale: .93; } 60% { scale: 1.04; } 100% { scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .mrv:not(.mrv-in) { opacity: 1; } .mrv.mrv-in, .tapk { animation: none; } }
+@keyframes sx { from { scale: 0 1; } to { scale: 1 1; } } @keyframes fi { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+@keyframes fo { to { opacity: 0; } } @keyframes dr { to { stroke-dashoffset: 0; } }
+.intro-ov.j { background: #0A0B0D; animation: j-out .65s cubic-bezier(.65, 0, .35, 1) 1.35s forwards; }
+.j .w { left: 0; right: 0; top: calc(50% - 40px); text-align: center; font: 800 68px/1 Tektur, sans-serif; letter-spacing: .06em;
+  background: linear-gradient(100deg, #3A3F46 0 35%, #FFFFFF 47%, #F5F6F7 53%, #F5F6F7 100%) 100% 0 / 300% 100% no-repeat; -webkit-background-clip: text; background-clip: text; color: transparent; animation: j-shine 1.05s cubic-bezier(.65, 0, .35, 1) .15s both; }
+.j .ln { left: 50%; top: calc(50% + 40px); width: 160px; height: 3px; margin-left: -80px; background: #E5202E; transform-origin: left; animation: sx .55s cubic-bezier(.16, 1, .3, 1) .8s both; }
+.j .s { left: 0; right: 0; top: calc(50% + 58px); text-align: center; font: 700 11px/1 Manrope, sans-serif; letter-spacing: .3em; color: #8C939C; animation: fi .6s cubic-bezier(.16, 1, .3, 1) .9s both; }
+@keyframes j-shine { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes j-out { to { translate: -100% 0; } }
+</style></head>
+<body>
+<div class="intro-ov j" aria-hidden="true"><b class="w">ЖАЛТ</b><i class="ln"></i><b class="s">ДЕТЕЙЛИНГ</b></div>
+<main>
+<section class="ba" style="padding:0" data-ba aria-label="Сравнение: до и после детейлинга">
+  <nav class="up"><b><i></i>Жалт</b><ul><li><a href="#sv">Услуги</a></li><li><a href="#calc">Цена</a></li><li><a href="#end">Адрес</a></li></ul><a class="btn" href="#calc">Записаться</a></nav>
+  <div class="after"><img src="../img/jl-hero.webp" alt="Чёрный спорткар после детейлинга"></div>
+  <div class="before"><img src="../img/jl-hero.webp" alt="">
+    <svg aria-hidden="true"><filter id="dust"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="4"/><feColorMatrix values="0 0 0 0 .78  0 0 0 0 .7  0 0 0 0 .58  0 0 0 -2.4 1.45"/></filter><filter id="smear"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="3" seed="9"/><feColorMatrix values="0 0 0 0 .66  0 0 0 0 .6  0 0 0 0 .5  0 0 0 -1.4 1.05"/></filter><rect width="100%" height="100%" filter="url(#smear)"/><rect width="100%" height="100%" filter="url(#dust)"/></svg></div>
+  <i class="shade"></i>
+  <span class="lab l">До</span><span class="lab r">После</span>
+  <div class="hdl"><b><svg viewBox="0 0 24 24"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></b></div>
+  <input type="range" min="0" max="100" value="50" aria-label="Граница до и после" data-range>
+  <div class="ht"><h1 class="t up" style="--i:1">Как из салона. <em>Даже в 10 лет</em></h1>
+    <div class="r up" style="--i:3"><p>Потяните границу на фото — так выглядит машина до нас и после. Мойка, полировка, керамика и химчистка салона в Бишкеке.</p><a class="btn" href="#calc">Посчитать цену</a></div></div>
+</section>
+<section id="sv"><div class="in">
+  <h2 class="h2 t rv">Что мы <em>делаем</em></h2><p class="sub rv">Работаем в тёплом боксе со светом, как на заводе. Каждую машину фотографируем до и после — снимки отдаём вам.</p>
+  <div class="sv">
+    <article class="rv"><img src="../img/jl-foam.webp" alt="Машина в пене" loading="lazy"><div class="c"><h3>Мойка в три фазы</h3><p>Пена, ручная мойка, сушка без разводов</p><strong>от 1 500 с</strong></div></article>
+    <article class="rv"><img src="../img/jl-pol.webp" alt="Полировка кузова машинкой" loading="lazy"><div class="c"><h3>Полировка</h3><p>Убираем царапины и паутинку с лака</p><strong>от 9 000 с</strong></div></article>
+    <article class="rv"><img src="../img/jl-wax.webp" alt="Нанесение покрытия" loading="lazy"><div class="c"><h3>Керамика</h3><p>Защита кузова на 2 года, вода скатывается</p><strong>от 22 000 с</strong></div></article>
+    <article class="rv"><img src="../img/jl-cloth.webp" alt="Микрофибра на капоте" loading="lazy"><div class="c"><h3>Химчистка салона</h3><p>Сиденья, потолок, ковры — без запаха</p><strong>от 6 000 с</strong></div></article>
+  </div>
+</div></section>
+<section class="calc" id="calc"><div class="in">
+  <h2 class="h2 t rv">Цена — <em>за 10 секунд</em></h2><p class="sub rv">Выберите машину и что нужно сделать. Цена окончательная — на месте не вырастет.</p>
+  <div class="cg">
+    <div class="rv">
+      <div class="q"><h3>Ваша машина</h3><div class="opts" data-cls></div></div>
+      <div class="q"><h3>Что сделать</h3><div class="opts" data-pkg></div></div>
+      <div class="q"><h3>Добавить</h3><div class="xs" data-xs></div></div>
+    </div>
+    <aside class="res rv" data-res><small>Итого</small><b class="big" data-sum>0 с</b><span class="hrs" data-hrs></span><ul data-lines></ul>
+      <div class="dys" data-dys></div><button class="btn" type="button" data-go>Записаться</button><p class="okm" data-ok></p></aside>
+  </div>
+</div></section>
+<section class="end" id="end"><img src="../img/jl-light.webp" alt="Фара чёрной машины" loading="lazy">
+  <div class="in"><h2 class="t rv">Приезжайте <em>грязным</em></h2><div class="info rv"><p><b>Адрес</b>ул. Ахунбаева, 210 · бокс 3</p><p><b>Часы</b>Каждый день 9:00 — 21:00</p><p><b>Связь</b>+996 555 000 000 · WhatsApp</p></div></div>
+</section>
+</main>
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)], calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = n => n.toLocaleString('ru-RU').replace(/ /g, ' ');
+  // до/после: тянуть мышью или пальцем, стрелками — через скрытый ползунок
+  const ba = $('[data-ba]'), rg = $('[data-range]'); let drag = false, touched = false;
+  const set = p => { p = Math.max(2, Math.min(98, p)); ba.style.setProperty('--x', p + '%'); rg.value = Math.round(p); };
+  const at = e => set((e.clientX - ba.getBoundingClientRect().left) / ba.offsetWidth * 100);
+  ba.addEventListener('pointerdown', e => { if (e.target.closest('a, button')) return; drag = touched = true; at(e); });
+  addEventListener('pointermove', e => { if (drag) at(e); else if (e.pointerType === 'mouse' && e.target.closest('[data-ba]') && !e.target.closest('a')) { touched = true; at(e); } }); // мышь: граница идёт за курсором и без нажатия
+  addEventListener('pointerup', () => drag = false); rg.addEventListener('input', () => { touched = true; set(+rg.value); });
+  if (!calm) { const t0 = performance.now(); const hint = t => { if (touched) return; const k = (t - t0) / 1000; if (k > 4.2) return; const p = 50 + Math.sin(Math.min(k / 3.6, 1) * Math.PI * 2) * 22 * (1 - Math.max(0, k - 3) / 1.2); set(p); requestAnimationFrame(hint); }; setTimeout(() => requestAnimationFrame(hint), 1200); }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), { threshold: .12 }); $$('.rv').forEach(el => io.observe(el));
+  // калькулятор: класс машины множит цену пакета
+  const CAR = '<path d="M2 17h3m14 0h3M5 17a2 2 0 1 0 4 0 2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0M9 17h6"/>';
+  const CL = [['Седан', 'Camry, Elantra, Prius', 1, '<path d="M2 17v-3l3-1 4-4h7l4 4h2v4"/>'], ['Кроссовер', 'RAV4, Tucson, CR-V', 1.25, '<path d="M2 17v-4l2-1 3-4h9l4 4h2v5"/>'], ['Внедорожник', 'Land Cruiser, Lexus LX', 1.5, '<path d="M2 17V11h3l2-4h11l1 4h3v6"/>']];
+  const PK = [['Экспресс', 'Мойка в три фазы и воск', 1500, 1], ['Блеск', 'Мойка + полировка кузова', 10500, 6], ['Броня', 'Полировка + керамика на 2 года', 30000, 14]];
+  const XS = [['Химчистка салона', 6000, 4], ['Полировка фар', 2500, 1], ['Чернение шин', 600, 0]];
+  let cl = 0, pk = 1; const xs = new Set();
+  const opts = (box, items, cur, cb, icon) => { box.textContent = ''; items.forEach((it, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = i === cur ? 'on' : '';
+    b.innerHTML = (icon ? `<svg viewBox="0 0 24 20">${it[3]}${CAR}</svg>` : '') + `<b>${it[0]}</b><span>${it[1]}${icon ? '' : ' · ' + fmt(it[2]) + ' с'}</span>`; b.addEventListener('click', () => cb(i)); box.append(b); }); };
+  XS.forEach(([n, p], i) => { const l = document.createElement('label'); l.innerHTML = `<input type="checkbox"><span>${n} +${fmt(p)} с</span>`; $('input', l).addEventListener('change', e => { e.target.checked ? xs.add(i) : xs.delete(i); calc(); }); $('[data-xs]').append(l); });
+  let shown = 0, goal = 0, anim;
+  function calc() { opts($('[data-cls]'), CL, cl, i => { cl = i; calc(); }, true); opts($('[data-pkg]'), PK, pk, i => { pk = i; calc(); });
+    const k = CL[cl][2], base = Math.round(PK[pk][2] * k / 100) * 100; let hrs = PK[pk][3], lines = [[PK[pk][0] + ' · ' + CL[cl][0].toLowerCase(), base]];
+    xs.forEach(i => { lines.push([XS[i][0], XS[i][1]]); hrs += XS[i][2]; }); goal = lines.reduce((s, l) => s + l[1], 0);
+    $('[data-lines]').innerHTML = lines.map(l => `<li><span>${l[0]}</span><span>${fmt(l[1])} с</span></li>`).join(''); $('[data-hrs]').textContent = hrs <= 1 ? 'Около часа — подождёте у нас за кофе' : hrs < 9 ? `Займёт ${hrs} ч — заберёте в тот же день` : `Займёт ${Math.ceil(hrs / 8)} дня — машина в тёплом боксе`;
+    cancelAnimationFrame(anim); const from = shown, t0 = performance.now(); const step = t => { const q = Math.min(1, (t - t0) / 600); shown = Math.round(from + (goal - from) * (1 - Math.pow(1 - q, 3))); $('[data-sum]').textContent = fmt(shown) + ' с'; if (q < 1) anim = requestAnimationFrame(step); }; anim = requestAnimationFrame(step);
+    $('[data-res]').classList.remove('sent'); }
+  let dy = 1; const dbox = $('[data-dys]'); for (let i = 0; i < 4; i++) { const d = new Date(); d.setDate(d.getDate() + i); const b = document.createElement('button'); b.type = 'button'; b.textContent = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : d.toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric' }); b.className = i === dy ? 'on' : ''; b.addEventListener('click', () => { dy = i; $$('button', dbox).forEach((x, k) => x.classList.toggle('on', k === i)); }); dbox.append(b); }
+  $('[data-go]').addEventListener('click', () => { $('[data-ok]').textContent = `Записали: ${PK[pk][0].toLowerCase()}, ${$$('button', dbox)[dy].textContent.toLowerCase()}. Мастер позвонит и уточнит время. Это концепт — заявка никуда не ушла.`; $('[data-res]').classList.add('sent'); });
+  calc();
+})();
+</script>
+<p class="ribbon"><span>Концепт Seinokojii Project<i> · заведение вымышленное</i></span><a href="/#works">К работам</a></p>
+<script>(function(){
+var d=document.documentElement, ov=document.querySelector('.intro-ov');
+if(ov&&d.classList.contains('intro')){var done=function(){ov.remove();d.classList.remove('intro')};ov.addEventListener('animationend',function(e){if(e.target===ov)done()});if(!window.__film)setTimeout(done,3000)}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+// появление: дети секций ниже первого экрана выезжают снизу, по очереди внутри одного родителя
+var secs=[].slice.call(document.querySelectorAll('main > section, body > section, section')).filter(function(s,i,a){return a.indexOf(s)===i&&s.getBoundingClientRect().top>innerHeight*.9});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('mrv-in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+secs.forEach(function(s){var kids=[].slice.call(s.children);if(kids.length===1&&kids[0].children.length>1)kids=[].slice.call(kids[0].children);
+  kids.forEach(function(el,k){var cs=getComputedStyle(el);if(cs.position==='fixed'||cs.position==='sticky'||el.classList.contains('up')||el.classList.contains('rv')||el.querySelector('.rv')||el.offsetHeight<8)return;el.classList.add('mrv');el.style.setProperty('--k',Math.min(k,6));io.observe(el)})});
+// отклик на нажатие: кнопка коротко «щёлкает»
+document.addEventListener('click',function(e){var b=e.target.closest('button,[role=button]');if(!b)return;b.classList.remove('tapk');void b.offsetWidth;b.classList.add('tapk')},true);
+})()</script>
+</body></html>
