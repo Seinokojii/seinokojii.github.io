@@ -196,7 +196,7 @@ h1 { font-size: clamp(2.1rem, 4.25vw, 4.2rem); } h2 { font-size: clamp(1.55rem, 
 
 /* ---------- ширины */
 @media (max-width: 1000px) {
-  .menu { display: none; } .top .btn { margin-left: auto; }
+  .menu { display: none; } .top .hdr-ig { margin-left: auto; }
   .hero .flow { opacity: .75; -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, .22), rgba(0, 0, 0, .3) 34%, #000 62%); mask-image: linear-gradient(180deg, rgba(0, 0, 0, .22), rgba(0, 0, 0, .3) 34%, #000 62%); }   /* на узком экране текст сверху, устройства снизу — линии уходят вниз, под текстом почти гаснут */
   .hero-g { grid-template-columns: minmax(0, 1fr); padding-bottom: 90px; } .stage { order: 2; margin: 10px 4% 0 8%; } .stage-in { transform: rotateY(-5deg) rotateX(2deg); }
   .head { grid-template-columns: minmax(0, 1fr); } .try-g { grid-template-columns: minmax(0, 1fr); } .try-v { order: -1; }
@@ -288,3 +288,7 @@ body { font-size: 18px; } .lead { color: #B9C2CF; } .tile p, .step p { color: #A
 .ticket .cut { display: none; } .sum-n { position: relative; }
 .sum-n::before, .sum-n::after { content: ""; position: absolute; bottom: -13px; width: 26px; height: 26px; border-radius: 50%; background: var(--night); }
 .sum-n::before { left: calc(-1 * clamp(26px, 3.4vw, 42px) - 13px); } .sum-n::after { right: calc(-1 * clamp(26px, 3.4vw, 42px) - 13px); }
+
+/* Instagram рядом с WhatsApp в шапке; на узком экране — только значок */
+.top { column-gap: 10px; } .top .menu { margin-right: 14px; }
+@media (max-width: 640px) { .top .hdr-ig { padding: 0; width: 44px; } .top .hdr-ig span { display: none; } }
