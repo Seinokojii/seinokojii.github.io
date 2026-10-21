@@ -106,6 +106,58 @@
       fc.strokeStyle = INK; fc.lineWidth = 3; fc.strokeRect(x + 1.5, y + 1.5, 2 * L - 3, 2 * L - 3); phAt += dt * 1000 * .7; }    // пока лупа на картинке, пример держится дольше
   };
 
+  // ---------- живая матрица за первым экраном (21.10.2026): тусклая сетка пикселей во весь фон. Курсор или палец оставляет светящийся след,
+  // касание пускает волну, а сама волна раз в несколько секунд расходится от цены — на телефоне эффект виден, даже если ничего не трогать.
+  // Яркость клетки — четыре ступени, как у 8-бит. Сетка строится заново только при смене ширины (адресная строка телефона меняет высоту — не реагируем).
+  const hero = $('.hero'), fcv = $('.field'), priceEl = $('.hero h1 em');
+  const TONES = ['#1E1E27', '#34343F', '#5A5A66', '#9A9AA3'];
+  let gc, gW = 0, gH = 0, G = 16, gcols = 0, grows = 0, en = new Float32Array(0), base = null, gOn = true, waves = [], gPt = null, gLast = now(), nextWave = 0;
+  const fieldSize = () => { const w = hero.clientWidth; if (!w || w === gW) return; gW = w; gH = Math.max(hero.clientHeight, innerHeight); G = w < 700 ? 14 : 16;
+    gc = hidpi(fcv, gW, gH); gcols = Math.ceil(gW / G); grows = Math.ceil(gH / G); en = new Float32Array(gcols * grows);
+    base = document.createElement('canvas'); const bc = hidpi(base, gW, gH); bc.fillStyle = '#1B1B23';
+    for (let y = 0; y < grows; y++) for (let x = 0; x < gcols; x++) bc.fillRect(x * G + G / 2 - 1, y * G + G / 2 - 1, 2, 2); };
+  fieldSize(); addEventListener('resize', fieldSize); addEventListener('load', fieldSize);
+  new IntersectionObserver(es => { gOn = es[0].isIntersecting; }).observe(hero);
+  const heroXY = (cx, cy) => { const r = hero.getBoundingClientRect(); return [(cx - r.left) / G, (cy - r.top) / G]; };
+  const wave = (x, y, power = 1) => { if (waves.length < 6) waves.push({ x, y, t: now(), p: power }); };
+  const fromPrice = () => { const r = priceEl.getBoundingClientRect(); return heroXY(r.left + r.width / 2, r.top + r.height / 2); };
+  const trail = (cx, cy) => { const p = heroXY(cx, cy); if (gPt) { const n = Math.ceil(Math.hypot(p[0] - gPt[0], p[1] - gPt[1]) * 2);   // по пути между событиями — чтобы след был сплошным
+      for (let i = 1; i <= n; i++) lit(lerp(gPt[0], p[0], i / n), lerp(gPt[1], p[1], i / n)); } else lit(p[0], p[1]); gPt = p; };
+  const lit = (fx, fy) => { const R = 1.9; for (let y = Math.floor(fy - R); y <= fy + R; y++) for (let x = Math.floor(fx - R); x <= fx + R; x++) {
+      if (x < 0 || y < 0 || x >= gcols || y >= grows) continue; const d = Math.hypot(x + .5 - fx, y + .5 - fy) / R; if (d < 1) { const i = y * gcols + x; en[i] = Math.max(en[i], 1 - d * .7); } } };
+  if (!calm) {
+    hero.addEventListener('pointermove', ev => { if (ev.pointerType === 'mouse') trail(ev.clientX, ev.clientY); });
+    hero.addEventListener('pointerleave', () => { gPt = null; });
+    hero.addEventListener('pointerdown', ev => { const p = heroXY(ev.clientX, ev.clientY); wave(p[0], p[1]); gPt = null; });
+    hero.addEventListener('touchmove', ev => { const t = ev.touches[0]; if (t) trail(t.clientX, t.clientY); }, { passive: true });
+    hero.addEventListener('touchend', () => { gPt = null; }, { passive: true });
+  }
+  const fieldFrame = () => {
+    if (!gOn || !gc || !root.classList.contains('ready')) return;
+    const t = now(), dt = Math.min(.05, (t - gLast) / 1000); gLast = t;
+    if (!calm && t > nextWave) { if (nextWave) { const p = fromPrice(); wave(p[0], p[1], .72); } nextWave = t + (nextWave ? 4200 : 1400); }
+    const fade = Math.pow(.002, dt);
+    for (let i = 0; i < en.length; i++) en[i] *= fade;
+    waves = waves.filter(w => { const age = (t - w.t) / 1000, life = 2.4; if (age > life) return false;
+      const rad = age * (gW < 700 ? 15 : 24), k = (1 - age / life) * w.p, y0 = Math.max(0, Math.floor(w.y - rad - 1)), y1 = Math.min(grows - 1, Math.ceil(w.y + rad + 1));
+      for (let y = y0; y <= y1; y++) for (let x = 0; x < gcols; x++) { const d = Math.abs(Math.hypot(x + .5 - w.x, y + .5 - w.y) - rad); if (d < 1.1) { const i = y * gcols + x; en[i] = Math.max(en[i], k * (1 - d / 1.1 * .5)); } }
+      return true; });
+    gc.clearRect(0, 0, gW, gH); gc.drawImage(base, 0, 0, gW, gH);
+    for (let lv = 0; lv < 4; lv++) { gc.fillStyle = TONES[lv]; const lo = (lv + 1) * .2;
+      for (let i = 0; i < en.length; i++) { const e = en[i]; if (e < lo || (lv < 3 && e >= lo + .2)) continue; const x = i % gcols, y = (i - x) / gcols; gc.fillRect(x * G + 2, y * G + 2, G - 4, G - 4); } }
+  };
+
+  // ---------- цены — счёт как в аркаде: от «00 000» до цены ступеньками, в конце плашка дважды мигает. Без JS и при «меньше движения» — сразу цена.
+  const fmt = (v, len) => String(v).padStart(len, '0').replace(/\B(?=(\d{3})+$)/g, ' ');
+  const counters = $$('[data-count]').map(el => { const to = +el.dataset.count.replace(/\D/g, ''), len = String(to).length, html = el.innerHTML.includes('gap');
+    const show = v => { const s = fmt(v, len); if (html) el.innerHTML = s.replace(' ', "<i class='gap'></i>"); else el.textContent = s.replace(' ', ' '); };
+    if (!calm) show(0); return { el, to, show, done: calm }; });
+  const countUp = c => { if (c.done) return; c.done = true; const N = 22; let i = 0;
+    const id = setInterval(() => { i++; const k = 1 - Math.pow(1 - i / N, 2.4); c.show(i >= N ? c.to : Math.round(c.to * k / 100) * 100);
+      if (i >= N) { clearInterval(id); c.el.classList.add('hit'); } }, 48); };
+  const heroCount = counters.find(c => c.el === priceEl);
+  const waitReady = setInterval(() => { if (root.classList.contains('ready')) { clearInterval(waitReady); setTimeout(() => heroCount && countUp(heroCount), 650); } }, 100);
+
   // ---------- примеры: картинка проявляется из крупных блоков, когда карточка на экране; при наведении — ещё раз, быстро
   const runPix = (cv, img, steps, ms) => { const r = cv.getBoundingClientRect(), c = hidpi(cv, r.width, r.height); cv.classList.remove('gone'); let i = 0; clearInterval(cv._t);
     const go = () => { if (i >= steps.length) { clearInterval(cv._t); cv.classList.add('gone'); return; } pixelate(c, img, steps[i], r.width, r.height, i < steps.length * .45); i++; };
@@ -121,7 +173,8 @@
   // getBoundingClientRect шторку не учитывает — блок открывается, как только его верх поднялся выше 92% окна (в том числе если он уже выше экрана).
   let pending = $$('.rv');
   const fill = el => { let v = 0; const bar = $('i', el), id = setInterval(() => { v = Math.min(1, v + 1 / 18); bar.style.setProperty('--lp', v.toFixed(3)); if (v >= 1) { clearInterval(id); el.classList.add('full'); } }, calm ? 1 : 85); };
-  const reveal = vh => { if (!pending.length) return; pending = pending.filter(el => { if (el.getBoundingClientRect().top > vh * .92) return true; el.classList.add('in'); if (el.classList.contains('load')) fill(el); return false; }); };
+  const reveal = vh => { if (!pending.length) return; pending = pending.filter(el => { if (el.getBoundingClientRect().top > vh * .92) return true; el.classList.add('in'); if (el.classList.contains('load')) fill(el);
+    const cn = counters.find(c => el.contains(c.el)); if (cn) setTimeout(() => countUp(cn), 450); return false; }); };
 
   // ---------- сцена «Как это работает»: прокрутка выбирает шаг (s1–s4). В телефоне клиента — НАСТОЯЩИЙ сайт «Кайчы» (тот же адрес, что в примерах),
   // и «палец» нажимает в нём настоящие кнопки: услугу, время, «Записаться». Выбранное попадает в уведомление на телефоне владельца.
@@ -178,10 +231,10 @@
   const frame = () => {
     const y = scrollY, vh = innerHeight, doc = root.scrollHeight - vh, down = y > lastY + 2, up = y < lastY - 2; lastY = y;
     top.classList.toggle('solid', y > 30); if (down && y > vh) top.classList.add('hide'); else if (up || y < vh) top.classList.remove('hide');
-    read.style.setProperty('--read', clamp(y / doc).toFixed(4)); fl.classList.toggle('off', y < vh * .6 || contact.getBoundingClientRect().top < vh * .8);
+    read.style.setProperty('--read', clamp(y / doc).toFixed(4)); const sr = story.getBoundingClientRect(); fl.classList.toggle('off', y < vh * .6 || contact.getBoundingClientRect().top < vh * .8 || (sr.top < vh * .5 && sr.bottom > vh * .5));
     paintStory(vh); reveal(vh);
     wordDraw(calm || doc - y < 3 ? 1 : Math.round(clamp((1 - (doc - y) / (vh * .6)) * 1.15) * 400) / 400);
-    forgeFrame();
+    forgeFrame(); fieldFrame();
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
