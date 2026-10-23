@@ -59,7 +59,33 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
 .intro { position: fixed; inset: 0; z-index: 100; pointer-events: none; display: none; }
 .intro-on .intro { display: block; pointer-events: auto; }
 .intro-c { width: 100%; height: 100%; display: block; }
+.no-intro .intro { background: var(--bg); }
 .intro-on body { overflow: hidden; }
+/* выбор страны (23.10.2026): кнопки проявляются ступенчатой шторкой одна за другой, выбранная дважды мигает, потом всё гаснет ступеньками */
+.ask { position: absolute; left: 50%; top: var(--ask-y, 50%); translate: -50% 0; width: min(760px, calc(100% - 32px)); text-align: center; }
+.intro-on .ask[hidden] { display: none; }
+.ask-h { font: 400 clamp(12px, 1.6vw, 16px)/1.4 var(--game); text-transform: uppercase; color: var(--ink); }
+.ask-s { margin-top: 10px; font: 500 20px/1.3 var(--hand); color: var(--mut); }
+.ask-g { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
+.ask-b { --c: var(--line-2); position: relative; display: grid; justify-items: start; gap: 10px; margin: var(--b); padding: 16px 16px 14px; background: var(--bg-2); color: var(--ink); border: 0; cursor: pointer; text-align: left;
+  box-shadow: 0 calc(-1 * var(--b)) var(--c), 0 var(--b) var(--c), calc(-1 * var(--b)) 0 var(--c), var(--b) 0 var(--c); font: inherit; }
+.ask-b i { font: 400 9px/1 var(--game); font-style: normal; padding: 5px 6px; background: var(--ink); color: var(--bg); }
+.ask-b b { font: 400 11px/1.3 var(--game); text-transform: uppercase; }
+.ask-b small { font: 500 19px/1 var(--hand); color: var(--mut); white-space: nowrap; }
+.ask-b.near::after { content: ""; position: absolute; right: 12px; top: 14px; width: 8px; height: 8px; background: var(--ink); animation: blink 1s steps(1) infinite; }
+@media (hover: hover) { .ask-b:hover { --c: var(--ink); background: var(--ink); color: var(--bg); } .ask-b:hover i { background: var(--bg); color: var(--ink); } .ask-b:hover small { color: #4a4a52; } .ask-b:hover::after { background: var(--bg); } }
+.ask-b:focus-visible { outline: 3px solid var(--ink); outline-offset: 6px; }
+.ask-b:active { translate: 0 2px; }
+.ask-b.hit { animation: askhit .36s steps(1); }
+@keyframes askhit { 0%, 50% { background: var(--ink); color: var(--bg); } 25%, 75% { background: var(--bg-2); color: var(--ink); } }
+.js .ask .ask-h, .js .ask .ask-s, .js .ask .ask-b { clip-path: inset(0 0 100% 0); }
+.ask.on .ask-h, .ask.on .ask-s, .ask.on .ask-b { clip-path: inset(-12px); transition: clip-path .36s steps(5) calc(var(--n, 0) * .1s + var(--d, .2s)); }
+.ask .ask-h { --d: 0s; } .ask .ask-s { --d: .12s; }
+.ask.out { opacity: 0; transition: opacity .2s steps(3); }
+@media (min-width: 1100px) { .ask { width: min(920px, calc(100% - 32px)); } .ask-h { font-size: 18px; } .ask-s { font-size: 24px; } .ask-g { gap: 18px; margin-top: 34px; }
+  .ask-b { padding: 22px 22px 20px; gap: 14px; } .ask-b i { font-size: 11px; padding: 6px 8px; } .ask-b b { font-size: 14px; } .ask-b small { font-size: 24px; } }
+@media (max-width: 760px) { .ask-g { grid-template-columns: 1fr 1fr; gap: 10px; } .ask-b { padding: 14px 12px 12px; } .ask-b b { font-size: 10px; } }
+@media (prefers-reduced-motion: reduce) { .ask.on .ask-h, .ask.on .ask-s, .ask.on .ask-b { transition: none; } .ask { top: 50%; translate: -50% -50%; } }
 
 /* ---------- шапка */
 .top { position: fixed; z-index: 50; inset: 0 0 auto; display: flex; align-items: center; gap: 14px; padding: 12px var(--pad); transition: translate .3s steps(3), background-color .2s steps(1); }

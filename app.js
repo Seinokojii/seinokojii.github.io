@@ -22,28 +22,63 @@
     const w = Math.max(1, Math.round(n)), h = Math.max(1, Math.round(n * H / W)); off.width = w; off.height = h; oc.imageSmoothingEnabled = true; oc.drawImage(img, 0, 0, w, h);
     c.save(); c.imageSmoothingEnabled = false; if (gray) c.filter = 'grayscale(1) contrast(1.15) brightness(1.05)'; c.drawImage(off, 0, 0, W, H); c.restore(); };
 
-  // ---------- заставка
-  const intro = $('.intro'), hasIntro = !root.classList.contains('no-intro');
+  // ---------- страна (23.10.2026): цены в сомах, рублях, тенге или леях. Выбор: ?c=ru → прошлый выбор на этом устройстве → часовой пояс → Кыргызстан.
+  // Числа и подписи с data-r / data-rc меняются на месте, язык один — русский.
+  const REG = JSON.parse($('#reg').textContent), RU_TZ = /^(Europe\/(Moscow|Kaliningrad|Samara|Volgograd|Saratov|Ulyanovsk|Astrakhan|Kirov|Simferopol)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Khandyga|Vladivostok|Ust-Nera|Magadan|Sakhalin|Srednekolymsk|Kamchatka|Anadyr))$/;
+  const byTz = () => { let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    return tz === 'Asia/Bishkek' ? 'kg' : /^Asia\/(Almaty|Qostanay|Aqtobe|Aqtau|Atyrau|Oral|Qyzylorda)$/.test(tz) ? 'kz' : /^Europe\/(Chisinau|Tiraspol)$/.test(tz) ? 'md' : RU_TZ.test(tz) ? 'ru' : 'kg'; };
+  const saved = () => { try { return localStorage.getItem('cc'); } catch (e) { return null; } };
+  let cc = [new URLSearchParams(location.search).get('c'), saved(), byTz()].find(k => k && REG[k]);
+  const nb = v => v.replace(/ /g, '\u00a0');
+  const applyReg = () => { const g = REG[cc];
+    $$('[data-r]').forEach(el => { el.textContent = nb(g[el.dataset.r]); });
+    $$('[data-rc]').forEach(el => { el.dataset.count = g[el.dataset.rc]; });
+    $$('[data-cc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cc === cc))); };
+  applyReg();
+
+  // ---------- заставка: логотип из пикселей → печатается название → (23.10.2026) «Выберите страну»: логотип уезжает вверх, кнопки стран проявляются
+  // ступеньками; после выбора экран рассыпается квадратами ОТ нажатой кнопки. Если страна уже в ссылке (?c=ru) — без вопроса, как раньше.
+  // При «меньше движения» вопрос тот же, но без анимации. При возврате из примера («К работам») — ни заставки, ни вопроса.
+  const intro = $('.intro'), ask = $('.ask'), fromEx = root.classList.contains('from-ex'), asking = !fromEx && !REG[new URLSearchParams(location.search).get('c')];
+  const hasIntro = !root.classList.contains('no-intro') || (asking && calm);
+  clearTimeout(window.__it);                                                       // страховка из <head> нужна, только если app.js не загрузился
   const ready = () => { root.classList.remove('intro-on'); root.classList.add('ready'); intro && intro.remove(); };
+  // ждём нажатия; возвращает точку, откуда рассыпать экран
+  const choose = () => new Promise(res => { const bs = $$('.ask-b', ask);
+    bs.forEach(b => { b.classList.toggle('near', b.dataset.pick === cc);
+      b.addEventListener('click', () => { if (ask.classList.contains('done')) return; ask.classList.add('done'); b.classList.add('hit'); setCC(b.dataset.pick, true);
+        const r = b.getBoundingClientRect(); setTimeout(() => res([r.left + r.width / 2, r.top + r.height / 2]), calm ? 0 : 380); }); });
+    ask.hidden = false; requestAnimationFrame(() => { ask.classList.add('on'); if (fine) setTimeout(() => (bs.find(b => b.dataset.pick === cc) || bs[0]).focus({ preventScroll: true }), calm ? 0 : 700); }); });
   async function playIntro() {
     const cv = $('.intro-c'), W = innerWidth, H = innerHeight, c = hidpi(cv, W, H); await fontsReady();
-    const S = Math.floor(Math.min(W * (W < 700 ? .36 : .2) / 16, H * .24 / 14)), lx = Math.round((W - 16 * S) / 2), ly = Math.round(H * .42 - 14 * S), px = cells(LOGO), rnd = seeded(2026);
-    const at = px.map(() => rnd() * .75), fs = Math.round(clamp(W * .04, 16, 40) / 4) * 4, word = 'SEINOKOJII', ty = ly + 14 * S + fs * 1.6;
-    const CELL = Math.ceil(Math.max(W, H) / 22), cols = Math.ceil(W / CELL), rows = Math.ceil(H / CELL), gone = Array.from({ length: cols * rows }, () => rnd());
-    const T_TYPE = .85, T_OUT = 2.05, T_END = 2.65, t0 = performance.now();
-    const tick = () => { const t = (performance.now() - t0) / 1000; c.fillStyle = BG; c.fillRect(0, 0, W, H);
+    const S = Math.floor(Math.min(W * (W < 700 ? .36 : .2) / 16, H * (asking ? .17 : .24) / 14)), lx = Math.round((W - 16 * S) / 2), ly = Math.round(H * .42 - 14 * S), px = cells(LOGO), rnd = seeded(2026);
+    const at = px.map(() => rnd() * .75), fs = Math.round(clamp(W * .04, 16, asking ? 32 : 40) / 4) * 4, word = 'SEINOKOJII', ty = ly + 14 * S + fs * 1.6;
+    const CELL = Math.ceil(Math.max(W, H) / 22), cols = Math.ceil(W / CELL), rows = Math.ceil(H / CELL), noise = Array.from({ length: cols * rows }, () => rnd());
+    // куда уехать логотипу, чтобы логотип + вопрос стояли по центру экрана
+    let dy = 0; if (asking) { ask.hidden = false; const top = ty + fs * 2.8, gap = Math.max(24, H * .05), h = top - ly + gap + ask.offsetHeight, y0 = Math.max(16, (H - h) / 2);
+      dy = y0 - ly; ask.style.setProperty('--ask-y', Math.round(y0 + top - ly + gap) + 'px'); ask.hidden = true; }
+    let order = noise, T_OUT = asking ? Infinity : 2.05, t0 = performance.now(), asked = false;
+    const T_TYPE = .85, T_UP = 1.9, ease = k => 1 - Math.pow(1 - clamp(k), 3);
+    const tick = () => { const t = (performance.now() - t0) / 1000, T_END = T_OUT + .6; c.fillStyle = BG; c.fillRect(0, 0, W, H);
+      c.save(); c.translate(0, Math.round(dy * (calm ? 1 : ease((t - T_UP) / .5))));
       c.fillStyle = INK; px.forEach(([x, y], i) => { if (t > at[i]) c.fillRect(lx + x * S, ly + y * S, S, S); });
       const n = clamp(Math.floor((t - T_TYPE) / .07), 0, word.length); c.font = `${fs}px PS2P`; c.textBaseline = 'top'; c.textAlign = 'left';
       const tw = c.measureText(word).width, tx = Math.round((W - tw) / 2); c.fillText(word.slice(0, n), tx, ty);
-      if (t > T_TYPE && Math.floor(t * 5) % 2 === 0) c.fillRect(tx + c.measureText(word.slice(0, n)).width + fs * .2, ty, fs * .7, fs);
+      if (t > T_TYPE && t < T_UP && Math.floor(t * 5) % 2 === 0) c.fillRect(tx + c.measureText(word.slice(0, n)).width + fs * .2, ty, fs * .7, fs);
       if (t > T_TYPE + .75) { c.font = `600 ${Math.round(fs * .9)}px Handjet`; c.fillStyle = '#A2A2AB'; c.textAlign = 'center'; try { c.letterSpacing = (fs * .5) + 'px'; } catch (e) {} c.fillText('PROJECT', W / 2 + fs * .25, ty + fs * 1.8); try { c.letterSpacing = '0px'; } catch (e) {} }
+      c.restore();
+      if (asking && !asked && t > T_UP + .35) { asked = true;
+        choose().then(([cx, cy]) => { const md = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy));   // волна квадратов от кнопки
+          order = noise.map((r, i) => Math.hypot((i % cols + .5) * CELL - cx, (Math.floor(i / cols) + .5) * CELL - cy) / md * .8 + r * .2);
+          T_OUT = (performance.now() - t0) / 1000; ask.classList.add('out'); }); }
       if (t > T_OUT) { const k = (t - T_OUT) / (T_END - T_OUT); if (!root.classList.contains('ready')) root.classList.add('ready');
-        for (let i = 0; i < gone.length; i++) if (gone[i] < k * 1.05) c.clearRect((i % cols) * CELL, Math.floor(i / cols) * CELL, CELL, CELL); }
+        for (let i = 0; i < order.length; i++) if (order[i] < k * 1.05) c.clearRect((i % cols) * CELL, Math.floor(i / cols) * CELL, CELL, CELL); }
       if (t < T_END) requestAnimationFrame(tick); else ready(); };
     requestAnimationFrame(tick);
   }
   if (hasIntro) { scrollTo(0, 0); addEventListener('load', () => scrollTo(0, 0), { once: true });       // заставка всегда открывает сайт с самого начала (QR с визитки, ссылка из Instagram)
-    playIntro().catch(ready); setTimeout(() => { if (!root.classList.contains('ready') || $('.intro')) ready(); }, 4500); }
+    if (calm) { root.classList.add('intro-on'); choose().then(ready); }
+    else { playIntro().catch(ready); if (!asking) setTimeout(() => { if (!root.classList.contains('ready') || $('.intro')) ready(); }, 4500); } }
   else { intro && intro.remove(); requestAnimationFrame(() => root.classList.add('ready')); }
 
   // ---------- звёзды: редкие пиксели на фоне, мигают ступеньками три раза в секунду. Перенастройка только при смене ширины окна:
@@ -147,20 +182,6 @@
       for (let i = 0; i < en.length; i++) { const e = en[i]; if (e < lo || (lv < 3 && e >= lo + .2)) continue; const x = i % gcols, y = (i - x) / gcols; gc.fillRect(x * G + 2, y * G + 2, G - 4, G - 4); } }
   };
 
-  // ---------- страна (23.10.2026): цены в сомах, рублях, тенге или леях. Выбор: ?c=ru → прошлый выбор на этом устройстве → часовой пояс → Кыргызстан.
-  // Числа и подписи с data-r / data-rc меняются на месте, язык один — русский.
-  const REG = JSON.parse($('#reg').textContent), RU_TZ = /^(Europe\/(Moscow|Kaliningrad|Samara|Volgograd|Saratov|Ulyanovsk|Astrakhan|Kirov|Simferopol)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Khandyga|Vladivostok|Ust-Nera|Magadan|Sakhalin|Srednekolymsk|Kamchatka|Anadyr))$/;
-  const byTz = () => { let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-    return tz === 'Asia/Bishkek' ? 'kg' : /^Asia\/(Almaty|Qostanay|Aqtobe|Aqtau|Atyrau|Oral|Qyzylorda)$/.test(tz) ? 'kz' : /^Europe\/(Chisinau|Tiraspol)$/.test(tz) ? 'md' : RU_TZ.test(tz) ? 'ru' : 'kg'; };
-  const saved = () => { try { return localStorage.getItem('cc'); } catch (e) { return null; } };
-  let cc = [new URLSearchParams(location.search).get('c'), saved(), byTz()].find(k => k && REG[k]);
-  const nb = v => v.replace(/ /g, '\u00a0');
-  const applyReg = () => { const g = REG[cc];
-    $$('[data-r]').forEach(el => { el.textContent = nb(g[el.dataset.r]); });
-    $$('[data-rc]').forEach(el => { el.dataset.count = g[el.dataset.rc]; });
-    $$('[data-cc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cc === cc))); };
-  applyReg();
-
   // ---------- цены — счёт как в аркаде: от «00 000» до цены ступеньками, в конце плашка дважды мигает. Без JS и при «меньше движения» — сразу цена.
   const fmt = (v, len) => String(v).padStart(len, '0').replace(/\B(?=(\d{3})+$)/g, ' ');
   const counters = $$('[data-count]').map(el => { const c = { el, done: calm }, html = el.innerHTML.includes('gap');
@@ -172,9 +193,11 @@
       if (i >= N) { clearInterval(id); c.el.classList.add('hit'); } }, 48); };
   const heroCount = counters.find(c => c.el === priceEl);
   // смена страны: подписи сразу, цены пересчитываются заново (уже показанные — с начала, ещё не показанные ждут прокрутки)
-  $$('[data-cc]').forEach(b => b.addEventListener('click', () => { if (b.dataset.cc === cc) return; cc = b.dataset.cc; try { localStorage.setItem('cc', cc); } catch (e) {}
+  function setCC(k, keep) { if (keep) try { localStorage.setItem('cc', k); } catch (e) {}
+    if (k === cc) return; cc = k;
     const shown = counters.filter(c => c.done && !calm); applyReg(); counters.forEach(c => { c.set(); c.el.classList.remove('hit'); c.show(calm ? c.to : 0); });
-    shown.forEach(c => { c.done = false; countUp(c); }); form.dispatchEvent(new Event('input')); }));
+    shown.forEach(c => { c.done = false; countUp(c); }); form.dispatchEvent(new Event('input')); }
+  $$('[data-cc]').forEach(b => b.addEventListener('click', () => setCC(b.dataset.cc, true)));
   const waitReady = setInterval(() => { if (root.classList.contains('ready')) { clearInterval(waitReady); setTimeout(() => heroCount && countUp(heroCount), 650); } }, 100);
 
   // ---------- примеры: картинка проявляется из крупных блоков, когда карточка на экране; при наведении — ещё раз, быстро
