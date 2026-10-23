@@ -147,15 +147,34 @@
       for (let i = 0; i < en.length; i++) { const e = en[i]; if (e < lo || (lv < 3 && e >= lo + .2)) continue; const x = i % gcols, y = (i - x) / gcols; gc.fillRect(x * G + 2, y * G + 2, G - 4, G - 4); } }
   };
 
+  // ---------- страна (23.10.2026): цены в сомах, рублях, тенге или леях. Выбор: ?c=ru → прошлый выбор на этом устройстве → часовой пояс → Кыргызстан.
+  // Числа и подписи с data-r / data-rc меняются на месте, язык один — русский.
+  const REG = JSON.parse($('#reg').textContent), RU_TZ = /^(Europe\/(Moscow|Kaliningrad|Samara|Volgograd|Saratov|Ulyanovsk|Astrakhan|Kirov|Simferopol)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Khandyga|Vladivostok|Ust-Nera|Magadan|Sakhalin|Srednekolymsk|Kamchatka|Anadyr))$/;
+  const byTz = () => { let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    return tz === 'Asia/Bishkek' ? 'kg' : /^Asia\/(Almaty|Qostanay|Aqtobe|Aqtau|Atyrau|Oral|Qyzylorda)$/.test(tz) ? 'kz' : /^Europe\/(Chisinau|Tiraspol)$/.test(tz) ? 'md' : RU_TZ.test(tz) ? 'ru' : 'kg'; };
+  const saved = () => { try { return localStorage.getItem('cc'); } catch (e) { return null; } };
+  let cc = [new URLSearchParams(location.search).get('c'), saved(), byTz()].find(k => k && REG[k]);
+  const nb = v => v.replace(/ /g, '\u00a0');
+  const applyReg = () => { const g = REG[cc];
+    $$('[data-r]').forEach(el => { el.textContent = nb(g[el.dataset.r]); });
+    $$('[data-rc]').forEach(el => { el.dataset.count = g[el.dataset.rc]; });
+    $$('[data-cc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cc === cc))); };
+  applyReg();
+
   // ---------- цены — счёт как в аркаде: от «00 000» до цены ступеньками, в конце плашка дважды мигает. Без JS и при «меньше движения» — сразу цена.
   const fmt = (v, len) => String(v).padStart(len, '0').replace(/\B(?=(\d{3})+$)/g, ' ');
-  const counters = $$('[data-count]').map(el => { const to = +el.dataset.count.replace(/\D/g, ''), len = String(to).length, html = el.innerHTML.includes('gap');
-    const show = v => { const s = fmt(v, len); if (html) el.innerHTML = s.replace(' ', "<i class='gap'></i>"); else el.textContent = s.replace(' ', ' '); };
-    if (!calm) show(0); return { el, to, show, done: calm }; });
+  const counters = $$('[data-count]').map(el => { const c = { el, done: calm }, html = el.innerHTML.includes('gap');
+    c.set = () => { c.to = +el.dataset.count.replace(/\D/g, ''); c.len = String(c.to).length; };
+    c.show = v => { const s = fmt(v, c.len); if (html) el.innerHTML = s.replace(' ', "<i class='gap'></i>"); else el.textContent = s.replace(' ', ' '); };
+    c.set(); if (!calm) c.show(0); return c; });
   const countUp = c => { if (c.done) return; c.done = true; const N = 22; let i = 0;
     const id = setInterval(() => { i++; const k = 1 - Math.pow(1 - i / N, 2.4); c.show(i >= N ? c.to : Math.round(c.to * k / 100) * 100);
       if (i >= N) { clearInterval(id); c.el.classList.add('hit'); } }, 48); };
   const heroCount = counters.find(c => c.el === priceEl);
+  // смена страны: подписи сразу, цены пересчитываются заново (уже показанные — с начала, ещё не показанные ждут прокрутки)
+  $$('[data-cc]').forEach(b => b.addEventListener('click', () => { if (b.dataset.cc === cc) return; cc = b.dataset.cc; try { localStorage.setItem('cc', cc); } catch (e) {}
+    const shown = counters.filter(c => c.done && !calm); applyReg(); counters.forEach(c => { c.set(); c.el.classList.remove('hit'); c.show(calm ? c.to : 0); });
+    shown.forEach(c => { c.done = false; countUp(c); }); form.dispatchEvent(new Event('input')); }));
   const waitReady = setInterval(() => { if (root.classList.contains('ready')) { clearInterval(waitReady); setTimeout(() => heroCount && countUp(heroCount), 650); } }, 100);
 
   // ---------- примеры: картинка проявляется из крупных блоков, когда карточка на экране; при наведении — ещё раз, быстро
@@ -247,7 +266,7 @@
   const form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]'), pick = $('.pick', form);
   const tierEl = () => $('input[name="tier"]:checked', form), val = n => form[n].value.trim();
   const text = () => { const t = tierEl(), lines = ['Здравствуйте! Хочу заказать сайт.'];
-    lines.push('Тариф: ' + (t ? `${t.dataset.title} — ${t.dataset.sum} сом` : '…'), 'Компания: ' + (val('company') || '…'), 'Адрес: ' + (val('address') || '…'));
+    lines.push('Тариф: ' + (t ? `${t.dataset.title} — ${REG[cc][t.dataset.rk]} ${REG[cc].curw}` : '…'), 'Страна: ' + REG[cc].name, 'Компания: ' + (val('company') || '…'), 'Адрес: ' + (val('address') || '…'));
     if (val('biz')) lines.push('Чем занимаемся: ' + val('biz')); lines.push('Меня зовут: ' + (val('name') || '…')); return lines.join('\n'); };
   const upd = () => { prev.textContent = text(); }; form.addEventListener('input', ev => { ev.target.classList.remove('bad'); err.textContent = ''; if (ev.target.name === 'tier') pick.classList.remove('bad'); upd(); }); upd();
   $$('[data-tier]').forEach(a => a.addEventListener('click', () => { const r = $(`input[name="tier"][value="${a.dataset.tier}"]`, form); r.checked = true; pick.classList.remove('bad'); upd(); }));

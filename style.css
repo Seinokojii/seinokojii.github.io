@@ -214,6 +214,12 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
 .sum-n { margin-top: 14px; font-size: 18px; color: var(--mut); } .tier.hot .sum-n { color: #4a4a52; }
 .incl { display: grid; gap: 12px; margin: 30px 0 34px; padding-top: 26px; border-top: var(--b) dashed var(--line-2); font-size: 21px; } .tier.hot .incl { border-color: #c9c9c4; }
 .incl li { display: flex; gap: 12px; align-items: baseline; } .incl .i { width: 15px; height: 15px; translate: 0 2px; }
+/* страна: цены в своей валюте; выбранная — инвертирована, как тариф с записью */
+.cc { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 8px; margin: calc(-1 * clamp(14px, 3vw, 40px)) 0 36px; }
+.cc > span { margin-right: 8px; font: 400 10px/1.4 var(--game); text-transform: uppercase; color: var(--mut); }
+.cc .btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.pk small span { display: inline; }
+@media (max-width: 560px) { .cc { display: grid; grid-template-columns: 1fr 1fr; } .cc > span { grid-column: 1 / -1; } }
 .renew { --c: var(--line); display: flex; align-items: center; gap: 16px; margin: 40px var(--b) 0; padding: 20px 24px; background: var(--bg-2); font-size: 21px; color: var(--mut); }
 .renew .i { width: 26px; height: 26px; color: var(--ink); } .renew b { color: var(--ink); font-weight: 700; }
 
