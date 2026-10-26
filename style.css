@@ -337,3 +337,5 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
   .ticker-in { animation: none; } .js .rv, .js .hero [class*="in-"], .beat { clip-path: none !important; }
   *, *::before, *::after { animation-duration: .01s !important; animation-iteration-count: 1 !important; transition-duration: .01s !important; }
 }
+
+[data-set][hidden] { display: none !important; }   /* примеры и профиль в сцене — по странам (26.10.2026) */

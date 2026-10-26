@@ -33,7 +33,11 @@
   const applyReg = () => { const g = REG[cc];
     $$('[data-r]').forEach(el => { el.textContent = nb(g[el.dataset.r]); });
     $$('[data-rc]').forEach(el => { el.dataset.count = g[el.dataset.rc]; });
-    $$('[data-cc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cc === cc))); };
+    $$('[data-cc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cc === cc)));
+    // (26.10.2026) примеры, профиль в сцене «Как это работает» и подсказка в заявке — свои у каждой страны
+    $$('[data-set]').forEach(el => { el.hidden = el.dataset.set !== cc; });
+    const co = $('input[name="company"]'); if (co && co.dataset.ph) co.placeholder = 'Например: ' + JSON.parse(co.dataset.ph)[cc];
+    document.dispatchEvent(new CustomEvent('cc', { detail: cc })); };
   applyReg();
 
   // ---------- заставка: логотип из пикселей → печатается название → (23.10.2026) «Выберите страну»: логотип уезжает вверх, кнопки стран проявляются
@@ -93,8 +97,11 @@
   // ---------- первый экран: «из пикселя в сайт». Логотип из пикселей (каждый — четыре кусочка) пружинит и разбегается от курсора.
   // Раз в несколько секунд кусочки разлетаются по экрану, на их месте проявляется пример: блоки мельчают, серый становится цветным. Потом обратно в логотип.
   // Пока виден пример, вокруг курсора — «пиксельная лупа»: картинка там снова крупными блоками.
-  const forge = $('.forge'), hostEl = $('[data-host]'), modeEl = $('[data-mode]'), WORKS = JSON.parse(forge.dataset.works);
-  const imgs = WORKS.map(([k]) => { const im = new Image(); im.decoding = 'async'; im.src = `img/${k}-d.webp`; return im; });
+  const forge = $('.forge'), hostEl = $('[data-host]'), modeEl = $('[data-mode]'), WORKS_BY = JSON.parse(forge.dataset.works);
+  // набор примеров выбранной страны; картинки грузятся, когда страна выбрана впервые
+  const imgOf = {}, pic = k => imgOf[k] || (imgOf[k] = Object.assign(new Image(), { decoding: 'async', src: `img/${k}-d.webp` }));
+  let WORKS = WORKS_BY[cc] || WORKS_BY.kg, imgs = WORKS.map(([k]) => pic(k));
+  document.addEventListener('cc', e => { WORKS = WORKS_BY[e.detail] || WORKS_BY.kg; imgs = WORKS.map(([k]) => pic(k)); wi = Math.min(wi, WORKS.length - 1); });
   let fc, FW = 0, FH = 0, parts = [], S = 0, fOn = true, fm = { x: -1e4, y: -1e4, on: false };
   const forgeSize = () => { const w = forge.clientWidth; if (!w || w === FW) return; FW = w; FH = forge.clientHeight; fc = hidpi(forge, FW, FH);
     S = Math.floor(Math.min(FW * .58 / 16, FH * .66 / 14) / 2) * 2; const ox = Math.round((FW - 16 * S) / 2), oy = Math.round((FH - 14 * S) / 2), h = S / 2, r = seeded(11);
@@ -225,6 +232,10 @@
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const load = () => loaded || (loaded = new Promise(res => { fr.addEventListener('load', () => setTimeout(res, 500), { once: true }); fr.src = fr.dataset.src; }));
   new IntersectionObserver(es => { if (es[0].isIntersecting) load(); }, { rootMargin: '900px 0px' }).observe(story);
+  // страна сменилась — в телефоне клиента барбершоп этой страны; если сайт уже был загружен, грузим новый и проигрываем шаг заново
+  const srcs = JSON.parse(fr.dataset.srcs || '{}'), pickSrc = k => { const src = srcs[k] || srcs.kg; if (!src || fr.dataset.src === src) return;
+    fr.dataset.src = src; if (loaded) { loaded = null; dirty = false; load(); } beat = 0; };
+  pickSrc(cc); document.addEventListener('cc', e => pickSrc(e.detail));
   const fd = () => fr.contentDocument, fw = () => fr.contentWindow;
   // палец едет к точке (в долях экрана телефона) и нажимает
   const tapAt = async (x, y, id, press = true) => { const to = [x.toFixed(1) + '%', y.toFixed(1) + '%'];
@@ -237,7 +248,7 @@
     const r = el.getBoundingClientRect(); if (!await tapAt((r.left + r.width / 2) / 390 * 100, (r.top + r.height / 2) / H * 100, id)) return false; el.click(); return true; };
   const reset = async () => { if (!dirty) return; dirty = false; await load(); fw().location.reload(); loaded = new Promise(res => fr.addEventListener('load', () => setTimeout(res, 400), { once: true })); await loaded; };
   const act = async (b, id) => {
-    if (b === 1) { tap.style.opacity = 0; await reset(); if (id !== run) return; const a = $('.ig-bio a', scr), r = a.getBoundingClientRect(), s = scr.getBoundingClientRect(); await wait(500); await tapAt((r.left + r.width / 2 - s.left) / s.width * 100, (r.top + r.height / 2 - s.top) / s.height * 100, id); return; }
+    if (b === 1) { tap.style.opacity = 0; await reset(); if (id !== run) return; const a = $('.ig:not([hidden]) .ig-bio a', scr), r = a.getBoundingClientRect(), s = scr.getBoundingClientRect(); await wait(500); await tapAt((r.left + r.width / 2 - s.left) / s.width * 100, (r.top + r.height / 2 - s.top) / s.height * 100, id); return; }
     await load(); if (id !== run) return; const d = fd(), $f = sel => d.querySelector(sel);
     if (b === 2) { await wait(2000); if (dirty) await reset(); if (id !== run) return; dirty = true;
       await tapEl($f('[data-svc] button:nth-child(3)'), id); return; }           // «Борода»
@@ -245,7 +256,7 @@
       const t = [...d.querySelectorAll('[data-times] button')].find(x => !x.disabled); if (!await tapEl(t, id)) return; await wait(400);
       if (!await tapEl($f('[data-go]'), id)) return; await wait(700); const sl = $f('[data-slip]'); if (sl) { const w = fw(), r = sl.getBoundingClientRect(); w.scrollTo({ top: w.scrollY + r.top - 852 * .3, behavior: 'smooth' }); } return; }
     if (b === 4) { tap.style.opacity = 0; const s1 = $f('[data-s1]').textContent, s3 = $f('[data-s3]').textContent, tm = s3.split(', ').pop();
-      if (s3 !== '—') { $('[data-nt]', story).textContent = `${s1} · ${s3}`; $('[data-nt2]', story).textContent = tm; $('[data-nt3]', story).textContent = `${s1} · с сайта`; } }
+      if (s3 !== '—') { $('[data-nt]', story).textContent = `${s1} · ${s3}`; $$('[data-nt2]', story).forEach(el => el.textContent = tm); $$('[data-nt3]', story).forEach(el => el.textContent = `${s1} · с сайта`); } }
   };
   const paintStory = vh => { const r = story.getBoundingClientRect(), span = story.offsetHeight - vh, p = span > 0 ? clamp(-r.top / span) : 1, b = calm ? 4 : Math.min(4, 1 + Math.floor(p * 4.02));
     if (r.top > vh || r.bottom < 0 || b === beat) return; beat = b; story.classList.remove('s1', 's2', 's3', 's4'); void story.offsetWidth; story.classList.add('s' + b); act(b, ++run).catch(() => {}); };
