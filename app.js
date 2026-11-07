@@ -48,8 +48,8 @@
   clearTimeout(window.__it);                                                       // страховка из <head> нужна, только если app.js не загрузился
   const ready = () => { root.classList.remove('intro-on'); root.classList.add('ready'); intro && intro.remove(); };
   // ждём нажатия; возвращает точку, откуда рассыпать экран
-  const choose = () => new Promise(res => { const bs = $$('.ask-b', ask);
-    bs.forEach(b => { b.classList.toggle('near', b.dataset.pick === cc);
+  const choose = () => new Promise(res => { const bs = $$('.ask-b[data-pick]', ask), bot = $('.ask-bot', ask); if (bot && byTz() === 'ru') bot.classList.add('near');   // Россия (08.11.2026) — ссылка на ботов, не страна сайта
+    bs.forEach(b => { b.classList.toggle('near', b.dataset.pick === cc && !(bot && bot.classList.contains('near')));
       b.addEventListener('click', () => { if (ask.classList.contains('done')) return; ask.classList.add('done'); b.classList.add('hit'); setCC(b.dataset.pick, true);
         const r = b.getBoundingClientRect(); setTimeout(() => res([r.left + r.width / 2, r.top + r.height / 2]), calm ? 0 : 380); }); });
     ask.hidden = false; requestAnimationFrame(() => { ask.classList.add('on'); if (fine) setTimeout(() => (bs.find(b => b.dataset.pick === cc) || bs[0]).focus({ preventScroll: true }), calm ? 0 : 700); }); });
