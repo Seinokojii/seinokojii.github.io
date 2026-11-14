@@ -267,7 +267,7 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
 .contact-g { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 100px); align-items: start; }
 .contact h2 { margin-bottom: 26px; }
 .tel { margin-top: 40px; display: grid; justify-items: start; gap: 10px; }
-.tel a { font: 800 clamp(48px, 5.6vw, 84px)/.9 var(--hand); letter-spacing: .01em; }
+.tel a { font: 800 clamp(34px, 3.6vw, 56px)/.95 var(--hand); letter-spacing: .01em; overflow-wrap: anywhere; }
 .tel a:hover { background: var(--ink); color: var(--bg); }
 .tel > span { color: var(--mut); font-size: 19px; margin-bottom: 14px; }
 .box { --c: var(--ink); margin: var(--b); background: var(--bg); padding: clamp(24px, 3vw, 36px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; position: relative; }
@@ -324,10 +324,10 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
   .acts .btn { width: calc(100% - 2 * var(--b)); }
   .sure { gap: 8px; flex-direction: column; }
   .who { min-height: 0; } .foot .copy { margin-left: 0; }
-  /* кнопки не шире колонки: на 320 «Спросить в WhatsApp» и «Сохранить номер» упирались в край — текст переносится по центру */
+  /* кнопки не шире колонки: на 320 «Написать в Instagram» и «Статьи — в Threads» упирались в край — текст переносится по центру */
   .btn { max-width: calc(100% - 2 * var(--b)); white-space: normal; text-align: center; line-height: 1.6; }
   .sum b { font-size: clamp(28px, 9vw, 40px); }
-  .tel a { font-size: min(14.6vw, 84px); white-space: nowrap; }
+  .tel a { font-size: min(9.2vw, 56px); white-space: nowrap; }
   .fq summary { padding: 17px 16px; font-size: 21px; } .fq p { padding: 0 16px 18px 44px; }
   .win-bar b { font-size: 8px; }
 }
@@ -339,3 +339,4 @@ h2 { font: 800 clamp(48px, 6.4vw, 104px)/.88 var(--hand); text-transform: upperc
 }
 
 [data-set][hidden] { display: none !important; }   /* примеры и профиль в сцене — по странам (26.10.2026) */
+.thr { margin-top: 12px; }

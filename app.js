@@ -295,7 +295,7 @@
   // ссылка с визитки (#works) при возврате из примера — сразу к работам
   if (location.hash === '#works') { root.style.scrollBehavior = 'auto'; requestAnimationFrame(() => { $('#works').scrollIntoView(); root.style.scrollBehavior = ''; }); }
 
-  // ---------- заявка: тариф, компания, адрес и имя обязательны; текст собирается на глазах и открывается в WhatsApp; сайт ничего не хранит.
+  // ---------- заявка: тариф, компания, адрес и имя обязательны; текст собирается на глазах и копируется и открывается в Instagram; сайт ничего не хранит.
   // Кнопки «Хочу визитку» / «Хочу сайт с записью» в ценах ведут сюда с уже выбранным тарифом.
   const form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]'), pick = $('.pick', form);
   const tierEl = () => $('input[name="tier"]:checked', form), val = n => form[n].value.trim();
@@ -309,8 +309,7 @@
     ev.preventDefault();
     if (!tierEl()) { err.textContent = 'Выберите, какой сайт нужен: визитка или с записью'; pick.classList.remove('bad'); void pick.offsetWidth; pick.classList.add('bad'); $('input[name="tier"]', form).focus(); return; }
     for (const [n, msg] of need) if (val(n).length < 2) { err.textContent = msg; form[n].classList.remove('bad'); void form[n].offsetWidth; form[n].classList.add('bad'); form[n].focus(); return; }
-    err.textContent = ''; window.open('https://wa.me/' + form.dataset.wa + '?text=' + encodeURIComponent(text()), '_blank', 'noopener');
+    err.textContent = ''; const msg = text(), go = () => window.open(form.dataset.wa + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    (navigator.clipboard ? navigator.clipboard.writeText(msg).catch(() => {}) : Promise.resolve()).then(go);
   });
-  $('[data-vcf]').addEventListener('click', ev => { const v = ['BEGIN:VCARD', 'VERSION:3.0', 'FN:Seinokojii Project', 'ORG:Seinokojii Project', 'TITLE:Сайты для бизнеса', 'TEL;TYPE=CELL:' + ev.currentTarget.dataset.tel, 'URL:' + location.origin, 'END:VCARD'].join('\r\n'), a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([v], { type: 'text/vcard;charset=utf-8' })); a.download = 'Seinokojii Project.vcf'; document.body.append(a); a.click(); a.remove(); });
 })();
