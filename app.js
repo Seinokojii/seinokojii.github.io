@@ -1,6 +1,6 @@
 // Seinokojii Project, пятая версия (19.10.2026) — пиксельная, как Instagram. Заставка (логотип из пикселей → название печатается → экран рассыпается квадратами),
 // звёзды, первый экран «из пикселя в сайт» (логотип разбегается от курсора и проявляется в примеры), примеры проявляются из крупных блоков,
-// сцена «Как это работает» (живой «Кайчы» в телефоне — перенесена из четвёртой версии без изменений логики), полоса загрузки, слово в подвале, заявка в WhatsApp.
+// сцена «Как это работает» (живой «Кайчы» в телефоне — перенесена из четвёртой версии без изменений логики), полоса загрузки, слово в подвале, заявка в личку Instagram (Whatsapp.
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -295,6 +295,13 @@
   // ссылка с визитки (#works) при возврате из примера — сразу к работам
   if (location.hash === '#works') { root.style.scrollBehavior = 'auto'; requestAnimationFrame(() => { $('#works').scrollIntoView(); root.style.scrollBehavior = ''; }); }
 
+
+  // ---------- личка Instagram: на телефоне — сразу в приложение (Android: intent с пакетом Instagram; iPhone: переход по нажатию в той же вкладке — iOS отдаёт ссылку приложению), на компьютере — новая вкладка
+  const IG_M = 'ig.me/m/seinokojii.project', mob = matchMedia('(pointer: coarse)').matches, andr = /android/i.test(navigator.userAgent);
+  const igHref = q => { const tail = IG_M + (q ? '?text=' + encodeURIComponent(q) : ''), web = 'https://' + tail;
+    return andr ? 'intent://' + tail + '#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url=' + encodeURIComponent(web) + ';end' : web; };
+  const igGo = q => { const h = igHref(q); if (mob) location.href = h; else window.open(h, '_blank', 'noopener'); };
+  $$('a[href^="https://ig.me/m/"]').forEach(a => { const q = new URL(a.href).searchParams.get('text') || ''; a.href = igHref(q); if (mob) a.removeAttribute('target'); });
   // ---------- заявка: тариф, компания, адрес и имя обязательны; текст собирается на глазах и копируется и открывается в Instagram; сайт ничего не хранит.
   // Кнопки «Хочу визитку» / «Хочу сайт с записью» в ценах ведут сюда с уже выбранным тарифом.
   const form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]'), pick = $('.pick', form);
@@ -309,7 +316,6 @@
     ev.preventDefault();
     if (!tierEl()) { err.textContent = 'Выберите, какой сайт нужен: визитка или с записью'; pick.classList.remove('bad'); void pick.offsetWidth; pick.classList.add('bad'); $('input[name="tier"]', form).focus(); return; }
     for (const [n, msg] of need) if (val(n).length < 2) { err.textContent = msg; form[n].classList.remove('bad'); void form[n].offsetWidth; form[n].classList.add('bad'); form[n].focus(); return; }
-    err.textContent = ''; const msg = text(), go = () => window.open(form.dataset.wa + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-    (navigator.clipboard ? navigator.clipboard.writeText(msg).catch(() => {}) : Promise.resolve()).then(go);
+    err.textContent = ''; const msg = text(); try { navigator.clipboard && navigator.clipboard.writeText(msg).catch(() => {}); } catch (e) {} igGo(msg);   // без ожидания: переход должен идти прямо из нажатия, иначе телефон не отдаст ссылку приложению
   });
 })();

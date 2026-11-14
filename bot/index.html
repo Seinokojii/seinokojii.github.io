@@ -11,7 +11,7 @@
 <link rel="icon" href="../img/px-icon.svg">
 <link rel="preload" href="../fonts/handjet-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/ps2p-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../style.css?v=38">
+<link rel="stylesheet" href="../style.css?v=39">
 <style>
 @media (hover: hover) and (pointer: fine) { html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='27' viewBox='0 0 6 9' shape-rendering='crispEdges' fill='white' stroke='black' stroke-width='.18' paint-order='stroke'%3E%3Crect x='0' y='0' width='1' height='1'/%3E%3Crect x='0' y='1' width='2' height='1'/%3E%3Crect x='0' y='2' width='1' height='1'/%3E%3Crect x='2' y='2' width='1' height='1'/%3E%3Crect x='0' y='3' width='1' height='1'/%3E%3Crect x='3' y='3' width='1' height='1'/%3E%3Crect x='0' y='4' width='1' height='1'/%3E%3Crect x='4' y='4' width='1' height='1'/%3E%3Crect x='0' y='5' width='1' height='1'/%3E%3Crect x='5' y='5' width='1' height='1'/%3E%3Crect x='0' y='6' width='1' height='1'/%3E%3Crect x='3' y='6' width='3' height='1'/%3E%3Crect x='0' y='7' width='2' height='1'/%3E%3Crect x='3' y='7' width='1' height='1'/%3E%3Crect x='2' y='8' width='2' height='1'/%3E%3C/svg%3E") 1 1, auto; } }
 .bot .hero h1 { font-size: clamp(40px, 15.4cqi, 112px); }
@@ -145,6 +145,10 @@
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { rootMargin: '0px 0px -8% 0px' }) : null;
   $$('.rv').forEach(function (el) { io ? io.observe(el) : el.classList.add('in'); });
   var top = $('.top'), fl = $('.float'), ct = $('#contact'), last = 0; var flo = function () { fl.classList.toggle('off', scrollY < innerHeight * .6 || ct.getBoundingClientRect().top < innerHeight * .8); }; flo(); addEventListener('scroll', function () { var y = scrollY; flo(); top.classList.toggle('solid', y > 30); if (y > last && y > 300) top.classList.add('hide'); else if (y < last) top.classList.remove('hide'); last = y; }, { passive: true });
+  var IG_M = 'ig.me/m/seinokojii.project', mob = matchMedia('(pointer: coarse)').matches, andr = /android/i.test(navigator.userAgent);
+  var igHref = function (q) { var tail = IG_M + (q ? '?text=' + encodeURIComponent(q) : ''), web = 'https://' + tail; return andr ? 'intent://' + tail + '#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url=' + encodeURIComponent(web) + ';end' : web; };
+  var igGo = function (q) { var h = igHref(q); if (mob) location.href = h; else open(h, '_blank', 'noopener'); };
+  $$('a[href^="https://ig.me/m/"]').forEach(function (a) { var q = new URL(a.href).searchParams.get('text') || ''; a.href = igHref(q); if (mob) a.removeAttribute('target'); });
   var form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]'), pick = $('.pick', form);
   var val = function (n) { return (form.elements[n].value || '').trim(); };
   var text = function () { var t = $('input[name="tier"]:checked', form);
@@ -156,7 +160,7 @@
     if (!$('input[name="tier"]:checked', form)) { pick.classList.add('bad'); bad.push('бота'); }
     ['company', 'address', 'name'].forEach(function (n) { if (!val(n)) { form.elements[n].classList.add('bad'); bad.push(n); } });
     if (bad.length) { err.textContent = 'Заполните поля со звёздочкой.'; return; }
-    var msg = text(); (navigator.clipboard ? navigator.clipboard.writeText(msg).catch(function () {}) : Promise.resolve()).then(function () { open(form.dataset.wa + '?text=' + encodeURIComponent(msg), '_blank', 'noopener'); }); });
+    var msg = text(); try { navigator.clipboard && navigator.clipboard.writeText(msg).catch(function () {}); } catch (e) {} igGo(msg); });
   var v = $('.botph video'); if (v && matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; }
 })()</script>
 </body>
