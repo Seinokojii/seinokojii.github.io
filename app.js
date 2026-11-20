@@ -296,13 +296,11 @@
   if (location.hash === '#works') { root.style.scrollBehavior = 'auto'; requestAnimationFrame(() => { $('#works').scrollIntoView(); root.style.scrollBehavior = ''; }); }
 
 
-  // ---------- личка Instagram: на телефоне — сразу в приложение (Android: intent с пакетом Instagram; iPhone: переход по нажатию в той же вкладке — iOS отдаёт ссылку приложению), на компьютере — новая вкладка
-  const IG_M = 'ig.me/m/seinokojii.project', mob = matchMedia('(pointer: coarse)').matches, andr = /android/i.test(navigator.userAgent);
-  const igHref = q => { const tail = IG_M + (q ? '?text=' + encodeURIComponent(q) : ''), web = 'https://' + tail;
-    return andr ? 'intent://' + tail + '#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url=' + encodeURIComponent(web) + ';end' : web; };
-  const igGo = q => { const h = igHref(q); if (mob) location.href = h; else window.open(h, '_blank', 'noopener'); };
-  $$('a[href^="https://ig.me/m/"]').forEach(a => { const q = new URL(a.href).searchParams.get('text') || ''; a.href = igHref(q); if (mob) a.removeAttribute('target'); });
-  // ---------- заявка: тариф, компания, адрес и имя обязательны; текст собирается на глазах и копируется и открывается в Instagram; сайт ничего не хранит.
+  // ---------- личка Telegram (@CEOSeinokojii): t.me/<имя>?text=… открывает чат с готовой заявкой; на телефоне — той же вкладкой (иначе приложение не получит ссылку), на компьютере — новая вкладка
+  const TG = 'https://t.me/CEOSeinokojii', mob = matchMedia('(pointer: coarse)').matches;
+  const igGo = q => { const h = TG + (q ? '?text=' + encodeURIComponent(q) : ''); if (mob) location.href = h; else window.open(h, '_blank', 'noopener'); };
+  if (mob) $$('a[href^="https://t.me/"]').forEach(a => a.removeAttribute('target'));
+  // ---------- заявка: тариф, компания, адрес и имя обязательны; текст собирается на глазах и копируется и открывается в Telegram; сайт ничего не хранит.
   // Кнопки «Хочу визитку» / «Хочу сайт с записью» в ценах ведут сюда с уже выбранным тарифом.
   const form = $('.contact .form'), err = $('.err', form), prev = $('[data-preview]'), pick = $('.pick', form);
   const tierEl = () => $('input[name="tier"]:checked', form), val = n => form[n].value.trim();
