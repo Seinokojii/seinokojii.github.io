@@ -1,0 +1,229 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Нур — бутик-отель на Иссык-Куле · пример сайта</title><meta name="theme-color" content="#ffffff">
+<link rel="preload" href="../m/ph/lake1.jpg" as="image">
+<link rel="stylesheet" href="../m/kit.css?v=4">
+<style>
+@font-face{font-family:Geo;font-weight:100 900;font-display:swap;src:url(../fonts/geologica-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Geo;font-weight:100 900;font-display:swap;src:url(../fonts/geologica-cyrillic-ext.woff2)format("woff2");unicode-range:U+0460-052F}
+@font-face{font-family:Geo;font-weight:100 900;font-display:swap;src:url(../fonts/geologica-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:On;font-weight:100 900;font-display:swap;src:url(../fonts/onest-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:On;font-weight:100 900;font-display:swap;src:url(../fonts/onest-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+:root{--ink:#0A0A0F;--mut:#76767E;--line:#E6E6EA;--paper:#F4F4F2}
+body{background:#fff;color:var(--ink);font:400 16px/1.55 On,system-ui,sans-serif}
+.w{width:min(1240px,100% - 40px);margin-inline:auto}
+/* шапка */
+.nav{position:fixed;inset:0 0 auto;z-index:60;transition:background .5s,box-shadow .5s}
+.nav.solid{background:rgba(255,255,255,.78);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.nav .w{display:flex;align-items:center;gap:30px;height:68px}
+.logo{display:flex;gap:9px;align-items:center;font:500 20px/1 Geo;letter-spacing:-.02em}
+.logo .nm{width:30px;height:38px;--lg-bg:#fff}.logo b{font:400 21px/1 Geo;letter-spacing:.34em}.logo small{display:block;font:400 8px/1 On;letter-spacing:.34em;color:var(--mut);margin-top:5px}
+.end .nm{width:84px;height:92px;color:#fff;margin-bottom:22px}
+.ttl .nm{width:72px;height:90px;margin:0 auto 18px;color:var(--ink);--lg-bg:#fff}
+.nav nav{display:flex;gap:28px;margin-left:auto;font-size:14px;color:#55555E}
+.nav nav a:hover{color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;font:500 14px/1 On;padding:13px 20px;border-radius:999px;transition:transform .3s,background .3s}
+.pill:hover{transform:translateY(-1px);background:#2A2A33}
+.pill svg{width:16px;height:16px}
+@media(max-width:760px){.nav nav{display:none}.nav .w{justify-content:space-between}.pill{padding:11px 16px;font-size:13px}}
+/* первый экран: рамка расширяется до краёв, точки растворяются в фото */
+.hero{height:210vh;position:relative}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.ttl{position:absolute;z-index:3;top:calc(96px - var(--s)*60px);left:0;right:0;text-align:center;opacity:calc(1 - var(--s)*2.2);pointer-events:none}
+.ttl .k{font:500 12px/1 On;letter-spacing:.3em;color:var(--mut)}
+.ttl h1{font:200 clamp(52px,8vw,124px)/.95 Geo;letter-spacing:-.055em;margin-top:22px}
+.ttl h1 .g{color:#B4B4BA}
+.stage{--t0:calc(300px + clamp(52px,8vw,124px)*1.95);--b0:130px}
+.frame{position:absolute;left:50%;top:calc(var(--t0)*(1 - var(--s)));width:calc(min(980px,88vw) + (100vw - min(980px,88vw))*var(--s));height:calc((100svh - var(--t0) - var(--b0))*(1 - var(--s)) + 100svh*var(--s));translate:-50% 0;border-radius:calc(36px*(1 - var(--s)));overflow:hidden;box-shadow:0 50px 100px -50px rgba(0,0,0,.45)}
+.frame picture{display:contents}.frame img{width:100%;height:100%;object-fit:cover;scale:calc(1.14 - var(--s)*.14)}
+.frame::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.55));opacity:var(--s)}
+.frame canvas{position:absolute;inset:0;width:100%;height:100%;background:#fff;opacity:calc(1 - var(--s)*1.6)}
+.over{position:absolute;z-index:4;left:0;right:0;bottom:12%;text-align:center;color:#fff;opacity:calc(var(--s)*2.4 - 1.3);transform:translateY(calc(30px - var(--s)*30px))}
+.over p{font:200 clamp(34px,5vw,72px)/1.04 Geo;letter-spacing:-.04em;text-shadow:0 10px 40px rgba(0,0,0,.35)}
+.over small{display:block;margin-top:16px;font:400 15px/1.5 On;opacity:.85}
+.bk{position:absolute;z-index:5;left:50%;bottom:28px;translate:-50% 0;display:flex;gap:6px;padding:7px;width:min(620px,calc(100% - 28px));border-radius:26px;background:rgba(255,255,255,.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);box-shadow:0 30px 60px -24px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.05);opacity:calc(1 - var(--s)*1.5)}
+.bk a{flex:1;padding:10px 14px;border-radius:19px;background:rgba(0,0,0,.04);font-size:12px;color:var(--mut);transition:background .3s}
+.bk a:hover{background:rgba(0,0,0,.08)}
+.bk a b{display:block;font:500 15px/1.35 On;color:var(--ink)}
+.bk .go{flex:none;width:56px;display:grid;place-items:center;background:var(--ink);color:#fff}.bk .go:hover{background:#2A2A33}
+.bk .go svg{width:20px;height:20px}
+@media(max-width:560px){.bk a:nth-child(3){display:none}.ttl{top:calc(96px - var(--s)*60px)}.stage{--t0:360px;--b0:150px}.bk{bottom:72px}}
+/* факты */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:100px}
+.facts div{padding:34px 0 30px;text-align:center}.facts div+div{border-left:1px solid var(--line)}
+.facts b{display:block;font:200 clamp(40px,5vw,64px)/1 Geo;letter-spacing:-.04em}
+.facts span{font-size:13px;color:var(--mut)}
+/* номера */
+.sec{padding:120px 0 0}
+.lab{display:flex;justify-content:space-between;font:500 12px/1 On;letter-spacing:.22em;color:var(--mut);margin-bottom:34px}
+.h2{font:200 clamp(40px,5.4vw,80px)/1 Geo;letter-spacing:-.05em;max-width:12ch}
+.rooms{display:grid;grid-template-columns:1fr 1.15fr;gap:60px;margin-top:56px;align-items:start}
+.rl{list-style:none}
+.rl li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.rl li b{font:300 clamp(46px,6vw,88px)/1 Geo;letter-spacing:-.05em;color:#CFCFD4;transition:color .5s,transform .6s cubic-bezier(.16,1,.3,1)}
+.rl li span{font-size:13px;color:var(--mut);text-align:right;line-height:1.4}
+.rl li.on b,.rl li:hover b{color:var(--ink)}.rl li.on b{transform:translateX(12px)}
+.rv{position:sticky;top:100px}
+.ph{position:relative;aspect-ratio:4/5;max-height:76vh;width:100%;border-radius:32px;overflow:hidden;background:var(--paper)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;scale:1.06;transition:opacity .9s,scale 1.6s cubic-bezier(.16,1,.3,1)}
+.ph img.on{opacity:1;scale:1}
+.tags{position:absolute;left:16px;top:16px;display:flex;gap:6px;flex-wrap:wrap}
+.tags span{background:rgba(255,255,255,.88);backdrop-filter:blur(10px);font-size:12.5px;padding:8px 12px;border-radius:14px}
+.price{position:absolute;right:16px;bottom:16px;background:var(--ink);color:#fff;border-radius:20px;padding:14px 18px;font-size:12px;line-height:1.3}
+.price b{display:block;font:500 22px/1.1 On;letter-spacing:-.02em}
+@media(max-width:860px){.rooms{grid-template-columns:1fr;gap:26px}.rv{position:static}.rl li{padding:12px 0}}
+/* бронь */
+.book{margin:120px auto 0;border-radius:40px;background:var(--paper);padding:clamp(24px,5vw,64px);display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(24px,5vw,70px)}
+.book .nb{display:block;width:72px;height:90px;margin-bottom:22px;color:var(--ink);--lg-bg:var(--paper)}
+.book h3{font:300 clamp(32px,3.6vw,48px)/1.05 Geo;letter-spacing:-.04em}
+.book .sub{color:var(--mut);margin-top:10px;font-size:15px}
+.mhead{display:flex;align-items:center;justify-content:space-between;margin-top:30px}
+.mhead b{font:500 17px/1 On;text-transform:capitalize}
+.mhead button{width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 1px var(--line)}
+.mhead button:hover{background:var(--ink);color:#fff}
+.mhead button svg{width:18px;height:18px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);row-gap:4px;margin-top:16px;text-align:center}
+.cal .h{font-size:12px;color:var(--mut);padding:8px 0}
+.cal button{height:48px;font:500 15px/1 On;transition:background .3s,color .3s,border-radius .3s}
+.cal button:disabled{color:#C5C5CB;cursor:default;text-decoration:line-through}
+.cal button.in{background:#E1E1E5}
+.cal button.a,.cal button.z{background:var(--ink);color:#fff}
+.cal button.a{border-radius:24px 0 0 24px}.cal button.z{border-radius:0 24px 24px 0}.cal button.a.z{border-radius:24px}
+.cal button:not(:disabled):not(.a):not(.z):hover{background:#fff;border-radius:24px}
+.side{background:#fff;border-radius:28px;padding:26px;align-self:start;box-shadow:0 30px 60px -40px rgba(0,0,0,.25)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+.row span{color:var(--mut)}
+.step{display:flex;align-items:center;gap:12px}.step button{width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 1px var(--line);font-size:18px;line-height:1}
+.step button:hover{background:var(--ink);color:#fff}
+.sum{margin-top:20px;font-size:13px;color:var(--mut)}.sum b{display:block;font:500 40px/1.1 On;letter-spacing:-.03em;color:var(--ink);margin-top:4px}
+.btn{width:100%;margin-top:18px;background:var(--ink);color:#fff;font:500 16px/1 On;padding:19px;border-radius:20px;transition:background .3s,transform .2s}
+.btn:hover{background:#2A2A33}.btn:active{transform:scale(.98)}.btn:disabled{background:#C9C9CE;cursor:not-allowed}
+@media(max-width:860px){.book{grid-template-columns:1fr;border-radius:30px}.cal button{height:44px}}
+/* подвал */
+.end{position:relative;margin-top:120px;height:80vh;min-height:520px;overflow:hidden;color:#fff;display:grid;align-content:end}
+.end img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;scale:calc(1.2 - var(--p)*.2)}
+.end::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(0,0,0,.6))}
+.end .w{position:relative;z-index:2;padding-bottom:90px;display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.end h2{font:200 clamp(56px,10vw,160px)/.9 Geo;letter-spacing:-.06em}
+.end p{font-size:14px;line-height:1.7;opacity:.85}
+</style></head><body>
+<header class="nav" id="nav"><div class="w"><a class="logo" href="#top"><svg class="nm" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Нур — бутик-отель">
+<defs><clipPath id="nuc1"><path d="M30,214 V88 A70,70 0 0 1 170,88 V214 Z"/></clipPath></defs>
+<path d="M22,214 V86 A78,78 0 0 1 178,86 V214" stroke="currentColor" stroke-width="1.6"/><path d="M30,214 V88 A70,70 0 0 1 170,88 V214" stroke="currentColor" stroke-width=".6"/>
+<line x1="14" y1="214" x2="186" y2="214" stroke="currentColor" stroke-width="1.6"/><line x1="22" y1="219" x2="178" y2="219" stroke="currentColor" stroke-width=".6"/>
+<g clip-path="url(#nuc1)">
+<g stroke="currentColor" stroke-width=".7" opacity=".85"><line x1="60.22" y1="141.82" x2="-19.34" y2="133.46"/><line x1="60.87" y1="137.68" x2="-17.38" y2="121.05"/><line x1="61.96" y1="133.64" x2="-14.13" y2="108.92"/><line x1="63.46" y1="129.73" x2="-9.63" y2="97.19"/><line x1="65.36" y1="126" x2="-3.92" y2="86"/><line x1="67.64" y1="122.49" x2="2.92" y2="75.47"/><line x1="70.27" y1="119.23" x2="10.82" y2="65.7"/><line x1="73.23" y1="116.27" x2="19.7" y2="56.82"/><line x1="76.49" y1="113.64" x2="29.47" y2="48.92"/><line x1="80" y1="111.36" x2="40" y2="42.08"/><line x1="83.73" y1="109.46" x2="51.19" y2="36.37"/><line x1="87.64" y1="107.96" x2="62.92" y2="31.87"/><line x1="91.68" y1="106.87" x2="75.05" y2="28.62"/><line x1="95.82" y1="106.22" x2="87.46" y2="26.66"/><line x1="100" y1="106" x2="100" y2="26"/><line x1="104.18" y1="106.22" x2="112.54" y2="26.66"/><line x1="108.32" y1="106.87" x2="124.95" y2="28.62"/><line x1="112.36" y1="107.96" x2="137.08" y2="31.87"/><line x1="116.27" y1="109.46" x2="148.81" y2="36.37"/><line x1="120" y1="111.36" x2="160" y2="42.08"/><line x1="123.51" y1="113.64" x2="170.53" y2="48.92"/><line x1="126.77" y1="116.27" x2="180.3" y2="56.82"/><line x1="129.73" y1="119.23" x2="189.18" y2="65.7"/><line x1="132.36" y1="122.49" x2="197.08" y2="75.47"/><line x1="134.64" y1="126" x2="203.92" y2="86"/><line x1="136.54" y1="129.73" x2="209.63" y2="97.19"/><line x1="138.04" y1="133.64" x2="214.13" y2="108.92"/><line x1="139.13" y1="137.68" x2="217.38" y2="121.05"/><line x1="139.78" y1="141.82" x2="219.34" y2="133.46"/></g>
+<circle cx="100" cy="146" r="30" fill="currentColor"/>
+<path d="M30,150 L44,132 L52,138 L66,116 L76,126 L84,120 L98,140 L112,124 L122,130 L136,108 L148,122 L158,118 L170,134 L170,150 Z" fill="var(--lg-bg,#fff)" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M66,116 L60,125 M66,116 L70,124 M136,108 L129,119 M136,108 L141,117 M112,124 L108,131" stroke="currentColor" stroke-width="1"/>
+<rect x="20" y="150" width="160" height="80" fill="var(--lg-bg,#fff)"/><line x1="30" y1="150" x2="170" y2="150" stroke="currentColor" stroke-width="1.4"/><g stroke="currentColor"><line x1="30" y1="158" x2="170" y2="158" stroke-width="1.6"/><line x1="36" y1="165" x2="164" y2="165" stroke-width="1.5"/><line x1="44" y1="172" x2="156" y2="172" stroke-width="1.4"/><line x1="52" y1="179" x2="148" y2="179" stroke-width="1.3"/><line x1="62" y1="186" x2="138" y2="186" stroke-width="1.2"/><line x1="72" y1="193" x2="128" y2="193" stroke-width="1.1"/><line x1="82" y1="200" x2="118" y2="200" stroke-width="1"/></g><g stroke="var(--lg-bg,#fff)" stroke-width="2.2"><line x1="80" y1="161" x2="120" y2="161"/><line x1="86" y1="168" x2="114" y2="168"/><line x1="91" y1="175" x2="109" y2="175"/><line x1="95" y1="182" x2="105" y2="182"/></g>
+</g>
+<g fill="currentColor"><polygon points="100,12 101.19,16.81 106,18 101.19,19.19 100,24 98.81,19.19 94,18 98.81,16.81"/><polygon points="84,23.4 84.51,25.49 86.6,26 84.51,26.51 84,28.6 83.49,26.51 81.4,26 83.49,25.49"/><polygon points="116,23.4 116.51,25.49 118.6,26 116.51,26.51 116,28.6 115.49,26.51 113.4,26 115.49,25.49"/></g>
+<text x="100" y="242" text-anchor="middle" fill="currentColor" font-family="Geo, sans-serif" font-weight="300" font-size="15" letter-spacing="9">ИССЫК-КУЛЬ</text>
+</svg><span><b>НУР</b><small>ИССЫК-КУЛЬ</small></span></a>
+<nav><a href="#rooms">Номера</a><a href="#lake">Озеро</a><a href="#book">Даты</a></nav>
+<a class="pill" href="#book">Забронировать</a></div></header>
+
+<section class="hero" id="top" data-p><div class="stage">
+  <div class="ttl"><svg class="nm big" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Нур — бутик-отель">
+<defs><clipPath id="nuc2"><path d="M30,214 V88 A70,70 0 0 1 170,88 V214 Z"/></clipPath></defs>
+<path d="M22,214 V86 A78,78 0 0 1 178,86 V214" stroke="currentColor" stroke-width="1.6"/><path d="M30,214 V88 A70,70 0 0 1 170,88 V214" stroke="currentColor" stroke-width=".6"/>
+<line x1="14" y1="214" x2="186" y2="214" stroke="currentColor" stroke-width="1.6"/><line x1="22" y1="219" x2="178" y2="219" stroke="currentColor" stroke-width=".6"/>
+<g clip-path="url(#nuc2)">
+<g stroke="currentColor" stroke-width=".7" opacity=".85"><line x1="60.22" y1="141.82" x2="-19.34" y2="133.46"/><line x1="60.87" y1="137.68" x2="-17.38" y2="121.05"/><line x1="61.96" y1="133.64" x2="-14.13" y2="108.92"/><line x1="63.46" y1="129.73" x2="-9.63" y2="97.19"/><line x1="65.36" y1="126" x2="-3.92" y2="86"/><line x1="67.64" y1="122.49" x2="2.92" y2="75.47"/><line x1="70.27" y1="119.23" x2="10.82" y2="65.7"/><line x1="73.23" y1="116.27" x2="19.7" y2="56.82"/><line x1="76.49" y1="113.64" x2="29.47" y2="48.92"/><line x1="80" y1="111.36" x2="40" y2="42.08"/><line x1="83.73" y1="109.46" x2="51.19" y2="36.37"/><line x1="87.64" y1="107.96" x2="62.92" y2="31.87"/><line x1="91.68" y1="106.87" x2="75.05" y2="28.62"/><line x1="95.82" y1="106.22" x2="87.46" y2="26.66"/><line x1="100" y1="106" x2="100" y2="26"/><line x1="104.18" y1="106.22" x2="112.54" y2="26.66"/><line x1="108.32" y1="106.87" x2="124.95" y2="28.62"/><line x1="112.36" y1="107.96" x2="137.08" y2="31.87"/><line x1="116.27" y1="109.46" x2="148.81" y2="36.37"/><line x1="120" y1="111.36" x2="160" y2="42.08"/><line x1="123.51" y1="113.64" x2="170.53" y2="48.92"/><line x1="126.77" y1="116.27" x2="180.3" y2="56.82"/><line x1="129.73" y1="119.23" x2="189.18" y2="65.7"/><line x1="132.36" y1="122.49" x2="197.08" y2="75.47"/><line x1="134.64" y1="126" x2="203.92" y2="86"/><line x1="136.54" y1="129.73" x2="209.63" y2="97.19"/><line x1="138.04" y1="133.64" x2="214.13" y2="108.92"/><line x1="139.13" y1="137.68" x2="217.38" y2="121.05"/><line x1="139.78" y1="141.82" x2="219.34" y2="133.46"/></g>
+<circle cx="100" cy="146" r="30" fill="currentColor"/>
+<path d="M30,150 L44,132 L52,138 L66,116 L76,126 L84,120 L98,140 L112,124 L122,130 L136,108 L148,122 L158,118 L170,134 L170,150 Z" fill="var(--lg-bg,#fff)" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M66,116 L60,125 M66,116 L70,124 M136,108 L129,119 M136,108 L141,117 M112,124 L108,131" stroke="currentColor" stroke-width="1"/>
+<rect x="20" y="150" width="160" height="80" fill="var(--lg-bg,#fff)"/><line x1="30" y1="150" x2="170" y2="150" stroke="currentColor" stroke-width="1.4"/><g stroke="currentColor"><line x1="30" y1="158" x2="170" y2="158" stroke-width="1.6"/><line x1="36" y1="165" x2="164" y2="165" stroke-width="1.5"/><line x1="44" y1="172" x2="156" y2="172" stroke-width="1.4"/><line x1="52" y1="179" x2="148" y2="179" stroke-width="1.3"/><line x1="62" y1="186" x2="138" y2="186" stroke-width="1.2"/><line x1="72" y1="193" x2="128" y2="193" stroke-width="1.1"/><line x1="82" y1="200" x2="118" y2="200" stroke-width="1"/></g><g stroke="var(--lg-bg,#fff)" stroke-width="2.2"><line x1="80" y1="161" x2="120" y2="161"/><line x1="86" y1="168" x2="114" y2="168"/><line x1="91" y1="175" x2="109" y2="175"/><line x1="95" y1="182" x2="105" y2="182"/></g>
+</g>
+<g fill="currentColor"><polygon points="100,12 101.19,16.81 106,18 101.19,19.19 100,24 98.81,19.19 94,18 98.81,16.81"/><polygon points="84,23.4 84.51,25.49 86.6,26 84.51,26.51 84,28.6 83.49,26.51 81.4,26 83.49,25.49"/><polygon points="116,23.4 116.51,25.49 118.6,26 116.51,26.51 116,28.6 115.49,26.51 113.4,26 115.49,25.49"/></g>
+<text x="100" y="242" text-anchor="middle" fill="currentColor" font-family="Geo, sans-serif" font-weight="300" font-size="15" letter-spacing="9">ИССЫК-КУЛЬ</text>
+</svg><p class="k">БУТИК-ОТЕЛЬ · ИССЫК-КУЛЬ</p>
+    <h1><span class="mask"><span class="g" data-split style="--d:200ms">Тишина</span></span><span class="mask"><span data-split style="--d:480ms">у воды.</span></span></h1></div>
+  <div class="frame"><picture><img src="../m/ph/lake1.jpg" alt="Озеро Иссык-Куль и горы на рассвете"></picture><canvas id="dots" aria-hidden="true"></canvas></div>
+  <div class="over"><p>Двенадцать номеров<br>на южном берегу.</p><small>Утром — горы в окне, вечером — озеро у ног.</small></div>
+  <div class="bk"><a href="#book">Заезд<b data-in>выбрать</b></a><a href="#book">Выезд<b data-out>—</b></a><a href="#book">Гости<b data-g2>2 взрослых</b></a><a class="go" href="#book" aria-label="К бронированию"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div></section>
+
+<div class="w facts" id="lake"><div data-r><b>12</b><span>номеров, не больше</span></div><div data-r style="--d:120ms"><b>40 м</b><span>от двери до воды</span></div><div data-r style="--d:240ms"><b>4,9</b><span>оценка гостей</span></div></div>
+
+<section class="sec w" id="rooms"><div class="lab" data-r><span>НОМЕРА</span><span>ВИД НА ГОРЫ ИЛИ ОЗЕРО</span></div>
+<h2 class="h2" data-r>Выберите, что будет за окном.</h2>
+<div class="rooms"><ul class="rl pick" id="rl">
+  <li class="on" data-v="0" data-r><b>Тоо</b><span>32 м² · окна на горы<br>от 9 800 сом</span></li>
+  <li data-v="1" data-r style="--d:80ms"><b>Суу</b><span>28 м² · балкон над водой<br>от 8 900 сом</span></li>
+  <li data-v="2" data-r style="--d:160ms"><b>Таш</b><span>40 м² · своя терраса<br>от 12 400 сом</span></li>
+  <li data-v="3" data-r style="--d:240ms"><b>Ай</b><span>24 м² · выход в сад<br>от 7 600 сом</span></li></ul>
+  <div class="rv" data-r><div class="ph" id="ph"><img class="on" src="../m/ph/hotel1.jpg" alt="Номер «Тоо»"><img src="../m/ph/hotel0.jpg" alt="Номер «Суу»" loading="lazy"><img src="../m/ph/hotel2.jpg" alt="Номер «Таш»" loading="lazy"><img src="../m/ph/hotel3.jpg" alt="Номер «Ай»" loading="lazy">
+    <div class="tags"><span>завтрак включён</span><span id="tg2">2 гостя</span><span>★ 4,9</span></div><div class="price">за ночь<b id="pr">9 800 сом</b></div></div></div>
+</div></section>
+
+<section class="w book" id="book"><div><svg class="nm nb" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Нур — бутик-отель">
+<defs><clipPath id="nuc3"><path d="M30,214 V88 A70,70 0 0 1 170,88 V214 Z"/></clipPath></defs>
+<path d="M22,214 V86 A78,78 0 0 1 178,86 V214" stroke="currentColor" stroke-width="1.6"/><path d="M30,214 V88 A70,70 0 0 1 170,88 V214" stroke="currentColor" stroke-width=".6"/>
+<line x1="14" y1="214" x2="186" y2="214" stroke="currentColor" stroke-width="1.6"/><line x1="22" y1="219" x2="178" y2="219" stroke="currentColor" stroke-width=".6"/>
+<g clip-path="url(#nuc3)">
+<g stroke="currentColor" stroke-width=".7" opacity=".85"><line x1="60.22" y1="141.82" x2="-19.34" y2="133.46"/><line x1="60.87" y1="137.68" x2="-17.38" y2="121.05"/><line x1="61.96" y1="133.64" x2="-14.13" y2="108.92"/><line x1="63.46" y1="129.73" x2="-9.63" y2="97.19"/><line x1="65.36" y1="126" x2="-3.92" y2="86"/><line x1="67.64" y1="122.49" x2="2.92" y2="75.47"/><line x1="70.27" y1="119.23" x2="10.82" y2="65.7"/><line x1="73.23" y1="116.27" x2="19.7" y2="56.82"/><line x1="76.49" y1="113.64" x2="29.47" y2="48.92"/><line x1="80" y1="111.36" x2="40" y2="42.08"/><line x1="83.73" y1="109.46" x2="51.19" y2="36.37"/><line x1="87.64" y1="107.96" x2="62.92" y2="31.87"/><line x1="91.68" y1="106.87" x2="75.05" y2="28.62"/><line x1="95.82" y1="106.22" x2="87.46" y2="26.66"/><line x1="100" y1="106" x2="100" y2="26"/><line x1="104.18" y1="106.22" x2="112.54" y2="26.66"/><line x1="108.32" y1="106.87" x2="124.95" y2="28.62"/><line x1="112.36" y1="107.96" x2="137.08" y2="31.87"/><line x1="116.27" y1="109.46" x2="148.81" y2="36.37"/><line x1="120" y1="111.36" x2="160" y2="42.08"/><line x1="123.51" y1="113.64" x2="170.53" y2="48.92"/><line x1="126.77" y1="116.27" x2="180.3" y2="56.82"/><line x1="129.73" y1="119.23" x2="189.18" y2="65.7"/><line x1="132.36" y1="122.49" x2="197.08" y2="75.47"/><line x1="134.64" y1="126" x2="203.92" y2="86"/><line x1="136.54" y1="129.73" x2="209.63" y2="97.19"/><line x1="138.04" y1="133.64" x2="214.13" y2="108.92"/><line x1="139.13" y1="137.68" x2="217.38" y2="121.05"/><line x1="139.78" y1="141.82" x2="219.34" y2="133.46"/></g>
+<circle cx="100" cy="146" r="30" fill="currentColor"/>
+<path d="M30,150 L44,132 L52,138 L66,116 L76,126 L84,120 L98,140 L112,124 L122,130 L136,108 L148,122 L158,118 L170,134 L170,150 Z" fill="var(--lg-bg,#fff)" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M66,116 L60,125 M66,116 L70,124 M136,108 L129,119 M136,108 L141,117 M112,124 L108,131" stroke="currentColor" stroke-width="1"/>
+<rect x="20" y="150" width="160" height="80" fill="var(--lg-bg,#fff)"/><line x1="30" y1="150" x2="170" y2="150" stroke="currentColor" stroke-width="1.4"/><g stroke="currentColor"><line x1="30" y1="158" x2="170" y2="158" stroke-width="1.6"/><line x1="36" y1="165" x2="164" y2="165" stroke-width="1.5"/><line x1="44" y1="172" x2="156" y2="172" stroke-width="1.4"/><line x1="52" y1="179" x2="148" y2="179" stroke-width="1.3"/><line x1="62" y1="186" x2="138" y2="186" stroke-width="1.2"/><line x1="72" y1="193" x2="128" y2="193" stroke-width="1.1"/><line x1="82" y1="200" x2="118" y2="200" stroke-width="1"/></g><g stroke="var(--lg-bg,#fff)" stroke-width="2.2"><line x1="80" y1="161" x2="120" y2="161"/><line x1="86" y1="168" x2="114" y2="168"/><line x1="91" y1="175" x2="109" y2="175"/><line x1="95" y1="182" x2="105" y2="182"/></g>
+</g>
+<g fill="currentColor"><polygon points="100,12 101.19,16.81 106,18 101.19,19.19 100,24 98.81,19.19 94,18 98.81,16.81"/><polygon points="84,23.4 84.51,25.49 86.6,26 84.51,26.51 84,28.6 83.49,26.51 81.4,26 83.49,25.49"/><polygon points="116,23.4 116.51,25.49 118.6,26 116.51,26.51 116,28.6 115.49,26.51 113.4,26 115.49,25.49"/></g>
+<text x="100" y="242" text-anchor="middle" fill="currentColor" font-family="Geo, sans-serif" font-weight="300" font-size="15" letter-spacing="9">ИССЫК-КУЛЬ</text>
+</svg><h3 data-r>Когда приедете?</h3><p class="sub" data-r>Нажмите день заезда, потом день выезда. Зачёркнутые дни заняты.</p>
+  <div class="mhead"><button id="prev" aria-label="Предыдущий месяц"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 6-6 6 6 6"/></svg></button><b id="mon"></b><button id="next" aria-label="Следующий месяц"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button></div>
+  <div class="cal" id="cal"></div></div>
+  <div class="side" data-r><div class="row"><span>Номер</span><b id="rn">Тоо</b></div><div class="row"><span>Даты</span><b id="dt">не выбраны</b></div>
+    <div class="row"><span>Гости</span><div class="step"><button id="gm" aria-label="Меньше гостей">−</button><b id="gn">2</b><button id="gp" aria-label="Больше гостей">+</button></div></div>
+    <p class="sum"><span id="nt">Выберите даты</span><b id="sm">0 сом</b></p><button class="btn" id="go" disabled>Забронировать</button></div>
+</section>
+
+<section class="end" data-p><img src="../m/ph/lake2.jpg" alt="" loading="lazy"><div class="w"><div><h2>Нур</h2></div><p>Южный берег, село Тамга<br>+996 555 00 12 12 · каждый день</p></div></section>
+<div class="concept"><span>пример Seinokojii · отель вымышленный</span><a href="/#works">← Все примеры</a></div>
+<script src="../m/kit.js?v=4"></script>
+<script>
+const nav = $('#nav'); addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > innerHeight * .35), { passive: true });
+// точки: фото озера, собранное из кружков; дышат и уступают дорогу указателю
+(() => { const cv = $('#dots'), img = new Image(); img.src = '../m/ph/lake1.jpg'; const G = innerWidth <= 600 ? [.95, 1.3] : [1.25, 1.15];
+  img.onload = () => { let W, H, c, d, tw, th, step;
+    const setup = () => { const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1); step = innerWidth < 600 ? 5 : 7;
+      W = cv.width = r.width * dpr; H = cv.height = r.height * dpr; c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      tw = Math.ceil(r.width / step); th = Math.ceil(r.height / step); const t = document.createElement('canvas'); t.width = tw; t.height = th; const tc = t.getContext('2d');
+      const s = Math.max(tw / img.width, th / img.height) * 1.14; tc.drawImage(img, (tw - img.width * s) / 2, (th - img.height * s) / 2, img.width * s, img.height * s); d = tc.getImageData(0, 0, tw, th).data; };
+    let lw = 0, lh = 0; const draw = (tm) => { const r = cv.getBoundingClientRect(); if (Math.abs(r.width - lw) > 40 || Math.abs(r.height - lh) > 60) { lw = r.width; lh = r.height; setup(); }
+      if (getComputedStyle(cv).opacity > .01 && r.bottom > 0) { c.clearRect(0, 0, W, H); c.fillStyle = '#0A0A0F';
+        const px = (ptr.x * innerWidth - r.left) / step, py = (ptr.y * innerHeight - r.top) / step;
+        for (let y = 0; y < th; y++) for (let x = 0; x < tw; x++) { const i = (y * tw + x) * 4, l = 1 - (d[i] * .3 + d[i + 1] * .59 + d[i + 2] * .11) / 255;
+          let v = Math.min(1, Math.pow(l, G[0]) * G[1]) * (.8 + .2 * Math.sin(tm / 900 + x * .3 + y * .2)); const dx = x - px, dy = y - py, dd = dx * dx + dy * dy;
+          if (ptr.moved && dd < 90) v *= dd / 90; const rr = v * step * .52; if (rr < .4) continue; c.beginPath(); c.arc(x * step + step / 2, y * step + step / 2, rr, 0, 7); c.fill(); } }
+      requestAnimationFrame(draw); }; requestAnimationFrame(draw); }; })();
+// номера
+const ROOMS = [['Тоо', 9800], ['Суу', 8900], ['Таш', 12400], ['Ай', 7600]]; let room = 0, guests = 2, a = null, z = null;
+$('#rl').addEventListener('pick', (e) => { room = +e.detail; $$('#ph img').forEach((im, i) => im.classList.toggle('on', i === room)); countTo($('#pr'), ROOMS[room][1], (v) => (Math.round(v / 100) * 100).toLocaleString('ru-RU') + ' сом'); $('#rn').textContent = ROOMS[room][0]; calc(); });
+$('#pr').dataset.v = 9800;
+// календарь: два месяца, заняты дни по правилу, нельзя перескочить через занятый
+const M = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'], MS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const today = new Date(); today.setHours(0, 0, 0, 0); let view = new Date(today.getFullYear(), today.getMonth() + (new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate() - today.getDate() < 12 ? 1 : 0), 1);
+const busy = (d) => d < today || ((d.getDate() * 7 + d.getMonth() * 3) % 11 === 0) || ((d.getDate() + d.getMonth()) % 13 === 0);
+const key = (d) => d.toDateString();
+function render() { const cal = $('#cal'); cal.innerHTML = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'].map((x) => `<span class="h">${x}</span>`).join('');
+  $('#mon').textContent = M[view.getMonth()] + ' ' + view.getFullYear(); const first = (view.getDay() + 6) % 7, n = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+  for (let i = 0; i < first; i++) cal.append(document.createElement('span'));
+  for (let k = 1; k <= n; k++) { const d = new Date(view.getFullYear(), view.getMonth(), k), b = document.createElement('button'); b.textContent = k; b.disabled = busy(d);
+    if (a && key(d) === key(a)) b.classList.add('a'); if (z && key(d) === key(z)) b.classList.add('z'); if (!z && a && key(d) === key(a)) b.classList.add('z');
+    if (a && z && d > a && d < z) b.classList.add('in'); b.onclick = () => pickDay(d); cal.append(b); }
+  $('#prev').disabled = view.getFullYear() * 12 + view.getMonth() <= today.getFullYear() * 12 + today.getMonth(); }
+function pickDay(d) { if (!a || z || d <= a) { a = d; z = null; } else { for (let x = new Date(a); x < d; x.setDate(x.getDate() + 1)) if (busy(x) && x > a) { a = d; z = null; render(); calc(); return; } z = d; } render(); calc(); }
+const fmt = (d) => d.getDate() + ' ' + MS[d.getMonth()];
+function calc() { const go = $('#go');
+  $('[data-in]').textContent = a ? fmt(a) : 'выбрать'; $('[data-out]').textContent = z ? fmt(z) : '—';
+  if (!a || !z) { $('#dt').textContent = a ? 'с ' + fmt(a) + ' — выберите выезд' : 'не выбраны'; $('#nt').textContent = 'Выберите даты'; $('#sm').dataset.v = 0; $('#sm').textContent = '—'; go.disabled = true; return; }
+  const n = Math.round((z - a) / 864e5), extra = Math.max(0, guests - 2) * 1500, sum = n * (ROOMS[room][1] + extra);
+  $('#dt').textContent = fmt(a) + ' – ' + fmt(z); $('#nt').textContent = n + ' ' + (n % 10 === 1 && n % 100 !== 11 ? 'ночь' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'ночи' : 'ночей') + ' · «' + ROOMS[room][0] + '»' + (extra ? ' · доп. место' : '');
+  countTo($('#sm'), sum, (v) => Math.round(v).toLocaleString('ru-RU') + ' сом'); go.disabled = false; }
+$('#prev').onclick = () => { view.setMonth(view.getMonth() - 1); render(); }; $('#next').onclick = () => { view.setMonth(view.getMonth() + 1); render(); };
+$('#gm').onclick = () => { guests = Math.max(1, guests - 1); upG(); }; $('#gp').onclick = () => { guests = Math.min(4, guests + 1); upG(); };
+const upG = () => { $('#gn').textContent = guests; $('#tg2').textContent = guests + (guests === 1 ? ' гость' : ' гостя'); $('[data-g2]').textContent = guests + (guests === 1 ? ' взрослый' : ' взрослых'); calc(); };
+$('#go').onclick = () => toast('Номер забронирован', `«${ROOMS[room][0]}», ${fmt(a)} – ${fmt(z)} · подтвердим в WhatsApp за 10 минут`);
+render(); calc();
+</script></body></html>

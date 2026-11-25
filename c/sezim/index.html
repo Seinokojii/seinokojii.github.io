@@ -1,0 +1,132 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Сезим — студия эстетики · пример сайта</title><meta name="theme-color" content="#EDEDEA">
+<link rel="preload" href="../m/ph/sz-hero.jpg" as="image">
+<link rel="stylesheet" href="../m/kit.css?v=4">
+<style>
+@font-face{font-family:Ora;font-display:swap;src:url(../fonts/oranien-400-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Ora;font-display:swap;src:url(../fonts/oranien-400-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Tenor;font-display:swap;src:url(../fonts/tenor-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Tenor;font-display:swap;src:url(../fonts/tenor-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Prata;font-display:swap;src:url(../fonts/prata-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Prata;font-display:swap;src:url(../fonts/prata-cyrillic-ext.woff2)format("woff2");unicode-range:U+0460-052F}
+@font-face{font-family:Prata;font-display:swap;src:url(../fonts/prata-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Jost;font-weight:100 900;font-display:swap;src:url(../fonts/jost-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Jost;font-weight:100 900;font-display:swap;src:url(../fonts/jost-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+:root{--bg:#EDEDEA;--ink:#0A0A0F;--mut:#76767C;--line:#D8D8D4;--card:#F7F7F5}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 Jost,system-ui,sans-serif}
+.w{width:min(1260px,100% - 40px);margin-inline:auto}
+.nav{position:sticky;top:0;z-index:60;background:rgba(237,237,234,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.nav .w{display:flex;align-items:center;gap:28px;height:72px}
+.lg{font:400 24px/1 Ora}.lg sup{font:400 10px/1 Tenor;letter-spacing:.3em;margin-left:6px;vertical-align:6px;color:var(--mut)}
+.nav nav{display:flex;gap:28px;margin-left:auto;font-size:15px;color:#55555C}.nav nav a:hover{color:var(--ink)}
+.pill{padding:14px 22px;border-radius:999px;background:var(--ink);color:#fff;font:500 15px/1 Jost;transition:transform .3s}.pill:hover{transform:translateY(-2px)}
+@media(max-width:760px){.nav nav{display:none}.nav .w{justify-content:space-between}}
+/* первый экран: портрет в живой «капле» */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:calc(100svh - 72px);padding:20px 0 60px}
+.k{font:400 12px/1 Tenor;letter-spacing:.3em;color:var(--mut);text-transform:uppercase}
+h1{font:400 clamp(48px,6.2vw,96px)/1 Ora;letter-spacing:-.01em;margin-top:26px}
+h1 i{font-style:normal;color:#9A9AA0}
+.lead{margin-top:26px;max-width:440px;font-size:19px;color:#4D4D54}
+.acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.acts .g{padding:14px 22px;border-radius:999px;box-shadow:inset 0 0 0 1px #C9C9C5;font:500 15px/1 Jost}.acts .g:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.blob{position:relative;width:100%;max-width:600px;justify-self:end;aspect-ratio:1}
+.blob svg{width:100%;height:100%;overflow:visible}
+.badge{position:absolute;left:-4%;bottom:12%;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-radius:22px;padding:14px 18px;box-shadow:0 24px 50px -24px rgba(0,0,0,.3);font-size:14px;line-height:1.35}
+.badge b{display:block;font:400 26px/1.1 Ora}
+.badge2{position:absolute;right:2%;top:10%;background:var(--ink);color:#fff;border-radius:999px;padding:10px 16px;font-size:13px;animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-12px)}}
+@media(max-width:860px){.hero{grid-template-columns:1fr;min-height:0;gap:10px}.blob{order:-1;justify-self:center;max-width:440px}.badge{left:0}}
+/* процедуры */
+.sec{padding-top:120px}
+.h2{font:400 clamp(38px,4.6vw,68px)/1.05 Ora;letter-spacing:-.02em;max-width:14ch}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.hd p{max-width:380px;color:var(--mut)}
+.pr{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.pc{text-align:left;border-radius:28px;background:var(--card);padding:12px 12px 20px;display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s,background .4s,color .4s}
+.pc:hover{transform:translateY(-6px);box-shadow:0 40px 60px -40px rgba(0,0,0,.35)}
+.pc .im{aspect-ratio:4/5;border-radius:20px;overflow:hidden}.pc img{width:100%;height:100%;object-fit:cover;transition:scale 1.2s cubic-bezier(.16,1,.3,1)}.pc:hover img{scale:1.06}
+.pc h3{font:400 22px/1.15 Ora;margin:16px 8px 0}.pc p{margin:6px 8px 0;color:var(--mut);font-size:14px;flex:1}
+.pc .row{display:flex;justify-content:space-between;margin:16px 8px 0;font-size:14px}.pc .row b{font-weight:600}
+.pc.on{background:var(--ink);color:#fff}.pc.on p,.pc.on .row span{color:#A5A5AC}
+@media(max-width:960px){.pr{grid-template-columns:1fr 1fr}}@media(max-width:600px){.pr{grid-template-columns:1fr}.pc .im{aspect-ratio:16/11}}
+/* философия: строка проявляется словами от прокрутки */
+.quote{padding:140px 0 0}
+.quote p{font:400 clamp(30px,3.8vw,56px)/1.25 Ora;letter-spacing:-.01em;max-width:22ch}
+.quote span{color:#C2C2BE;transition:color .4s}.quote span.on{color:var(--ink)}
+/* запись */
+.bk{margin-top:130px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bk>div{border-radius:34px;background:var(--card);padding:clamp(24px,4vw,50px)}
+.bk .dark{background:var(--ink);color:#fff;display:flex;flex-direction:column}
+.bk h2{font:400 clamp(34px,3.6vw,52px)/1.05 Ora}
+.lb{font:400 12px/1 Tenor;letter-spacing:.24em;text-transform:uppercase;color:var(--mut);margin:28px 0 12px}
+.ch{display:flex;flex-wrap:wrap;gap:8px}
+.ch [data-v]{padding:13px 18px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);font:500 15px/1 Jost;background:#fff}
+.ch [data-v].on{background:var(--ink);color:#fff;box-shadow:none}
+.sum dl{margin-top:26px}.sum dl div{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid #24242B;font-size:15px}.sum dt{color:#8D8D95}.sum dd{text-align:right}
+.sum .tt{margin-top:auto;padding-top:30px;display:flex;justify-content:space-between;align-items:end}.sum .tt span{color:#8D8D95;font-size:14px}.sum .tt b{font:400 46px/1 Ora}
+.sum button{margin-top:22px;width:100%;padding:20px;border-radius:999px;background:#fff;color:var(--ink);font:500 16px/1 Jost;transition:opacity .3s}.sum button:disabled{opacity:.3;cursor:not-allowed}
+@media(max-width:860px){.bk{grid-template-columns:1fr}}
+.end{padding:130px 0 120px;display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.end h2{font:400 clamp(70px,13vw,210px)/.85 Ora}
+.end p{color:var(--mut);line-height:1.9}
+</style></head><body>
+<header class="nav"><div class="w"><a class="lg" href="#top">Сезим<sup>STUDIO</sup></a><nav><a href="#care">Процедуры</a><a href="#book">Запись</a><a href="#where">Контакты</a></nav><a class="pill" href="#book">Записаться</a></div></header>
+<section class="w hero" id="top"><div>
+  <p class="k" data-r>Студия эстетики · Бишкек</p>
+  <h1><span class="mask"><span data-split style="--d:150ms">Кожа, которой</span></span><span class="mask"><i data-split style="--d:500ms">не нужно</i></span><span class="mask"><span data-split style="--d:750ms">прятаться.</span></span></h1>
+  <p class="lead" data-r style="--d:700ms">Уход без спешки: косметолог смотрит кожу и подбирает процедуру. Первая консультация — бесплатно.</p>
+  <div class="acts" data-r style="--d:850ms"><a class="pill" href="#book">Выбрать время</a><a class="g" href="#care">Процедуры и цены</a></div></div>
+  <div class="blob" data-r="zoom"><svg viewBox="0 0 600 600" aria-label="Портрет клиентки студии"><defs><clipPath id="cp"><path id="bp"/></clipPath></defs>
+    <image href="../m/ph/sz-hero.jpg" x="10" y="-60" width="580" height="870" preserveAspectRatio="xMidYMid slice" clip-path="url(#cp)"/><use href="#bp" fill="none" stroke="#0A0A0F" stroke-opacity=".22" stroke-width="1.2" transform="translate(300 300) rotate(14) scale(1.06) translate(-300 -300)"/><use href="#bp" fill="none" stroke="#0A0A0F" stroke-opacity=".1" stroke-width="1" transform="translate(300 300) rotate(-22) scale(1.12) translate(-300 -300)"/></svg>
+    <p class="badge2">Свободно сегодня в 16:00</p><p class="badge"><b>4,9</b>612 отзывов в 2GIS</p></div>
+</section>
+
+<section class="sec w" id="care"><div class="hd"><h2 class="h2" data-r>Процедуры</h2><p data-r>Нажмите на процедуру — она сразу попадёт в запись ниже.</p></div>
+<div class="pr pick" id="pr">
+  <button class="pc" data-v="0" data-r><span class="im"><img src="../m/ph/sz-b.jpg" alt="" loading="lazy"></span><h3>Чистка лица</h3><p>Ультразвук и ручная, маска по типу кожи</p><span class="row"><span>60 мин</span><b>2 800 сом</b></span></button>
+  <button class="pc" data-v="1" data-r style="--d:80ms"><span class="im"><img src="../m/ph/spa1.jpg" alt="" loading="lazy"></span><h3>Массаж лица</h3><p>Скульптурный, снимает отёки за сеанс</p><span class="row"><span>45 мин</span><b>2 200 сом</b></span></button>
+  <button class="pc" data-v="2" data-r style="--d:160ms"><span class="im"><img src="../m/ph/sz-a.jpg" alt="" loading="lazy"></span><h3>Пилинг</h3><p>Миндальный или молочный, без восстановления</p><span class="row"><span>40 мин</span><b>3 200 сом</b></span></button>
+  <button class="pc" data-v="3" data-r style="--d:240ms"><span class="im"><img src="../m/ph/spa0.jpg" alt="" loading="lazy"></span><h3>Консультация</h3><p>Смотрим кожу и составляем план ухода</p><span class="row"><span>20 мин</span><b>бесплатно</b></span></button></div></section>
+
+<section class="w quote" id="q"><p id="qt">Мы не продаём курс из десяти процедур. Сначала смотрим кожу, потом говорим, что ей нужно — и что не нужно.</p></section>
+
+<section class="w bk" id="book"><div><h2 data-r>Когда вам удобно?</h2>
+  <p class="lb">Процедура</p><div class="ch pick" id="fp"><button data-v="0">Чистка</button><button data-v="1">Массаж</button><button data-v="2">Пилинг</button><button data-v="3">Консультация</button></div>
+  <p class="lb">День</p><div class="ch pick" id="fd"></div>
+  <p class="lb">Время</p><div class="ch pick" id="ft"></div></div>
+  <div class="dark sum"><h2>Ваша запись</h2><dl><div><dt>Процедура</dt><dd id="s1">—</dd></div><div><dt>Косметолог</dt><dd>Алина, 8 лет опыта</dd></div><div><dt>Когда</dt><dd id="s2">—</dd></div></dl>
+    <div class="tt"><span>оплата после процедуры</span><b id="s3">—</b></div><button id="go" disabled>Выберите процедуру</button></div></section>
+
+<section class="w end" id="where"><h2>Сезим</h2><p>Бишкек, Исанова, 79 · 2 этаж<br>+996 777 30 30 30 · пн–сб 10:00–20:00</p></section>
+<div class="concept"><span>пример Seinokojii · студия вымышленная</span><a href="/#works">← Все примеры</a></div>
+<script src="../m/kit.js?v=4"></script>
+<script>
+// живая капля: радиус точек контура колышется, тянется к указателю
+(() => { const p = $('#bp'), N = 10; (function f(t) { t /= 1000; const pts = [];
+  for (let i = 0; i < N; i++) { const a = i / N * Math.PI * 2, r = 250 + 18 * Math.sin(t * .9 + i * 1.7) + 12 * Math.cos(t * .6 + i * 2.3) + (ptr.moved ? 22 * Math.cos(a - Math.atan2(ptr.y - .5, ptr.x - .75)) : 0); pts.push([300 + Math.cos(a) * r, 300 + Math.sin(a) * r]); }
+  let d = ''; for (let i = 0; i < N; i++) { const p0 = pts[(i - 1 + N) % N], p1 = pts[i], p2 = pts[(i + 1) % N], p3 = pts[(i + 2) % N];
+    if (!i) d += `M${p1[0].toFixed(1)},${p1[1].toFixed(1)}`; const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += `C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`; }
+  p.setAttribute('d', d + 'Z'); if (!RM) requestAnimationFrame(f); })(0); })();
+// цитата проявляется словами от прокрутки
+(() => { const q = $('#qt'); q.innerHTML = q.textContent.split(' ').map((w) => `<span>${w}</span>`).join(' '); const ws = $$('span', q);
+  const f = () => { const r = q.getBoundingClientRect(), k = Math.min(1, Math.max(0, (innerHeight * .85 - r.top) / (r.height + innerHeight * .35))); ws.forEach((w, i) => w.classList.toggle('on', i < k * ws.length)); };
+  addEventListener('scroll', f, { passive: true }); f(); })();
+// запись
+const PR = [['Чистка лица', 2800, 60], ['Массаж лица', 2200, 45], ['Пилинг', 3200, 40], ['Консультация', 0, 20]];
+const DN = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'], MN = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'], now = new Date(), days = [];
+for (let i = 0; days.length < 6; i++) { const d = new Date(now); d.setDate(d.getDate() + i); if (d.getDay() === 0) continue; days.push([i, i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : DN[d.getDay()] + ' ' + d.getDate(), i === 0 ? 'сегодня' : i === 1 ? 'завтра' : DN[d.getDay()] + ', ' + d.getDate() + ' ' + MN[d.getMonth()]]); }
+$('#fd').innerHTML = days.map(([i, l]) => `<button data-v="${i}">${l}</button>`).join('');
+const st = { p: null, d: null, t: null };
+const times = () => { $('#ft').innerHTML = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00'].map((t, i) => { const past = st.d === 0 && +t.slice(0, 2) <= now.getHours(), busy = (i * 2 + (st.d || 0) + (st.p || 0)) % 4 === 0; return `<button data-v="${t}"${past || busy ? ' class="x"' : ''}>${t}</button>`; }).join(''); st.t = null; };
+times();
+const up = () => { const go = $('#go'), ok = st.p !== null && st.d !== null && st.t; $('#s1').textContent = st.p !== null ? PR[st.p][0] + ' · ' + PR[st.p][2] + ' мин' : '—';
+  $('#s2').textContent = st.d !== null ? days.find((x) => x[0] === st.d)[2] + (st.t ? ', ' + st.t : '') : '—'; $('#s3').textContent = st.p === null ? '—' : PR[st.p][1] ? PR[st.p][1].toLocaleString('ru-RU') + ' с' : '0 с';
+  go.disabled = !ok; go.textContent = ok ? 'Записаться' : st.p === null ? 'Выберите процедуру' : st.d === null ? 'Выберите день' : 'Выберите время'; };
+const setP = (v) => { st.p = v; $$('#fp [data-v]').forEach((b) => b.classList.toggle('on', +b.dataset.v === v)); $$('#pr [data-v]').forEach((b) => b.classList.toggle('on', +b.dataset.v === v)); times(); up(); };
+$('#pr').addEventListener('pick', (e) => { setP(+e.detail); setTimeout(() => $('#book').scrollIntoView({ behavior: 'smooth' }), 350); });
+$('#fp').addEventListener('pick', (e) => setP(+e.detail));
+$('#fd').addEventListener('pick', (e) => { st.d = +e.detail; times(); up(); }); $('#ft').addEventListener('pick', (e) => { st.t = e.detail; up(); });
+$('#go').onclick = () => toast('Вы записаны', `${PR[st.p][0]}, ${$('#s2').textContent}. Напомним в WhatsApp за день.`);
+up();
+</script></body></html>

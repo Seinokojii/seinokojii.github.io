@@ -1,0 +1,166 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Аркар — фитнес-клуб · пример сайта</title><meta name="theme-color" content="#0A0A0F">
+<link rel="preload" href="../m/ph/athlete0.jpg" as="image">
+<link rel="stylesheet" href="../m/kit.css?v=4">
+<style>
+@font-face{font-family:Dela;font-display:swap;src:url(../fonts/dela-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Dela;font-display:swap;src:url(../fonts/dela-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Man;font-weight:200 800;font-display:swap;src:url(../fonts/manrope-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Man;font-weight:200 800;font-display:swap;src:url(../fonts/manrope-cyrillic-ext.woff2)format("woff2");unicode-range:U+0460-052F}
+@font-face{font-family:Man;font-weight:200 800;font-display:swap;src:url(../fonts/manrope-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+:root{--bg:#0A0A0F;--ink:#F4F4F2;--mut:#8D8D96;--line:#22222A;--card:#131318}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 Man,system-ui,sans-serif}
+::selection{background:#fff;color:#0A0A0F}
+.w{width:min(1320px,100% - 40px);margin-inline:auto}
+.nav{position:fixed;inset:0 0 auto;z-index:60;background:linear-gradient(rgba(10,10,15,.85),transparent)}
+.nav .w{display:flex;align-items:center;gap:26px;height:72px}
+.lg{font:400 20px/1 Dela;letter-spacing:.02em}
+.nav nav{display:flex;gap:26px;margin-left:auto;font:600 13px/1 Man;letter-spacing:.08em;text-transform:uppercase;color:#B5B5BC}.nav nav a:hover{color:#fff}
+.bt{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#0A0A0F;font:800 13px/1 Man;letter-spacing:.06em;text-transform:uppercase;padding:15px 20px;border-radius:999px;transition:transform .3s}
+.bt:hover{transform:scale(1.04)}
+@media(max-width:760px){.nav nav{display:none}.nav .w{justify-content:space-between}}
+/* первый экран: фото, слово тянется от скорости прокрутки */
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden;display:grid;align-content:end}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;scale:1.15;animation:zo 3s cubic-bezier(.16,1,.3,1) forwards;translate:0 calc(var(--p,0)*120px)}
+@keyframes zo{to{scale:1}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,15,.2),rgba(10,10,15,0) 40%,rgba(10,10,15,.9))}
+.hero .w{position:relative;z-index:2;padding-bottom:38px}
+.big{font:400 clamp(72px,16.5vw,270px)/.8 Dela;text-transform:uppercase;letter-spacing:-.02em;text-align:center;transform-origin:50% 100%;transform:scaleY(var(--st,1)) skewX(var(--sk,0deg));will-change:transform;margin-bottom:28px}
+.ecg{position:absolute;z-index:2;left:0;right:0;bottom:30%;height:120px;pointer-events:none;opacity:.9}
+.ecg path{fill:none;stroke:#fff;stroke-width:2.2;stroke-linejoin:round;stroke-dasharray:1400 1400;animation:ecg 3.2s linear infinite;filter:drop-shadow(0 0 6px rgba(255,255,255,.6))}
+@keyframes ecg{from{stroke-dashoffset:1400}to{stroke-dashoffset:-1400}}
+.bpm{position:absolute;z-index:3;right:max(20px,calc((100vw - 1320px)/2));top:110px;display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:999px;background:rgba(10,10,15,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);font:700 13px/1 Man}
+.bpm svg{width:20px;height:20px;fill:#fff;animation:beat .47s ease-in-out infinite alternate}.bpm b{font:400 22px/1 Dela}
+@keyframes beat{to{transform:scale(1.25)}}
+/* загруженность зала */
+.load{margin-top:120px;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,80px);align-items:end;background:var(--card);border-radius:34px;padding:clamp(24px,4vw,54px)}
+.load h2{font:400 clamp(34px,4vw,58px)/1 Dela}.load .now{margin-top:20px;display:flex;align-items:center;gap:10px;color:#C8C8CE}.load .now i{width:10px;height:10px;border-radius:50%;background:#fff;animation:bl 1.4s infinite}
+@keyframes bl{50%{opacity:.2}}
+.load .now b{font:400 30px/1 Dela;color:#fff}
+.bars{display:grid;grid-template-columns:repeat(18,1fr);align-items:end;gap:6px;height:220px}
+.bars div{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px}
+.bars i{width:100%;border-radius:6px 6px 2px 2px;background:#2E2E37;height:calc(var(--h)*1%);transform-origin:bottom;transform:scaleY(0);transition:transform .9s cubic-bezier(.16,1,.3,1),background .3s;transition-delay:calc(var(--k)*30ms)}
+.load.in .bars i{transform:none}.bars .cur i{background:#fff}.bars div:hover i{background:#8D8D96}
+.bars span{font:600 10px/1 Man;color:var(--mut)}.bars .cur span{color:#fff}
+.bars div:not(:nth-child(3n+1)) span{visibility:hidden}
+@media(max-width:860px){.load{grid-template-columns:1fr}.bars{height:160px;gap:3px}}
+/* блины-разделители */
+.plates{display:flex;gap:14px;justify-content:center;margin:110px 0 0;flex-wrap:wrap}
+.plates span{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#0A0A0F 0 12px,#1C1C23 13px 30px,#2A2A33 31px 32px,#1C1C23 33px);box-shadow:inset 0 0 0 2px #55555F;font:400 15px/1 Dela;color:#D0D0D6;position:relative}
+.plates span b{position:absolute;top:12px;font:700 9px/1 Man;letter-spacing:.1em}
+@media(max-width:600px){.plates{gap:8px}.plates span{width:64px;height:64px;font-size:11px}.plates span b{top:8px;font-size:7px}}
+.plates span:hover{animation:spinp 1s cubic-bezier(.16,1,.3,1)}@keyframes spinp{to{rotate:360deg}}
+.row{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.row p{max-width:420px;font-size:17px;line-height:1.5;color:#D0D0D6}
+.row .bt{padding:20px 28px;font-size:14px}
+/* цифры */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.stats div{padding:40px 24px 36px;border-right:1px solid var(--line)}.stats div:last-child{border:0}
+.stats b{display:block;font:400 clamp(40px,4.6vw,68px)/1 Dela}
+.stats span{display:block;margin-top:10px;font-size:13px;color:var(--mut)}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+/* зал: три фото с подписями, горизонтально от прокрутки */
+.zones{height:300vh;position:relative}
+.zones .st{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.zones h2{font:400 clamp(40px,5vw,76px)/1 Dela;padding:0 max(20px,calc((100vw - 1320px)/2))}
+.track{display:flex;gap:20px;margin-top:40px;padding-left:max(20px,calc((100vw - 1320px)/2));transform:translateX(calc(var(--s,0)*(-1 * var(--tw,0px))));will-change:transform}
+.zn{flex:none;width:min(520px,78vw);aspect-ratio:4/5;max-height:62vh;position:relative;border-radius:28px;overflow:hidden;background:var(--card)}
+.zn img{width:100%;height:100%;object-fit:cover}
+.zn::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.zn p{position:absolute;z-index:2;left:24px;right:24px;bottom:22px}.zn b{display:block;font:400 28px/1.1 Dela}.zn span{font-size:14px;color:#C8C8CE}
+/* расписание */
+.sec{padding-top:120px}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.h2{font:400 clamp(40px,5vw,76px)/1 Dela}
+.hd p{color:var(--mut);max-width:360px}
+.days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.days [data-v]{flex:none;padding:14px 18px;border-radius:999px;background:var(--card);font:700 14px/1 Man;color:#BDBDC4}
+.days [data-v].on{background:#fff;color:#0A0A0F}
+.cls{margin-top:20px;display:grid;gap:8px}
+.cl{display:grid;grid-template-columns:90px 1fr 180px 170px;align-items:center;gap:16px;padding:18px 22px;border-radius:22px;background:var(--card);transition:background .3s,transform .5s cubic-bezier(.16,1,.3,1);animation:in .6s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i)*60ms)}
+@keyframes in{from{opacity:0;transform:translateY(16px)}}
+.cl:hover{background:#1A1A21}
+.cl time{font:400 22px/1 Dela}.cl b{font:700 18px/1.2 Man}.cl small{display:block;color:var(--mut);font-size:13px;font-weight:500;margin-top:3px}
+.bar{height:6px;border-radius:3px;background:#2A2A33;overflow:hidden}.bar i{display:block;height:100%;background:#fff;border-radius:3px;transition:width .6s cubic-bezier(.16,1,.3,1)}
+.left{font-size:12px;color:var(--mut);margin-top:7px}
+.cl button{justify-self:end;padding:13px 18px;border-radius:999px;background:#fff;color:#0A0A0F;font:800 12px/1 Man;letter-spacing:.06em;text-transform:uppercase;transition:background .3s,color .3s}
+.cl button.ok{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px #fff}
+.cl button:disabled{background:#2A2A33;color:#77777F;cursor:not-allowed}
+@media(max-width:760px){.cl{grid-template-columns:62px 1fr;row-gap:12px;padding:16px}.cl time{font-size:18px}.cl .sp{grid-column:1/-1}.cl button{grid-column:1/-1;justify-self:stretch}}
+/* абонементы */
+.per{display:inline-flex;padding:5px;border-radius:999px;background:var(--card);gap:4px}
+.per [data-v]{padding:12px 18px;border-radius:999px;font:700 14px/1 Man;color:#BDBDC4}.per [data-v].on{background:#fff;color:#0A0A0F}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pl{border-radius:30px;padding:30px;background:var(--card);display:flex;flex-direction:column}
+.pl.hot{background:#F4F4F2;color:#0A0A0F}.pl.hot .mt,.pl.hot li{color:#55555E}
+.pl h3{font:400 26px/1.1 Dela}.pl .mt{color:var(--mut);font-size:14px;margin-top:6px}
+.pl .pr{margin-top:28px;font:400 50px/1 Dela;letter-spacing:-.02em}.pl .pr small{font:600 14px/1 Man;margin-left:6px;letter-spacing:0}
+.pl .eco{font-size:13px;margin-top:8px;min-height:20px;color:var(--mut)}
+.pl ul{list-style:none;margin:24px 0 28px;display:grid;gap:10px;flex:1}.pl li{font-size:15px;color:#C4C4CB;padding-left:26px;position:relative}
+.pl li::before{content:"";position:absolute;left:0;top:7px;width:12px;height:7px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg)}
+.pl .bt{justify-content:center}.pl.hot .bt{background:#0A0A0F;color:#fff}
+@media(max-width:900px){.plans{grid-template-columns:1fr}}
+.end{padding:140px 0 130px;text-align:center}
+.end h2{font:400 clamp(40px,10vw,170px)/.9 Dela}
+.end p{margin-top:26px;color:var(--mut);line-height:1.8}
+.end .bt{margin-top:30px;padding:20px 30px}
+</style></head><body>
+<header class="nav"><div class="w"><a class="lg" href="#top">АРКАР</a><nav><a href="#zones">Зал</a><a href="#sched">Расписание</a><a href="#plans">Абонементы</a></nav><a class="bt" href="#sched">Пробная — 0 сом</a></div></header>
+<section class="hero" id="top" data-p><img src="../m/ph/athlete0.jpg" alt="Спортсмен на старте в зале «Аркар»">
+  <svg class="ecg" viewBox="0 0 1400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70H360l20-6 14 6h40l14-52 18 96 16-62 12 18h60l18-8 16 8H900l20-6 14 6h40l14-52 18 96 16-62 12 18h60l18-8 16 8H1400"/></svg>
+  <p class="bpm" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11Z"/></svg><b id="bpm">128</b>уд/мин</p>
+  <div class="w"><h1 class="big" id="big"><span data-split style="--d:150ms">Аркар</span></h1>
+  <div class="row" data-r style="--d:700ms"><p>Фитнес-клуб в Бишкеке. Тренажёры, бокс, функционалка — и тренер, который заметит, что вы пропустили.</p><a class="bt" href="#sched">Записаться на пробную</a></div></div></section>
+<div class="w stats"><div data-r><b data-c="1200">0</b><span>м² зала</span></div><div data-r style="--d:100ms"><b data-c="14">0</b><span>тренеров</span></div><div data-r style="--d:200ms"><b data-c="38">0</b><span>занятий в неделю</span></div><div data-r style="--d:300ms"><b>6–23</b><span>каждый день</span></div></div>
+
+<section class="zones" id="zones" data-p><div class="st"><h2 data-r>Пять зон. Один абонемент.</h2>
+<div class="track" id="track"><div class="zn"><img src="../m/ph/gym0.jpg" alt="Тренажёрный зал" loading="lazy"><p><b>Железо</b><span>свободные веса, 6 рам, помосты</span></p></div>
+<div class="zn"><img src="../m/ph/gym1.jpg" alt="Зал функционального тренинга" loading="lazy"><p><b>Функционалка</b><span>группы до 12 человек</span></p></div>
+<div class="zn"><img src="../m/ph/gym3.jpg" alt="Гантели" loading="lazy"><p><b>Гантели до 50 кг</b><span>шаг 1 кг — подберёте точно</span></p></div>
+<div class="zn"><img src="../m/ph/athlete1.jpg" alt="Кольца" loading="lazy"><p><b>Гимнастика</b><span>кольца, турники, канаты</span></p></div>
+<div class="zn"><img src="../m/ph/gym2.jpg" alt="Беговая зона" loading="lazy"><p><b>Кардио</b><span>дорожки, гребля, байки</span></p></div></div></div></section>
+
+<section class="sec w" id="sched"><div class="hd"><h2 class="h2" data-r>Расписание</h2><p data-r>Выберите день и нажмите «Записаться». Полоска показывает, сколько мест занято.</p></div>
+<div class="days pick" id="dy"></div><div class="cls" id="cls"></div></section>
+
+<section class="w load" id="load" data-r><div><h2>Когда в зале свободнее</h2><p class="now"><i></i>Сейчас в зале:&nbsp;<b id="ppl">23</b>&nbsp;чел.</p><p style="color:var(--mut);margin-top:14px;font-size:15px">Обычно по будням. Приходите в светлые часы — тренажёры свободны.</p></div><div class="bars" id="bars"></div></section>
+<section class="sec w" id="plans"><div class="hd"><h2 class="h2" data-r>Абонементы</h2><div class="per pick" id="per" data-r><button data-v="1" class="on">Месяц</button><button data-v="3">3 месяца</button><button data-v="12">Год</button></div></div>
+<div class="plans"><div class="pl" data-r><h3>Утро</h3><p class="mt">до 16:00, будни</p><p class="pr"><span data-pp="2400">2 400</span><small>сом/мес</small></p><p class="eco" data-e></p><ul><li>Все пять зон</li><li>Раздевалка и душ</li><li>Вводная с тренером</li></ul><a class="bt" href="#sched">Выбрать</a></div>
+<div class="pl hot" data-r style="--d:100ms"><h3>Полный</h3><p class="mt">любое время, каждый день</p><p class="pr"><span data-pp="3500">3 500</span><small>сом/мес</small></p><p class="eco" data-e></p><ul><li>Всё из «Утра»</li><li>Групповые занятия</li><li>Заморозка 14 дней</li></ul><a class="bt" href="#sched">Выбрать</a></div>
+<div class="pl" data-r style="--d:200ms"><h3>С тренером</h3><p class="mt">8 персональных в месяц</p><p class="pr"><span data-pp="9900">9 900</span><small>сом/мес</small></p><p class="eco" data-e></p><ul><li>Всё из «Полного»</li><li>План тренировок и питания</li><li>Замеры раз в 2 недели</li></ul><a class="bt" href="#sched">Выбрать</a></div></div></section>
+
+<div class="w plates" aria-hidden="true"><span><b>KG</b>1,25</span><span><b>KG</b>2,5</span><span><b>KG</b>5</span><span><b>KG</b>10</span><span><b>KG</b>15</span><span><b>KG</b>20</span><span><b>KG</b>25</span></div>
+<section class="end w"><h2 data-r>Первая — бесплатно</h2><p data-r>Бишкек, Ахунбаева, 144 · +996 550 44 44 00<br>каждый день 6:00–23:00</p><a class="bt" href="#sched" data-r>Записаться на пробную</a></section>
+<div class="concept"><span>пример Seinokojii · клуб вымышленный</span><a href="/#works">← Все примеры</a></div>
+<script src="../m/kit.js?v=4"></script>
+<script>
+// слово тянется и наклоняется от скорости прокрутки
+(() => { const big = $('#big'); let y = scrollY, v = 0; (function f() { const d = scrollY - y; y = scrollY; v += (d - v) * .12; const a = Math.min(1, Math.abs(v) / 40);
+  big.style.setProperty('--st', (1 + a * .55).toFixed(3)); big.style.setProperty('--sk', (Math.sign(v) * a * -8).toFixed(2) + 'deg'); requestAnimationFrame(f); })(); })();
+// цифры бегут при появлении
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { countTo(e.target, +e.target.dataset.c); io.unobserve(e.target); } }), { threshold: .6 });
+$$('[data-c]').forEach((n) => io.observe(n));
+// горизонтальная лента залов
+const tr = $('#track'), tw = () => tr.style.setProperty('--tw', Math.max(0, tr.scrollWidth - innerWidth + 40) + 'px'); tw(); addEventListener('resize', tw);
+// расписание
+const DN = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'], CL = [['07:00', 'Функционалка', 'Азамат', 12], ['09:00', 'Растяжка', 'Айпери', 14], ['12:30', 'Бокс', 'Нурбек', 10], ['18:00', 'Кроссфит', 'Азамат', 12], ['19:30', 'Бокс', 'Нурбек', 10], ['20:30', 'Йога', 'Айпери', 14]];
+const mine = new Set(), now = new Date(); let day = 0;
+$('#dy').innerHTML = [...Array(7)].map((_, i) => { const d = new Date(now); d.setDate(d.getDate() + i); return `<button data-v="${i}"${i ? '' : ' class="on"'}>${i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : DN[d.getDay()] + ' ' + d.getDate()}</button>`; }).join('');
+function list() { $('#cls').innerHTML = CL.map(([t, n, c, cap], i) => { const k = day + '-' + i, taken = Math.min(cap, (i * 5 + day * 3 + 4) % (cap + 3)) + (mine.has(k) ? 1 : 0), past = day === 0 && +t.slice(0, 2) <= now.getHours(), full = taken >= cap && !mine.has(k);
+  return `<div class="cl" style="--i:${i}"><time>${t}</time><div><b>${n}</b><small>${c} · 55 минут</small></div><div class="sp"><div class="bar"><i style="width:${taken / cap * 100}%"></i></div><p class="left">${full ? 'мест нет' : 'свободно ' + (cap - taken) + ' из ' + cap}</p></div>
+  <button data-k="${k}"${past || full ? ' disabled' : ''} class="${mine.has(k) ? 'ok' : ''}">${past ? 'Прошло' : mine.has(k) ? 'Вы записаны ✓' : full ? 'Нет мест' : 'Записаться'}</button></div>`; }).join(''); }
+$('#dy').addEventListener('pick', (e) => { day = +e.detail; list(); });
+$('#cls').addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return; const k = b.dataset.k, i = +k.split('-')[1];
+  if (mine.has(k)) { mine.delete(k); toast('Запись отменена', CL[i][1] + ', ' + CL[i][0]); } else { mine.add(k); toast('Вы записаны', `${CL[i][1]} в ${CL[i][0]} · тренер ${CL[i][2]} напомнит за 2 часа`); } list(); });
+list();
+// пульс: меняется от скорости прокрутки
+(() => { let y = scrollY, b = 92; const el = $('#bpm'); setInterval(() => { const v = Math.abs(scrollY - y); y = scrollY; b += ((96 + Math.min(80, v / 6)) - b) * .3; el.textContent = Math.round(b); }, 300); })();
+// загруженность по часам 6–23, текущий час подсвечен
+(() => { const L = [8, 22, 38, 30, 18, 14, 20, 26, 22, 18, 28, 52, 78, 92, 84, 60, 34, 14], h = new Date().getHours();
+  $('#bars').innerHTML = L.map((v, i) => `<div class="${i + 6 === h ? 'cur' : ''}" title="${i + 6}:00 — ${v < 30 ? 'свободно' : v < 65 ? 'средне' : 'много людей'}"><i style="--h:${v};--k:${i}"></i><span>${i + 6}</span></div>`).join('');
+  const k = h >= 6 && h <= 23 ? L[h - 6] : 4; $('#ppl').textContent = Math.max(2, Math.round(k * .45)); })();
+// абонементы: скидка за срок
+$('#per').addEventListener('pick', (e) => { const m = +e.detail, k = m === 1 ? 1 : m === 3 ? .9 : .75;
+  $$('[data-pp]').forEach((s) => countTo(s, Math.round(+s.dataset.pp * k / 10) * 10)); $$('[data-e]').forEach((n, i) => { const base = [2400, 3500, 9900][i]; n.textContent = m === 1 ? '' : 'за ' + m + ' мес: ' + (Math.round(base * k / 10) * 10 * m).toLocaleString('ru-RU') + ' сом · выгода ' + (m === 3 ? '10' : '25') + '%'; }); });
+$$('[data-pp]').forEach((s) => s.dataset.v = s.dataset.pp);
+</script></body></html>

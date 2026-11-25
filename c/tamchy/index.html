@@ -1,0 +1,191 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Тамчы — кофейня · пример сайта</title><meta name="theme-color" content="#ffffff">
+<link rel="preload" href="../m/ph/coffee3.jpg" as="image">
+<link rel="stylesheet" href="../m/kit.css?v=4">
+<style>
+@font-face{font-family:Unb;font-weight:200 900;font-display:swap;src:url(../fonts/unbounded-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:Unb;font-weight:200 900;font-display:swap;src:url(../fonts/unbounded-cyrillic-ext.woff2)format("woff2");unicode-range:U+0460-052F}
+@font-face{font-family:Unb;font-weight:200 900;font-display:swap;src:url(../fonts/unbounded-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:On;font-weight:100 900;font-display:swap;src:url(../fonts/onest-cyrillic.woff2)format("woff2");unicode-range:U+0400-045F}
+@font-face{font-family:On;font-weight:100 900;font-display:swap;src:url(../fonts/onest-cyrillic-ext.woff2)format("woff2");unicode-range:U+0460-052F}
+@font-face{font-family:On;font-weight:100 900;font-display:swap;src:url(../fonts/onest-latin.woff2)format("woff2");unicode-range:U+0000-00FF,U+2000-206F}
+:root{--ink:#0A0A0F;--mut:#77777F;--line:#E8E8EB;--paper:#F3F3F1}
+body{background:#fff;color:var(--ink);font:400 16px/1.55 On,system-ui,sans-serif}
+.w{width:min(1240px,100% - 40px);margin-inline:auto}
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.8);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5)}
+.nav .w{display:flex;align-items:center;gap:26px;height:66px}
+.lg{display:flex;align-items:center;gap:8px;font:600 17px/1 Unb;letter-spacing:-.02em}
+.lg .tm{width:44px;height:44px;--lg-bg:#fff}.lg b{font:600 19px/1 Unb;letter-spacing:-.04em}.lg small{display:block;font:500 8.5px/1 On;letter-spacing:.32em;color:var(--mut);margin-top:4px}
+.seal{position:absolute;z-index:2;left:0;top:4%;width:140px;height:140px;color:var(--ink);--lg-bg:#fff;background:#fff;border-radius:50%;box-shadow:0 20px 40px -20px rgba(0,0,0,.35);animation:rot 60s linear infinite}
+@keyframes rot{to{rotate:360deg}}
+.seal-c{position:absolute;left:4%;top:6%;width:120px;height:120px;display:grid;place-items:center}.seal-c .tm{width:30px;height:39px;--bgc:#fff}
+.end .tm{width:150px;height:150px;--lg-bg:var(--ink);color:#fff;margin-bottom:30px}
+@media(max-width:860px){.seal{width:100px;height:100px;left:0;top:2%}}
+.nav nav{display:flex;gap:24px;margin-left:auto;font-size:14px;color:#5A5A62}.nav nav a:hover{color:var(--ink)}
+.bag{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;background:var(--ink);color:#fff;font:500 14px/1 On}
+.bag b{min-width:22px;height:22px;border-radius:11px;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:12px;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.bag b.pop{transform:scale(1.35)}
+@media(max-width:700px){.nav nav{display:none}.nav .w{justify-content:space-between}}
+/* первый экран: чашка сверху, круги от касания */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px;min-height:calc(100svh - 66px);padding:30px 0 60px}
+.k{font:500 12px/1 On;letter-spacing:.24em;color:var(--mut)}
+h1{font:300 clamp(40px,5.4vw,84px)/1 Unb;letter-spacing:-.06em;margin-top:24px}
+h1 b{font-weight:600}
+.lead{max-width:440px;margin-top:26px;font-size:18px;line-height:1.5;color:#55555E}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:18px 26px;border-radius:999px;background:var(--ink);color:#fff;font:500 15px/1 On;transition:transform .3s,background .3s}
+.btn:hover{transform:translateY(-2px);background:#25252D}
+.btn.g{background:var(--paper);color:var(--ink)}.btn.g:hover{background:#E8E8E6}
+.now{display:flex;align-items:center;gap:10px;margin-top:34px;font-size:14px;color:var(--mut)}
+.now i{width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 0 rgba(10,10,15,.4);animation:pl 2s infinite}
+@keyframes pl{70%{box-shadow:0 0 0 10px rgba(10,10,15,0)}100%{box-shadow:0 0 0 0 rgba(10,10,15,0)}}
+.cup{position:relative;aspect-ratio:1;max-width:620px;width:100%;justify-self:center;cursor:crosshair;touch-action:manipulation}
+.cup .disc{position:absolute;inset:6%;border-radius:50%;overflow:hidden;box-shadow:0 60px 80px -50px rgba(0,0,0,.35)}
+.cup img{width:100%;height:100%;object-fit:cover;scale:1.5;animation:spin 60s linear infinite}
+@keyframes spin{to{rotate:360deg}}
+.cup canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.tip{position:absolute;right:2%;bottom:8%;padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);box-shadow:0 20px 40px -18px rgba(0,0,0,.3);font-size:13px;line-height:1.35}
+.tip b{display:block;font:600 15px/1.3 On}
+.tip2{position:absolute;left:2%;bottom:12%;padding:10px 14px;border-radius:16px;background:var(--ink);color:#fff;font-size:13px;animation:fl 5s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-10px)}}
+@media(max-width:860px){.hero{grid-template-columns:1fr;min-height:0;padding-top:20px;gap:10px}.cup{max-width:420px;order:-1}}
+/* меню */
+.sec{padding-top:110px}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.h2{font:300 clamp(36px,4.6vw,66px)/1 Unb;letter-spacing:-.06em}.h2 b{font-weight:600}
+.tabs{display:flex;gap:6px;padding:5px;border-radius:999px;background:var(--paper)}
+.tabs [data-v]{padding:11px 18px;border-radius:999px;font:500 14px/1 On}
+.tabs [data-v].on{background:#fff;box-shadow:0 6px 16px -8px rgba(0,0,0,.25)}
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+.it{border-radius:30px;background:var(--paper);padding:12px 12px 18px;display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+.it:hover{transform:translateY(-6px);box-shadow:0 40px 60px -40px rgba(0,0,0,.35)}
+.it .im{aspect-ratio:1.15;border-radius:22px;overflow:hidden;background:#fff}
+.it .im img{width:100%;height:100%;object-fit:cover;transition:scale 1.2s cubic-bezier(.16,1,.3,1)}.it:hover .im img{scale:1.06}
+.it h3{font:600 19px/1.2 Unb;letter-spacing:-.04em;margin:16px 8px 0}
+.it p{margin:6px 8px 0;font-size:14px;color:var(--mut);flex:1}
+.it .row{display:flex;align-items:center;justify-content:space-between;margin:16px 8px 0}
+.it .row b{font:600 18px/1 On}
+.qty{display:flex;align-items:center;gap:4px;background:#fff;border-radius:999px;padding:4px}
+.qty button{width:36px;height:36px;border-radius:50%;font-size:20px;line-height:1;display:grid;place-items:center}
+.qty button:hover{background:var(--paper)}.qty .p{background:var(--ink);color:#fff}.qty .p:hover{background:#2A2A33}
+.qty span{min-width:20px;text-align:center;font-weight:600}
+.qty:not(.has) .m,.qty:not(.has) span{display:none}
+.it.gone{display:none}
+@media(max-width:960px){.menu{grid-template-columns:1fr 1fr}}@media(max-width:560px){.menu{grid-template-columns:1fr}.it{flex-direction:row;gap:14px;padding:10px;align-items:center;border-radius:24px}.it .im{width:96px;flex:none;aspect-ratio:1;border-radius:16px}.it>div{flex:1;min-width:0}.it h3{margin:0;font-size:16px}.it p{margin:2px 0 0;font-size:13px}.it .row{margin:8px 0 0}}
+/* корзина */
+.cart{position:fixed;left:50%;bottom:20px;z-index:100;width:min(560px,calc(100% - 24px));translate:-50% 160%;background:var(--ink);color:#fff;border-radius:28px;padding:16px 16px 16px 22px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);transition:translate .7s cubic-bezier(.16,1,.3,1)}
+.cart.on{translate:-50% 0}
+.cart .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cart .top p{font-size:13px;color:#A0A0A8}.cart .top p b{display:block;color:#fff;font:600 22px/1.2 On}
+.cart .go{background:#fff;color:var(--ink);padding:15px 20px;border-radius:999px;font:600 14px/1 On;white-space:nowrap}
+.when{display:flex;align-items:center;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid #26262E;font-size:13px;color:#A0A0A8}
+.when input{flex:1;accent-color:#fff}.when b{color:#fff;min-width:100px;text-align:right}
+/* как это работает */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.how div{border-radius:30px;padding:30px;background:var(--paper)}
+.how em{font:600 13px/1 Unb;font-style:normal;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.how h3{font:600 20px/1.2 Unb;letter-spacing:-.04em;margin-top:22px}.how p{color:var(--mut);margin-top:8px;font-size:15px}
+@media(max-width:860px){.how{grid-template-columns:1fr}}@media(max-width:760px){.cart{bottom:66px}}
+.end{margin-top:110px;background:var(--ink);color:#fff;padding:100px 0 130px}
+.end .w{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end}
+.end h2{font:300 clamp(56px,10vw,150px)/.9 Unb;letter-spacing:-.07em}
+.end p{color:#A0A0A8;font-size:15px;line-height:1.8}.end p b{color:#fff;font-weight:500}
+@media(max-width:760px){.end .w{grid-template-columns:1fr}}
+</style></head><body>
+<header class="nav"><div class="w"><a class="lg" href="#top"><svg class="tm" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Тамчы — кофейня">
+<defs><path id="tmt2" d="M24,110 A86,86 0 0,1 196,110"/><path id="tmb2" d="M17,110 A93,93 0 0,0 203,110"/>
+<clipPath id="tmd2"><path d="M110,52 C110,52 72,98 72,124 a38,38 0 0 0 76,0 C148,98 110,52 110,52 Z"/></clipPath></defs>
+<circle cx="110" cy="110" r="107" stroke="currentColor" stroke-width="1.6"/><circle cx="110" cy="110" r="102" stroke="currentColor" stroke-width=".6"/>
+<circle cx="110" cy="110" r="70" stroke="currentColor" stroke-width="1.1"/>
+<g fill="currentColor"><circle cx="176" cy="110" r="0.8"/><circle cx="175.75" cy="115.75" r="0.8"/><circle cx="175" cy="121.46" r="0.8"/><circle cx="173.75" cy="127.08" r="0.8"/><circle cx="172.02" cy="132.57" r="0.8"/><circle cx="169.82" cy="137.89" r="0.8"/><circle cx="167.16" cy="143" r="0.8"/><circle cx="164.06" cy="147.86" r="0.8"/><circle cx="160.56" cy="152.42" r="0.8"/><circle cx="156.67" cy="156.67" r="0.8"/><circle cx="152.42" cy="160.56" r="0.8"/><circle cx="147.86" cy="164.06" r="0.8"/><circle cx="143" cy="167.16" r="0.8"/><circle cx="137.89" cy="169.82" r="0.8"/><circle cx="132.57" cy="172.02" r="0.8"/><circle cx="127.08" cy="173.75" r="0.8"/><circle cx="121.46" cy="175" r="0.8"/><circle cx="115.75" cy="175.75" r="0.8"/><circle cx="110" cy="176" r="0.8"/><circle cx="104.25" cy="175.75" r="0.8"/><circle cx="98.54" cy="175" r="0.8"/><circle cx="92.92" cy="173.75" r="0.8"/><circle cx="87.43" cy="172.02" r="0.8"/><circle cx="82.11" cy="169.82" r="0.8"/><circle cx="77" cy="167.16" r="0.8"/><circle cx="72.14" cy="164.06" r="0.8"/><circle cx="67.58" cy="160.56" r="0.8"/><circle cx="63.33" cy="156.67" r="0.8"/><circle cx="59.44" cy="152.42" r="0.8"/><circle cx="55.94" cy="147.86" r="0.8"/><circle cx="52.84" cy="143" r="0.8"/><circle cx="50.18" cy="137.89" r="0.8"/><circle cx="47.98" cy="132.57" r="0.8"/><circle cx="46.25" cy="127.08" r="0.8"/><circle cx="45" cy="121.46" r="0.8"/><circle cx="44.25" cy="115.75" r="0.8"/><circle cx="44" cy="110" r="0.8"/><circle cx="44.25" cy="104.25" r="0.8"/><circle cx="45" cy="98.54" r="0.8"/><circle cx="46.25" cy="92.92" r="0.8"/><circle cx="47.98" cy="87.43" r="0.8"/><circle cx="50.18" cy="82.11" r="0.8"/><circle cx="52.84" cy="77" r="0.8"/><circle cx="55.94" cy="72.14" r="0.8"/><circle cx="59.44" cy="67.58" r="0.8"/><circle cx="63.33" cy="63.33" r="0.8"/><circle cx="67.58" cy="59.44" r="0.8"/><circle cx="72.14" cy="55.94" r="0.8"/><circle cx="77" cy="52.84" r="0.8"/><circle cx="82.11" cy="50.18" r="0.8"/><circle cx="137.89" cy="50.18" r="0.8"/><circle cx="143" cy="52.84" r="0.8"/><circle cx="147.86" cy="55.94" r="0.8"/><circle cx="152.42" cy="59.44" r="0.8"/><circle cx="156.67" cy="63.33" r="0.8"/><circle cx="160.56" cy="67.58" r="0.8"/><circle cx="164.06" cy="72.14" r="0.8"/><circle cx="167.16" cy="77" r="0.8"/><circle cx="169.82" cy="82.11" r="0.8"/><circle cx="172.02" cy="87.43" r="0.8"/><circle cx="173.75" cy="92.92" r="0.8"/><circle cx="175" cy="98.54" r="0.8"/><circle cx="175.75" cy="104.25" r="0.8"/></g>
+<g fill="currentColor" font-family="Unb, sans-serif" font-weight="500" font-size="12" letter-spacing="4.2">
+<text><textPath href="#tmt2" startOffset="50%" text-anchor="middle">ТАМЧЫ · COFFEE</textPath></text>
+<text><textPath href="#tmb2" startOffset="50%" text-anchor="middle">БИШКЕК · 2021</textPath></text></g>
+<g fill="currentColor"><polygon points="21,105.5 21.89,109.11 25.5,110 21.89,110.89 21,114.5 20.11,110.89 16.5,110 20.11,109.11"/><polygon points="199,105.5 199.89,109.11 203.5,110 199.89,110.89 199,114.5 198.11,110.89 194.5,110 198.11,109.11"/></g>
+<path d="M110,52 C110,52 72,98 72,124 a38,38 0 0 0 76,0 C148,98 110,52 110,52 Z" fill="currentColor"/>
+<g clip-path="url(#tmd2)" stroke="var(--lg-bg,#fff)" stroke-width=".8" opacity=".35"><line x1="60" y1="40" x2="20" y2="190"/><line x1="65" y1="40" x2="25" y2="190"/><line x1="70" y1="40" x2="30" y2="190"/><line x1="75" y1="40" x2="35" y2="190"/><line x1="80" y1="40" x2="40" y2="190"/><line x1="85" y1="40" x2="45" y2="190"/><line x1="90" y1="40" x2="50" y2="190"/><line x1="95" y1="40" x2="55" y2="190"/><line x1="100" y1="40" x2="60" y2="190"/><line x1="105" y1="40" x2="65" y2="190"/><line x1="110" y1="40" x2="70" y2="190"/><line x1="115" y1="40" x2="75" y2="190"/><line x1="120" y1="40" x2="80" y2="190"/><line x1="125" y1="40" x2="85" y2="190"/><line x1="130" y1="40" x2="90" y2="190"/><line x1="135" y1="40" x2="95" y2="190"/><line x1="140" y1="40" x2="100" y2="190"/><line x1="145" y1="40" x2="105" y2="190"/><line x1="150" y1="40" x2="110" y2="190"/><line x1="155" y1="40" x2="115" y2="190"/><line x1="160" y1="40" x2="120" y2="190"/><line x1="165" y1="40" x2="125" y2="190"/><line x1="170" y1="40" x2="130" y2="190"/><line x1="175" y1="40" x2="135" y2="190"/><line x1="180" y1="40" x2="140" y2="190"/><line x1="185" y1="40" x2="145" y2="190"/><line x1="190" y1="40" x2="150" y2="190"/><line x1="195" y1="40" x2="155" y2="190"/></g>
+<g transform="rotate(-24 110 126)"><ellipse cx="110" cy="126" rx="17" ry="24" fill="var(--lg-bg,#fff)"/>
+<path d="M111,103 C100,113 121,128 108,149" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g>
+</svg><span><b>тамчы</b><small>COFFEE · БИШКЕК</small></span></a><nav><a href="#menu">Меню</a><a href="#how">Как заказать</a><a href="#where">Где мы</a></nav>
+<a class="bag" href="#menu" aria-label="Заказ">Заказ <b id="bn">0</b></a></div></header>
+<section class="w hero" id="top"><div>
+  <p class="k" data-r>КОФЕЙНЯ · БИШКЕК, ТОКТОГУЛА 98</p>
+  <h1><span class="mask"><span data-split style="--d:150ms">Кофе, который</span></span><span class="mask"><b data-split style="--d:500ms">уже ждёт вас.</b></span></h1>
+  <p class="lead" data-r style="--d:500ms">Закажите по дороге — заберёте у стойки без очереди. Оплата на месте.</p>
+  <div class="acts" data-r style="--d:650ms"><a class="btn" href="#menu">Собрать заказ</a><a class="btn g" href="#how">Как это работает</a></div>
+  <p class="now" data-r style="--d:800ms"><i></i><span id="now">Открыто до 22:00 · бариста сейчас: Айгерим</span></p></div>
+  <div class="cup" id="cup" data-r="zoom"><div class="disc"><img src="../m/ph/coffee3.jpg" alt="Чашка кофе, вид сверху"></div><canvas id="rp" aria-hidden="true"></canvas>
+    <svg class="seal" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Тамчы — кофейня">
+<defs><path id="tmt1" d="M24,110 A86,86 0 0,1 196,110"/><path id="tmb1" d="M17,110 A93,93 0 0,0 203,110"/>
+<clipPath id="tmd1"><path d="M110,52 C110,52 72,98 72,124 a38,38 0 0 0 76,0 C148,98 110,52 110,52 Z"/></clipPath></defs>
+<circle cx="110" cy="110" r="107" stroke="currentColor" stroke-width="1.6"/><circle cx="110" cy="110" r="102" stroke="currentColor" stroke-width=".6"/>
+<circle cx="110" cy="110" r="70" stroke="currentColor" stroke-width="1.1"/>
+<g fill="currentColor"><circle cx="176" cy="110" r="0.8"/><circle cx="175.75" cy="115.75" r="0.8"/><circle cx="175" cy="121.46" r="0.8"/><circle cx="173.75" cy="127.08" r="0.8"/><circle cx="172.02" cy="132.57" r="0.8"/><circle cx="169.82" cy="137.89" r="0.8"/><circle cx="167.16" cy="143" r="0.8"/><circle cx="164.06" cy="147.86" r="0.8"/><circle cx="160.56" cy="152.42" r="0.8"/><circle cx="156.67" cy="156.67" r="0.8"/><circle cx="152.42" cy="160.56" r="0.8"/><circle cx="147.86" cy="164.06" r="0.8"/><circle cx="143" cy="167.16" r="0.8"/><circle cx="137.89" cy="169.82" r="0.8"/><circle cx="132.57" cy="172.02" r="0.8"/><circle cx="127.08" cy="173.75" r="0.8"/><circle cx="121.46" cy="175" r="0.8"/><circle cx="115.75" cy="175.75" r="0.8"/><circle cx="110" cy="176" r="0.8"/><circle cx="104.25" cy="175.75" r="0.8"/><circle cx="98.54" cy="175" r="0.8"/><circle cx="92.92" cy="173.75" r="0.8"/><circle cx="87.43" cy="172.02" r="0.8"/><circle cx="82.11" cy="169.82" r="0.8"/><circle cx="77" cy="167.16" r="0.8"/><circle cx="72.14" cy="164.06" r="0.8"/><circle cx="67.58" cy="160.56" r="0.8"/><circle cx="63.33" cy="156.67" r="0.8"/><circle cx="59.44" cy="152.42" r="0.8"/><circle cx="55.94" cy="147.86" r="0.8"/><circle cx="52.84" cy="143" r="0.8"/><circle cx="50.18" cy="137.89" r="0.8"/><circle cx="47.98" cy="132.57" r="0.8"/><circle cx="46.25" cy="127.08" r="0.8"/><circle cx="45" cy="121.46" r="0.8"/><circle cx="44.25" cy="115.75" r="0.8"/><circle cx="44" cy="110" r="0.8"/><circle cx="44.25" cy="104.25" r="0.8"/><circle cx="45" cy="98.54" r="0.8"/><circle cx="46.25" cy="92.92" r="0.8"/><circle cx="47.98" cy="87.43" r="0.8"/><circle cx="50.18" cy="82.11" r="0.8"/><circle cx="52.84" cy="77" r="0.8"/><circle cx="55.94" cy="72.14" r="0.8"/><circle cx="59.44" cy="67.58" r="0.8"/><circle cx="63.33" cy="63.33" r="0.8"/><circle cx="67.58" cy="59.44" r="0.8"/><circle cx="72.14" cy="55.94" r="0.8"/><circle cx="77" cy="52.84" r="0.8"/><circle cx="82.11" cy="50.18" r="0.8"/><circle cx="137.89" cy="50.18" r="0.8"/><circle cx="143" cy="52.84" r="0.8"/><circle cx="147.86" cy="55.94" r="0.8"/><circle cx="152.42" cy="59.44" r="0.8"/><circle cx="156.67" cy="63.33" r="0.8"/><circle cx="160.56" cy="67.58" r="0.8"/><circle cx="164.06" cy="72.14" r="0.8"/><circle cx="167.16" cy="77" r="0.8"/><circle cx="169.82" cy="82.11" r="0.8"/><circle cx="172.02" cy="87.43" r="0.8"/><circle cx="173.75" cy="92.92" r="0.8"/><circle cx="175" cy="98.54" r="0.8"/><circle cx="175.75" cy="104.25" r="0.8"/></g>
+<g fill="currentColor" font-family="Unb, sans-serif" font-weight="500" font-size="12" letter-spacing="4.2">
+<text><textPath href="#tmt1" startOffset="50%" text-anchor="middle">ТАМЧЫ · COFFEE</textPath></text>
+<text><textPath href="#tmb1" startOffset="50%" text-anchor="middle">БИШКЕК · 2021</textPath></text></g>
+<g fill="currentColor"><polygon points="21,105.5 21.89,109.11 25.5,110 21.89,110.89 21,114.5 20.11,110.89 16.5,110 20.11,109.11"/><polygon points="199,105.5 199.89,109.11 203.5,110 199.89,110.89 199,114.5 198.11,110.89 194.5,110 198.11,109.11"/></g>
+<path d="M110,52 C110,52 72,98 72,124 a38,38 0 0 0 76,0 C148,98 110,52 110,52 Z" fill="currentColor"/>
+<g clip-path="url(#tmd1)" stroke="var(--lg-bg,#fff)" stroke-width=".8" opacity=".35"><line x1="60" y1="40" x2="20" y2="190"/><line x1="65" y1="40" x2="25" y2="190"/><line x1="70" y1="40" x2="30" y2="190"/><line x1="75" y1="40" x2="35" y2="190"/><line x1="80" y1="40" x2="40" y2="190"/><line x1="85" y1="40" x2="45" y2="190"/><line x1="90" y1="40" x2="50" y2="190"/><line x1="95" y1="40" x2="55" y2="190"/><line x1="100" y1="40" x2="60" y2="190"/><line x1="105" y1="40" x2="65" y2="190"/><line x1="110" y1="40" x2="70" y2="190"/><line x1="115" y1="40" x2="75" y2="190"/><line x1="120" y1="40" x2="80" y2="190"/><line x1="125" y1="40" x2="85" y2="190"/><line x1="130" y1="40" x2="90" y2="190"/><line x1="135" y1="40" x2="95" y2="190"/><line x1="140" y1="40" x2="100" y2="190"/><line x1="145" y1="40" x2="105" y2="190"/><line x1="150" y1="40" x2="110" y2="190"/><line x1="155" y1="40" x2="115" y2="190"/><line x1="160" y1="40" x2="120" y2="190"/><line x1="165" y1="40" x2="125" y2="190"/><line x1="170" y1="40" x2="130" y2="190"/><line x1="175" y1="40" x2="135" y2="190"/><line x1="180" y1="40" x2="140" y2="190"/><line x1="185" y1="40" x2="145" y2="190"/><line x1="190" y1="40" x2="150" y2="190"/><line x1="195" y1="40" x2="155" y2="190"/></g>
+<g transform="rotate(-24 110 126)"><ellipse cx="110" cy="126" rx="17" ry="24" fill="var(--lg-bg,#fff)"/>
+<path d="M111,103 C100,113 121,128 108,149" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g>
+</svg><p class="tip2">Нажмите на чашку</p><p class="tip"><b>Флэт уайт · 250 мл</b>готов через 6 минут</p></div>
+</section>
+
+<section class="sec w" id="menu"><div class="hd"><h2 class="h2" data-r>Что <b>будете?</b></h2>
+  <div class="tabs pick" id="tabs" data-r><button data-v="all" class="on">Всё</button><button data-v="c">Кофе</button><button data-v="t">Не кофе</button><button data-v="f">К кофе</button></div></div>
+  <div class="menu" id="mn"></div></section>
+
+<section class="sec w" id="how"><h2 class="h2" data-r>Без очереди — <b>в три шага</b></h2>
+<div class="how"><div data-r><em>1</em><h3>Выберите напитки</h3><p>Нажмите «+» у того, что хотите. Корзина появится внизу.</p></div>
+<div data-r style="--d:100ms"><em>2</em><h3>Скажите, когда придёте</h3><p>Потяните ползунок: через 10 минут или через час.</p></div>
+<div data-r style="--d:200ms"><em>3</em><h3>Заберите у стойки</h3><p>Назовите номер заказа. Платите на месте — картой или наличными.</p></div></div></section>
+
+<footer class="end" id="where"><div class="w"><div><svg class="tm big" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Тамчы — кофейня">
+<defs><path id="tmt3" d="M24,110 A86,86 0 0,1 196,110"/><path id="tmb3" d="M17,110 A93,93 0 0,0 203,110"/>
+<clipPath id="tmd3"><path d="M110,52 C110,52 72,98 72,124 a38,38 0 0 0 76,0 C148,98 110,52 110,52 Z"/></clipPath></defs>
+<circle cx="110" cy="110" r="107" stroke="currentColor" stroke-width="1.6"/><circle cx="110" cy="110" r="102" stroke="currentColor" stroke-width=".6"/>
+<circle cx="110" cy="110" r="70" stroke="currentColor" stroke-width="1.1"/>
+<g fill="currentColor"><circle cx="176" cy="110" r="0.8"/><circle cx="175.75" cy="115.75" r="0.8"/><circle cx="175" cy="121.46" r="0.8"/><circle cx="173.75" cy="127.08" r="0.8"/><circle cx="172.02" cy="132.57" r="0.8"/><circle cx="169.82" cy="137.89" r="0.8"/><circle cx="167.16" cy="143" r="0.8"/><circle cx="164.06" cy="147.86" r="0.8"/><circle cx="160.56" cy="152.42" r="0.8"/><circle cx="156.67" cy="156.67" r="0.8"/><circle cx="152.42" cy="160.56" r="0.8"/><circle cx="147.86" cy="164.06" r="0.8"/><circle cx="143" cy="167.16" r="0.8"/><circle cx="137.89" cy="169.82" r="0.8"/><circle cx="132.57" cy="172.02" r="0.8"/><circle cx="127.08" cy="173.75" r="0.8"/><circle cx="121.46" cy="175" r="0.8"/><circle cx="115.75" cy="175.75" r="0.8"/><circle cx="110" cy="176" r="0.8"/><circle cx="104.25" cy="175.75" r="0.8"/><circle cx="98.54" cy="175" r="0.8"/><circle cx="92.92" cy="173.75" r="0.8"/><circle cx="87.43" cy="172.02" r="0.8"/><circle cx="82.11" cy="169.82" r="0.8"/><circle cx="77" cy="167.16" r="0.8"/><circle cx="72.14" cy="164.06" r="0.8"/><circle cx="67.58" cy="160.56" r="0.8"/><circle cx="63.33" cy="156.67" r="0.8"/><circle cx="59.44" cy="152.42" r="0.8"/><circle cx="55.94" cy="147.86" r="0.8"/><circle cx="52.84" cy="143" r="0.8"/><circle cx="50.18" cy="137.89" r="0.8"/><circle cx="47.98" cy="132.57" r="0.8"/><circle cx="46.25" cy="127.08" r="0.8"/><circle cx="45" cy="121.46" r="0.8"/><circle cx="44.25" cy="115.75" r="0.8"/><circle cx="44" cy="110" r="0.8"/><circle cx="44.25" cy="104.25" r="0.8"/><circle cx="45" cy="98.54" r="0.8"/><circle cx="46.25" cy="92.92" r="0.8"/><circle cx="47.98" cy="87.43" r="0.8"/><circle cx="50.18" cy="82.11" r="0.8"/><circle cx="52.84" cy="77" r="0.8"/><circle cx="55.94" cy="72.14" r="0.8"/><circle cx="59.44" cy="67.58" r="0.8"/><circle cx="63.33" cy="63.33" r="0.8"/><circle cx="67.58" cy="59.44" r="0.8"/><circle cx="72.14" cy="55.94" r="0.8"/><circle cx="77" cy="52.84" r="0.8"/><circle cx="82.11" cy="50.18" r="0.8"/><circle cx="137.89" cy="50.18" r="0.8"/><circle cx="143" cy="52.84" r="0.8"/><circle cx="147.86" cy="55.94" r="0.8"/><circle cx="152.42" cy="59.44" r="0.8"/><circle cx="156.67" cy="63.33" r="0.8"/><circle cx="160.56" cy="67.58" r="0.8"/><circle cx="164.06" cy="72.14" r="0.8"/><circle cx="167.16" cy="77" r="0.8"/><circle cx="169.82" cy="82.11" r="0.8"/><circle cx="172.02" cy="87.43" r="0.8"/><circle cx="173.75" cy="92.92" r="0.8"/><circle cx="175" cy="98.54" r="0.8"/><circle cx="175.75" cy="104.25" r="0.8"/></g>
+<g fill="currentColor" font-family="Unb, sans-serif" font-weight="500" font-size="12" letter-spacing="4.2">
+<text><textPath href="#tmt3" startOffset="50%" text-anchor="middle">ТАМЧЫ · COFFEE</textPath></text>
+<text><textPath href="#tmb3" startOffset="50%" text-anchor="middle">БИШКЕК · 2021</textPath></text></g>
+<g fill="currentColor"><polygon points="21,105.5 21.89,109.11 25.5,110 21.89,110.89 21,114.5 20.11,110.89 16.5,110 20.11,109.11"/><polygon points="199,105.5 199.89,109.11 203.5,110 199.89,110.89 199,114.5 198.11,110.89 194.5,110 198.11,109.11"/></g>
+<path d="M110,52 C110,52 72,98 72,124 a38,38 0 0 0 76,0 C148,98 110,52 110,52 Z" fill="currentColor"/>
+<g clip-path="url(#tmd3)" stroke="var(--lg-bg,#fff)" stroke-width=".8" opacity=".35"><line x1="60" y1="40" x2="20" y2="190"/><line x1="65" y1="40" x2="25" y2="190"/><line x1="70" y1="40" x2="30" y2="190"/><line x1="75" y1="40" x2="35" y2="190"/><line x1="80" y1="40" x2="40" y2="190"/><line x1="85" y1="40" x2="45" y2="190"/><line x1="90" y1="40" x2="50" y2="190"/><line x1="95" y1="40" x2="55" y2="190"/><line x1="100" y1="40" x2="60" y2="190"/><line x1="105" y1="40" x2="65" y2="190"/><line x1="110" y1="40" x2="70" y2="190"/><line x1="115" y1="40" x2="75" y2="190"/><line x1="120" y1="40" x2="80" y2="190"/><line x1="125" y1="40" x2="85" y2="190"/><line x1="130" y1="40" x2="90" y2="190"/><line x1="135" y1="40" x2="95" y2="190"/><line x1="140" y1="40" x2="100" y2="190"/><line x1="145" y1="40" x2="105" y2="190"/><line x1="150" y1="40" x2="110" y2="190"/><line x1="155" y1="40" x2="115" y2="190"/><line x1="160" y1="40" x2="120" y2="190"/><line x1="165" y1="40" x2="125" y2="190"/><line x1="170" y1="40" x2="130" y2="190"/><line x1="175" y1="40" x2="135" y2="190"/><line x1="180" y1="40" x2="140" y2="190"/><line x1="185" y1="40" x2="145" y2="190"/><line x1="190" y1="40" x2="150" y2="190"/><line x1="195" y1="40" x2="155" y2="190"/></g>
+<g transform="rotate(-24 110 126)"><ellipse cx="110" cy="126" rx="17" ry="24" fill="var(--lg-bg,#fff)"/>
+<path d="M111,103 C100,113 121,128 108,149" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g>
+</svg><h2>тамчы</h2></div><p><b>Токтогула, 98</b> — вход со двора<br>каждый день 7:30–22:00<br>+996 707 98 98 98</p></div></footer>
+<div class="cart" id="cart"><div class="top"><p><span id="cc">0 позиций</span><b id="ct">0 сом</b></p><button class="go" id="go">Заказать</button></div>
+  <label class="when"><span>Приду</span><input type="range" min="10" max="60" step="5" value="15" id="wh" aria-label="Когда придёте"><b id="wt">через 15 мин</b></label></div>
+<div class="concept"><span>пример Seinokojii · кофейня вымышленная</span><a href="/#works">← Все примеры</a></div>
+<script src="../m/kit.js?v=4"></script>
+<script>
+const MENU = [['c', 'Флэт уайт', 'двойной эспрессо и бархатное молоко', 260, 'latte0'], ['c', 'Капучино', 'классика, 300 мл', 230, 'latte1'], ['c', 'Эспрессо', 'наша обжарка, Эфиопия', 150, 'coffee2'],
+  ['c', 'Американо', 'с горячей водой или льдом', 180, 'coffee0'], ['t', 'Чай с чабрецом', 'чайник на двоих', 220, 'coffee1'], ['f', 'Круассан', 'выпекаем каждое утро', 190, 'dinner1']];
+const q = MENU.map(() => 0);
+$('#mn').innerHTML = MENU.map(([k, n, d, p, im], i) => `<article class="it" data-k="${k}" data-r style="--d:${(i % 3) * 90}ms"><div class="im"><img src="../m/ph/${im}.jpg" alt="${n}" loading="lazy"></div><div><h3>${n}</h3><p>${d}</p>
+  <div class="row"><b>${p} сом</b><div class="qty" data-i="${i}"><button class="m" aria-label="Убрать ${n}">−</button><span>0</span><button class="p" aria-label="Добавить ${n}">+</button></div></div></div></article>`).join('');
+$('#tabs').addEventListener('pick', (e) => $$('.it').forEach((it) => it.classList.toggle('gone', e.detail !== 'all' && it.dataset.k !== e.detail)));
+$('#mn').addEventListener('click', (e) => { const b = e.target.closest('.qty button'); if (!b) return; const box = b.parentNode, i = +box.dataset.i;
+  q[i] = Math.max(0, q[i] + (b.classList.contains('p') ? 1 : -1)); box.querySelector('span').textContent = q[i]; box.classList.toggle('has', q[i] > 0); upd(); });
+const plural = (n, a, b, c) => n % 10 === 1 && n % 100 !== 11 ? a : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? b : c;
+function upd() { const n = q.reduce((a, b) => a + b, 0), sum = q.reduce((a, v, i) => a + v * MENU[i][3], 0);
+  $('#cart').classList.toggle('on', n > 0); $('#cc').textContent = n + ' ' + plural(n, 'позиция', 'позиции', 'позиций');
+  countTo($('#ct'), sum, (v) => Math.round(v).toLocaleString('ru-RU') + ' сом'); const bn = $('#bn'); bn.textContent = n; bn.classList.add('pop'); setTimeout(() => bn.classList.remove('pop'), 300); }
+const wh = $('#wh'), at = () => { const d = new Date(Date.now() + wh.value * 6e4); return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); };
+wh.oninput = () => $('#wt').textContent = wh.value >= 60 ? 'через час' : 'через ' + wh.value + ' мин';
+let no = 12; $('#go').onclick = () => { no++; toast('Заказ №' + no + ' принят', 'Будет готов к ' + at() + '. Назовите номер у стойки.'); q.fill(0); $$('.qty').forEach((x) => { x.classList.remove('has'); x.querySelector('span').textContent = 0; }); upd(); };
+// часы работы по-настоящему
+(() => { const h = new Date().getHours(); if (h < 7 || h >= 22) $('#now').textContent = 'Сейчас закрыто · заказ можно оставить на утро'; })();
+// круги на кофе от касания + сами раз в 3 с
+(() => { const cup = $('#cup'), cv = $('#rp'); let c, S = 0; const rings = [];
+  const size = () => { const r = cv.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); if (Math.abs(r.width - S) < 2) return; S = r.width; cv.width = cv.height = S * d; c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); };
+  const drop = (x, y) => rings.push({ x, y, t: performance.now() });
+  cup.addEventListener('pointerdown', (e) => { const r = cv.getBoundingClientRect(); drop(e.clientX - r.left, e.clientY - r.top); $('.tip2').style.opacity = 0; });
+  let last = 0; (function fr(now) { size(); c.clearRect(0, 0, S, S); if (now - last > 3200) { last = now; drop(S * (.42 + Math.random() * .16), S * (.42 + Math.random() * .16)); }
+    c.save(); c.beginPath(); c.arc(S / 2, S / 2, S * .44, 0, 7); c.clip();
+    for (let i = rings.length - 1; i >= 0; i--) { const g = rings[i], k = (now - g.t) / 2400; if (k > 1) { rings.splice(i, 1); continue; }
+      for (let j = 0; j < 3; j++) { const kk = k - j * .12; if (kk <= 0) continue; c.beginPath(); c.arc(g.x, g.y, kk * S * .5, 0, 7); c.strokeStyle = `rgba(255,255,255,${(1 - kk) * .55})`; c.lineWidth = 2.2 * (1 - kk) + .5; c.stroke(); } }
+    c.restore(); requestAnimationFrame(fr); })(0); })();
+</script></body></html>
