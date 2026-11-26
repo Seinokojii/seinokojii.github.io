@@ -1,0 +1,18 @@
+<svg class="logo-sw" viewBox="0 0 220 260" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saltwater House — guesthouse">
+<defs><path id="swt" d="M20,130 A90,108 0 0,1 200,130"/><path id="swb" d="M17,130 A93,113 0 0,0 203,130"/><clipPath id="swc"><ellipse cx="110" cy="130" rx="72" ry="100"/></clipPath></defs>
+<ellipse cx="110" cy="130" rx="106" ry="127" stroke="currentColor" stroke-width="1.6"/><ellipse cx="110" cy="130" rx="101" ry="122" stroke="currentColor" stroke-width=".6"/>
+<ellipse cx="110" cy="130" rx="76" ry="104" stroke="currentColor" stroke-width="1.2"/>
+<g fill="currentColor" font-family="Caslon, serif" font-size="14" letter-spacing="4.4">
+<text><textPath href="#swt" startOffset="50%" text-anchor="middle">SALTWATER HOUSE</textPath></text>
+<text><textPath href="#swb" startOffset="50%" text-anchor="middle" font-size="11" letter-spacing="4">DOOLIN · CO. CLARE</textPath></text></g>
+<g fill="currentColor"><polygon points="18,125.5 18.89,129.11 22.5,130 18.89,130.89 18,134.5 17.11,130.89 13.5,130 17.11,129.11"/><polygon points="202,125.5 202.89,129.11 206.5,130 202.89,130.89 202,134.5 201.11,130.89 197.5,130 201.11,129.11"/></g>
+<g clip-path="url(#swc)">
+<g stroke="currentColor" stroke-width=".6" opacity=".55"><line x1="30" y1="40" x2="190" y2="40"/><line x1="30" y1="46" x2="190" y2="46"/><line x1="30" y1="52" x2="190" y2="52"/><line x1="30" y1="58" x2="190" y2="58"/><line x1="30" y1="64" x2="190" y2="64"/><line x1="30" y1="70" x2="190" y2="70"/><line x1="30" y1="76" x2="190" y2="76"/><line x1="30" y1="82" x2="190" y2="82"/><line x1="30" y1="88" x2="190" y2="88"/><line x1="30" y1="94" x2="190" y2="94"/><line x1="30" y1="100" x2="190" y2="100"/><line x1="30" y1="106" x2="190" y2="106"/><line x1="30" y1="112" x2="190" y2="112"/><line x1="30" y1="118" x2="190" y2="118"/></g>
+<circle cx="146" cy="74" r="16" fill="var(--lg-bg,#fff)" stroke="currentColor" stroke-width="1.2"/>
+<path d="M20,168 L20,150 C40,146 52,136 70,134 L150,132 C168,134 182,144 200,150 L200,168 Z" fill="currentColor"/>
+<path d="M78,134 L78,104 L108,82 L138,104 L138,134 Z" fill="var(--lg-bg,#fff)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="M72,108 L108,80 L144,108" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><rect x="122" y="84" width="7" height="16" fill="currentColor"/>
+<rect x="102" y="114" width="12" height="20" fill="currentColor"/><rect x="86" y="110" width="9" height="9" stroke="currentColor" stroke-width="1.4"/><rect x="121" y="110" width="9" height="9" stroke="currentColor" stroke-width="1.4"/>
+<rect x="20" y="168" width="180" height="70" fill="var(--lg-bg,#fff)"/><g stroke="currentColor" stroke-linecap="round"><path d="M34,172 q8,-5 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0" stroke-width="1.40"/><path d="M37,181 q8,-5 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0" stroke-width="1.25"/><path d="M40,190 q8,-5 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0" stroke-width="1.10"/><path d="M43,199 q8,-5 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0" stroke-width="0.95"/><path d="M46,208 q8,-5 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0 t16,0" stroke-width="0.80"/></g>
+<path d="M58,64 q6,-6 12,0 q6,-6 12,0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+</svg>

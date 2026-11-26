@@ -1,0 +1,115 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Maison Lune — skin and nail studio in Marylebone, London · concept</title><meta name="description" content="Facials, brows and nails in Marylebone. See prices and book online."><meta name="theme-color" content="#0A0A0F">
+<link rel="icon" href="../m/logo/lune.svg"><link rel="preload" href="../m/ph/en/l-hero.jpg" as="image">
+<link rel="stylesheet" href="../m/kit.css?v=7"><link rel="stylesheet" href="../m/en.css?v=7">
+<style>@font-face{font-family:"Bodoni";font-weight:400 700;font-style:normal;font-display:swap;src:url(../fonts/bodoni-latin-2.woff2)format("woff2")}@font-face{font-family:"Bodoni";font-weight:400 700;font-style:italic;font-display:swap;src:url(../fonts/bodoni-latin.woff2)format("woff2")}@font-face{font-family:"Jost";font-weight:300 600;font-style:normal;font-display:swap;src:url(../fonts/jost-latin.woff2)format("woff2")}
+
+:root{--bg:#FBFAF8;--ink:#1B1A19;--mut:#857A72;--line:rgba(27,26,25,.12);--card:#F1EEEA;--acc:#1B1A19;--acc-ink:#FBFAF8;--disp:Bodoni,Didot,serif;--body:Jost,system-ui,sans-serif;
+  --cardk:#1B1A19;--cardk-ink:#FBFAF8;--acc2:#FBFAF8;--acc2-ink:#1B1A19;--foot:#1B1A19;--foot-ink:#FBFAF8;--nav-ink:#1B1A19;--rc:999px;--ri:999px 999px 6px 6px}
+.bk-card{border-radius:28px}.bk-people img{border-radius:50%}.bk-chips button,.bk-times button{border-radius:999px;padding:13px 20px}.bk-people button,.bk-days button{border-radius:18px}.bk-fields input{border-radius:14px}
+.disp,.hd h2,.list b,[data-fill]{font-weight:400}
+em.i,.hd h2 i{font-style:italic;color:var(--mut)}
+.brand b{font:400 22px/1 Bodoni;letter-spacing:.24em;text-transform:uppercase}
+/* первый экран: белый, портрет в арке чёрно-белый, «луна» за курсором проявляет цвет */
+.hero{background:var(--bg);color:var(--ink);min-height:100svh;display:grid;align-items:center;padding:110px 0 60px}
+.hero .w{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,80px);align-items:center}
+.hero h1{font:400 clamp(64px,9.6vw,168px)/.88 Bodoni;letter-spacing:-.035em}
+.hero h1 i{font-style:italic;display:block;padding-left:.6em;color:var(--mut)}
+.hero .lead{max-width:420px;margin:30px 0 34px;color:#4E4844;font-size:18px}
+.acts{display:flex;gap:12px;flex-wrap:wrap}
+.next{margin-top:30px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--mut)}.next i{width:8px;height:8px;border-radius:50%;background:#7BA37E}
+.arch{position:relative;aspect-ratio:3/4;border-radius:999px 999px 8px 8px;overflow:hidden;background:var(--card);box-shadow:0 60px 100px -60px rgba(27,26,25,.5)}
+.arch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.arch .bw{filter:grayscale(1) contrast(1.05)}
+.arch .co{clip-path:circle(var(--r,0%) at var(--mx,50%) var(--my,45%));transition:clip-path .1s}
+.arch .ring{position:absolute;left:var(--mx,50%);top:var(--my,45%);width:calc(var(--r,0%)*2.5);aspect-ratio:1;translate:-50% -50%;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.7);pointer-events:none}
+.badge{position:absolute;right:-26px;bottom:60px;width:150px;color:var(--ink);--lg-bg:var(--bg);background:var(--bg);border-radius:50%;padding:10px;box-shadow:0 30px 60px -30px rgba(27,26,25,.45);animation:rot 40s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+@media(max-width:860px){.hero .w{grid-template-columns:1fr}.arch{max-width:420px;margin:0 auto;width:100%}.badge{width:110px;right:-6px}}
+.duo{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,100px);align-items:center}
+.duo .bl{aspect-ratio:3/4;--ri:999px 999px 6px 6px}
+@media(max-width:860px){.duo{grid-template-columns:1fr}}
+.list b{font-size:clamp(30px,3.2vw,46px)}.list li:hover b{font-style:italic}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.trio .bl{aspect-ratio:3/4}.trio .bl:nth-child(2){margin-top:70px;--ri:999px 999px 6px 6px}
+@media(max-width:760px){.trio{grid-template-columns:1fr 1fr}.trio .bl:nth-child(3){display:none}}
+</style></head><body>
+<header class="nav"><div class="w"><a class="brand" href="#" aria-label="Maison Lune, home"><svg aria-hidden="true" class="logo-ln" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maison Lune — beauty studio">
+<defs><path id="nlnt" d="M24,120 A96,96 0 0,1 216,120"/><path id="nlnb" d="M16,120 A104,104 0 0,0 224,120"/><mask id="nlnm"><rect width="240" height="240" fill="#fff"/><circle cx="140" cy="108" r="46" fill="#000"/></mask></defs>
+<circle cx="120" cy="120" r="117" stroke="currentColor" stroke-width=".8"/><circle cx="120" cy="120" r="84" stroke="currentColor" stroke-width=".6"/>
+<g fill="currentColor" font-family="Bodoni, serif" font-size="15" letter-spacing="7">
+<text><textPath href="#nlnt" startOffset="50%" text-anchor="middle">MAISON LUNE</textPath></text>
+<text><textPath href="#nlnb" startOffset="50%" text-anchor="middle" font-size="10.5" letter-spacing="5">SKIN · NAILS · LONDON</textPath></text></g>
+<circle cx="116" cy="120" r="50" fill="currentColor" mask="url(#nlnm)"/>
+<g fill="currentColor"><polygon points="160,143 160.99,149.01 167,150 160.99,150.99 160,157 159.01,150.99 153,150 159.01,149.01"/><polygon points="176,124.5 176.62,127.38 179.5,128 176.62,128.62 176,131.5 175.38,128.62 172.5,128 175.38,127.38"/><polygon points="20,116 20.79,119.21 24,120 20.79,120.79 20,124 19.21,120.79 16,120 19.21,119.21"/><polygon points="220,116 220.79,119.21 224,120 220.79,120.79 220,124 219.21,120.79 216,120 219.21,119.21"/></g>
+</svg><b>Lune</b></a>
+  <nav aria-label="Sections"><a href="#treatments">Treatments</a><a href="#studio">Studio</a><a href="#book">Book</a></nav><a class="btn" href="#book">Book a visit</a></div></header>
+<main>
+<section class="hero" aria-labelledby="h1"><div class="w">
+  <div><p class="k" data-r>Skin &amp; nail studio · Marylebone, London</p>
+    <h1 id="h1" data-r style="--d:80ms">Skin, <i>quietly</i> cared for.</h1>
+    <p class="lead" data-r style="--d:180ms">Facials, brows and nails in a calm room off Chiltern Street. No hard sell, no rush — and you can book in a minute.</p>
+    <div class="acts" data-r style="--d:260ms"><a class="btn" href="#book">Book a visit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#treatments">Treatments &amp; prices</a></div>
+    <p class="next" data-r style="--d:340ms"><i></i><span data-next>Next free: today, 4:30pm</span></p></div>
+  <div class="arch" data-r="zoom"><img class="bw" src="../m/ph/en/l-hero.jpg" alt="Portrait of a woman with glowing skin"><img class="co" src="../m/ph/en/l-hero.jpg" alt=""><i class="ring"></i>
+    <svg class="badge logo-ln" aria-hidden="true" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maison Lune — beauty studio">
+<defs><path id="blnt" d="M24,120 A96,96 0 0,1 216,120"/><path id="blnb" d="M16,120 A104,104 0 0,0 224,120"/><mask id="blnm"><rect width="240" height="240" fill="#fff"/><circle cx="140" cy="108" r="46" fill="#000"/></mask></defs>
+<circle cx="120" cy="120" r="117" stroke="currentColor" stroke-width=".8"/><circle cx="120" cy="120" r="84" stroke="currentColor" stroke-width=".6"/>
+<g fill="currentColor" font-family="Bodoni, serif" font-size="15" letter-spacing="7">
+<text><textPath href="#blnt" startOffset="50%" text-anchor="middle">MAISON LUNE</textPath></text>
+<text><textPath href="#blnb" startOffset="50%" text-anchor="middle" font-size="10.5" letter-spacing="5">SKIN · NAILS · LONDON</textPath></text></g>
+<circle cx="116" cy="120" r="50" fill="currentColor" mask="url(#blnm)"/>
+<g fill="currentColor"><polygon points="160,143 160.99,149.01 167,150 160.99,150.99 160,157 159.01,150.99 153,150 159.01,149.01"/><polygon points="176,124.5 176.62,127.38 179.5,128 176.62,128.62 176,131.5 175.38,128.62 172.5,128 175.38,127.38"/><polygon points="20,116 20.79,119.21 24,120 20.79,120.79 20,124 19.21,120.79 16,120 19.21,119.21"/><polygon points="220,116 220.79,119.21 224,120 220.79,120.79 220,124 219.21,120.79 216,120 219.21,119.21"/></g>
+</svg></div>
+</div></section>
+
+<section class="sec w duo" id="studio"><div class="bl" data-r="fade"><img src="../m/ph/en/l-face.jpg" alt="Facial treatment in the studio" loading="lazy"></div>
+  <p data-fill>We see one guest at a time in each room. Your therapist looks at your skin first, then suggests what will help — and what you can skip.</p></section>
+
+<section class="sec w" id="treatments" aria-labelledby="t-h" style="padding-top:0">
+  <div class="hd"><div><p class="k" data-r>Treatments</p><h2 id="t-h" class="disp" data-split>Menu &amp; prices</h2></div><p data-r>Prices include everything. Hover a treatment to see it.</p></div>
+  <ul class="list" data-peek><li data-img="../m/ph/en/l-face.jpg" data-r style="--d:0ms"><b>Lune facial</b><em>£95</em><small>Cleanse, massage, mask. Our signature · 60 min</small></li><li data-img="../m/ph/en/l-mass.jpg" data-r style="--d:60ms"><b>Hydrating facial</b><em>£75</em><small>For dry or tired skin · 45 min</small></li><li data-img="../m/ph/en/l-brush.jpg" data-r style="--d:120ms"><b>LED and gentle peel</b><em>£85</em><small>Brighter skin, no downtime · 50 min</small></li><li data-img="../m/ph/en/l-lip.jpg" data-r style="--d:180ms"><b>Brow lamination</b><em>£55</em><small>Shape, tint and set · 45 min</small></li><li data-img="../m/ph/en/l-nails.jpg" data-r style="--d:240ms"><b>Gel manicure</b><em>£38</em><small>Lasts two to three weeks · 45 min</small></li></ul>
+</section>
+
+<section class="sec w" aria-label="The studio" style="padding-top:0"><div class="trio">
+  <div class="bl" data-r="fade"><img src="../m/ph/en/l-nails.jpg" alt="Manicure" loading="lazy"></div><div class="bl" data-r="fade" style="--d:120ms"><img src="../m/ph/en/l-mass.jpg" alt="Facial massage" loading="lazy"></div><div class="bl" data-r="fade" style="--d:240ms"><img src="../m/ph/en/l-brush.jpg" alt="Mask applied with a brush" loading="lazy"></div></div></section>
+
+<section class="sec" id="book" aria-labelledby="b-h" style="background:var(--card)"><div class="w">
+  <div class="hd"><div><p class="k" data-r>Book online</p><h2 id="b-h" class="disp" data-split>Your visit</h2></div><p data-r>Choose a treatment and a time. The confirmation comes to your email.</p></div>
+  <div data-book></div></div></section>
+</main>
+<template id="seal"><svg class="logo-ln" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maison Lune — beauty studio">
+<defs><path id="slnt" d="M24,120 A96,96 0 0,1 216,120"/><path id="slnb" d="M16,120 A104,104 0 0,0 224,120"/><mask id="slnm"><rect width="240" height="240" fill="#fff"/><circle cx="140" cy="108" r="46" fill="#000"/></mask></defs>
+<circle cx="120" cy="120" r="117" stroke="currentColor" stroke-width=".8"/><circle cx="120" cy="120" r="84" stroke="currentColor" stroke-width=".6"/>
+<g fill="currentColor" font-family="Bodoni, serif" font-size="15" letter-spacing="7">
+<text><textPath href="#slnt" startOffset="50%" text-anchor="middle">MAISON LUNE</textPath></text>
+<text><textPath href="#slnb" startOffset="50%" text-anchor="middle" font-size="10.5" letter-spacing="5">SKIN · NAILS · LONDON</textPath></text></g>
+<circle cx="116" cy="120" r="50" fill="currentColor" mask="url(#slnm)"/>
+<g fill="currentColor"><polygon points="160,143 160.99,149.01 167,150 160.99,150.99 160,157 159.01,150.99 153,150 159.01,149.01"/><polygon points="176,124.5 176.62,127.38 179.5,128 176.62,128.62 176,131.5 175.38,128.62 172.5,128 175.38,127.38"/><polygon points="20,116 20.79,119.21 24,120 20.79,120.79 20,124 19.21,120.79 16,120 19.21,119.21"/><polygon points="220,116 220.79,119.21 224,120 220.79,120.79 220,124 219.21,120.79 216,120 219.21,119.21"/></g>
+</svg></template>
+<footer class="foot"><div class="w"><div class="foot-g"><svg class="logo-ln" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maison Lune — beauty studio">
+<defs><path id="flnt" d="M24,120 A96,96 0 0,1 216,120"/><path id="flnb" d="M16,120 A104,104 0 0,0 224,120"/><mask id="flnm"><rect width="240" height="240" fill="#fff"/><circle cx="140" cy="108" r="46" fill="#000"/></mask></defs>
+<circle cx="120" cy="120" r="117" stroke="currentColor" stroke-width=".8"/><circle cx="120" cy="120" r="84" stroke="currentColor" stroke-width=".6"/>
+<g fill="currentColor" font-family="Bodoni, serif" font-size="15" letter-spacing="7">
+<text><textPath href="#flnt" startOffset="50%" text-anchor="middle">MAISON LUNE</textPath></text>
+<text><textPath href="#flnb" startOffset="50%" text-anchor="middle" font-size="10.5" letter-spacing="5">SKIN · NAILS · LONDON</textPath></text></g>
+<circle cx="116" cy="120" r="50" fill="currentColor" mask="url(#flnm)"/>
+<g fill="currentColor"><polygon points="160,143 160.99,149.01 167,150 160.99,150.99 160,157 159.01,150.99 153,150 159.01,149.01"/><polygon points="176,124.5 176.62,127.38 179.5,128 176.62,128.62 176,131.5 175.38,128.62 172.5,128 175.38,127.38"/><polygon points="20,116 20.79,119.21 24,120 20.79,120.79 20,124 19.21,120.79 16,120 19.21,119.21"/><polygon points="220,116 220.79,119.21 224,120 220.79,120.79 220,124 219.21,120.79 216,120 219.21,119.21"/></g>
+</svg><div><h4>Studio</h4><p>Maison Lune<br>Chiltern Street, Marylebone<br>London W1</p></div><div><h4>Contact</h4><p><a href="tel:+442079460588">020 7946 0588</a><br><a href="mailto:hello@maisonlune.com">hello@maisonlune.com</a></p></div><div><h4>Open</h4><p>Mon–Sat, 10am–8pm</p></div></div>
+<p class="huge" aria-hidden="true">Maison Lune</p></div></footer>
+<div class="concept" lang="en"><span>Concept · fictional business · site by Seinokojii</span><a href="../../en/#works">All examples</a></div>
+<script type="application/json" id="book-cfg">{"locale": "en-GB", "days": 12, "closed": [0], "today": true, "cardTitle": "Your visit", "cta": "Book my visit", "codePrefix": "LUNE", "fine": "Pay at the studio. Free to move or cancel up to 24 hours before.", "doneKicker": "Booked", "toast": "Visit booked", "seal": "seal", "steps": [{"type": "chips", "key": "tr", "label": "Treatment", "err": "Choose a treatment.", "options": [{"v": "lune", "label": "Lune facial", "sub": "£95 · 60 min", "p": 95, "m": 60}, {"v": "hydra", "label": "Hydrating facial", "sub": "£75 · 45 min", "p": 75, "m": 45}, {"v": "peel", "label": "LED and gentle peel", "sub": "£85 · 50 min", "p": 85, "m": 50}, {"v": "brow", "label": "Brow lamination", "sub": "£55 · 45 min", "p": 55, "m": 45}, {"v": "gel", "label": "Gel manicure", "sub": "£38 · 45 min", "p": 38, "m": 45}]}, {"type": "people", "key": "who", "label": "With", "err": "Choose who you'd like, or anyone.", "options": [{"v": "any", "label": "Anyone", "sub": "First free time"}, {"v": "amara", "label": "Amara", "sub": "Facials", "img": "../m/ph/en/l-hero.jpg"}, {"v": "chloe", "label": "Chloé", "sub": "Skin and brows", "img": "../m/ph/en/l-lip.jpg"}, {"v": "mei", "label": "Mei", "sub": "Nails", "img": "../m/ph/en/l-nails.jpg"}]}, {"type": "days", "key": "day", "label": "Day", "err": "Pick a day."}, {"type": "times", "key": "time", "label": "Time", "seed": "who", "slots": ["10:00", "11:15", "12:30", "14:00", "15:15", "16:30", "17:45", "19:00"], "err": "Pick a time."}, {"type": "fields", "key": "f", "label": "Your details", "fields": [{"name": "name", "label": "Name", "ph": "Sophie Clarke", "auto": "name", "err": "Add your name."}, {"name": "email", "label": "Email", "ph": "sophie@mail.com", "type": "email", "auto": "email", "re": "^\\S+@\\S+\\.\\S+$", "err": "Add an email for the confirmation."}]}], "summary": [["tr", "Treatment"], ["who", "With"], ["day", "Day"], ["time", "Time"]]}</script>
+<script src="../m/kit.js?v=7"></script><script src="../m/en.js?v=7"></script>
+<script>
+const TRS = JSON.parse(document.getElementById('book-cfg').textContent).steps[0].options;
+window.bookPrice = ({ st }) => { const o = TRS.find((x) => x.v === st.tr); return o ? { n: o.p, fmt: (v) => '£' + v, sub: o.m + ' minutes' } : { text: '£—', sub: 'Choose a treatment' }; };
+window.bookDone = ({ st, label }) => ['See you soon', `${label('tr')}${st.who === 'any' ? '' : ' with ' + label('who')}, ${label('day')} at ${st.time}. Confirmation sent to ${st.email}.`];
+// «луна»: круг цвета на ч/б портрете — за указателем, без него ходит по орбите
+(() => { const a = $('.arch'); let r = 0, mx = 50, my = 45, tx = 50, ty = 45, over = false, t = 0;
+  a.addEventListener('pointermove', (e) => { const b = a.getBoundingClientRect(); tx = (e.clientX - b.left) / b.width * 100; ty = (e.clientY - b.top) / b.height * 100; over = true; });
+  a.addEventListener('pointerleave', () => { over = false; });
+  (function f() { t += .006; if (!over) { tx = 50 + Math.cos(t) * 22; ty = 44 + Math.sin(t * 1.3) * 16; }
+    mx += (tx - mx) * .08; my += (ty - my) * .08; r += ((over ? 24 : 19) - r) * .05;
+    a.style.setProperty('--mx', mx + '%'); a.style.setProperty('--my', my + '%'); a.style.setProperty('--r', r + '%'); if (!RM) requestAnimationFrame(f); })(); })();
+(() => { const d = new Date(), h = d.getHours(), el = $('[data-next]'); el.textContent = d.getDay() === 0 || h >= 18 ? 'Next free: tomorrow, 11:15am' : `Next free: today, ${h < 12 ? '2:00pm' : h < 15 ? '4:30pm' : '7:00pm'}`; })();
+</script>
+</body></html>

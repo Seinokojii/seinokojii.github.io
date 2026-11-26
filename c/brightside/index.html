@@ -1,0 +1,254 @@
+<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Brightside Cleaning Co. — house cleaning in Austin, TX · concept</title><meta name="theme-color" content="#ffffff"><link rel="icon" href="../m/logo/brightside.svg">
+<meta name="description" content="House cleaning in Austin. See your price in 30 seconds and book a time online.">
+<link rel="preload" href="../m/ph/en/b-kitchen2.jpg" as="image">
+<link rel="stylesheet" href="../m/kit.css?v=7"><link rel="stylesheet" href="../m/en.css?v=7">
+<style>
+@font-face{font-family:"Brico";font-weight:200 800;font-style:normal;font-display:swap;src:url(../fonts/bricolage-latin.woff2)format("woff2")}@font-face{font-family:"Mono";font-weight:400;font-style:normal;font-display:swap;src:url(../fonts/dmmono-latin.woff2)format("woff2")}@font-face{font-family:"Mono";font-weight:500;font-style:normal;font-display:swap;src:url(../fonts/dmmono-latin-2.woff2)format("woff2")}
+:root{--nav-ink:#0E1A24;--nv:#0E1A24;--mint:#BFEBD9;--deep:#1F7A5C;--mist:#F2F6F5;--line:#DDE6E3;--mut:#56646C;--lg-bg:#fff}
+body{background:#fff;color:var(--nv);font:400 17px/1.6 Brico,system-ui,sans-serif}
+.w{width:min(1220px,100% - 40px);margin-inline:auto}
+h1,h2,h3{font-weight:700;letter-spacing:-.035em}
+.mono{font-family:Mono,ui-monospace,monospace}
+.k{font:500 12px/1 Mono;letter-spacing:.06em;text-transform:uppercase;color:var(--deep)}
+.nav{position:fixed;inset:0 0 auto;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.nav .w{display:flex;align-items:center;gap:30px;height:70px}
+.brand{display:flex;align-items:center;gap:10px;font:800 20px/1 Brico;letter-spacing:-.03em;white-space:nowrap}.brand svg{width:40px;height:40px}
+.nav nav{display:flex;gap:26px;margin-left:auto;font-size:15px;color:var(--mut)}.nav nav a:hover{color:var(--nv)}
+.tel{font:500 14px Mono;color:var(--nv)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--nv);color:#fff;font:700 16px/1 Brico;padding:16px 24px;border-radius:14px;transition:transform .2s,background .3s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}.btn svg{width:18px;height:18px}
+.btn.mt{background:var(--mint);color:var(--nv)}
+@media(max-width:860px){.nav nav,.tel{display:none}.nav .w{justify-content:space-between;height:62px}.nav .btn{padding:12px 16px;font-size:14px}.brand{font-size:17px}.brand svg{width:34px;height:34px}}
+/* первый экран на весь экран: кухня под «пыльной» плёнкой — проведите курсором или пальцем */
+.hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;background:#E9EEEC}
+.wipe{position:absolute;inset:0;touch-action:pan-y;cursor:crosshair}
+.wipe img,.wipe canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.h-txt{position:absolute;z-index:2;left:0;right:0;top:clamp(100px,16vh,170px);pointer-events:none}
+.hero h1{font-size:clamp(64px,10vw,176px);line-height:.86;letter-spacing:-.06em;color:var(--nv);max-width:9ch}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 64%,var(--mint) 0)}
+.hero .lead{font-size:19px;color:#2C3A44;margin:24px 0 30px;max-width:430px;font-weight:500}
+.acts{display:flex;gap:12px;flex-wrap:wrap;align-items:center;pointer-events:auto}
+.from{font:500 14px Mono;color:#2C3A44;background:rgba(255,255,255,.75);padding:8px 12px;border-radius:10px}.from b{color:var(--nv);font-weight:500}
+.wipe .tag{position:absolute;left:50%;translate:-50% 0;bottom:28px;display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:rgba(255,255,255,.94);font:500 13px Mono;color:var(--nv);box-shadow:0 10px 30px -10px rgba(14,26,36,.3);pointer-events:none;z-index:3}
+.wipe .tag i{width:10px;height:10px;border-radius:50%;background:var(--deep);box-shadow:0 0 0 4px var(--mint)}
+.wipe .pct{position:absolute;right:24px;top:92px;padding:10px 14px;border-radius:10px;background:var(--nv);color:#fff;font:500 13px Mono;pointer-events:none;z-index:3}
+@media(max-width:860px){.hero h1{font-size:17vw}.wipe .pct{top:76px;bottom:auto;right:16px}.h-txt{top:96px}}
+.strip{border-block:1px solid var(--line)}
+.strip .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:22px 0;font:500 14px Mono;color:var(--mut)}
+.strip span{display:flex;align-items:center;gap:8px}.strip svg{width:16px;color:var(--deep)}
+.sec{padding:clamp(80px,10vw,130px) 0}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:44px;flex-wrap:wrap}
+.hd h2{font-size:clamp(38px,4.6vw,64px);line-height:.98;margin-top:12px;max-width:640px}.hd p{color:var(--mut);max-width:420px}
+/* что входит */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tabs [data-v]{padding:12px 18px;border-radius:12px;background:var(--mist);font:600 15px/1 Brico}
+.tabs [data-v].on{background:var(--nv);color:#fff}
+.rps{display:grid}
+.rp{grid-area:1/1;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.rp.on{opacity:1;visibility:visible}
+.rp img{aspect-ratio:16/10;object-fit:cover;width:100%;border-radius:22px}
+.rp ul{list-style:none;display:grid;gap:4px}
+.rp li{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);font-size:18px}
+.rp li svg{flex:none;width:22px;height:22px;padding:4px;border-radius:50%;background:var(--mint);color:var(--deep);margin-top:2px}
+.rp.on li{animation:li .6s cubic-bezier(.16,1,.3,1) both}.rp.on li:nth-child(2){animation-delay:.06s}.rp.on li:nth-child(3){animation-delay:.12s}.rp.on li:nth-child(4){animation-delay:.18s}
+@keyframes li{from{opacity:0;transform:translateX(16px)}}
+@media(max-width:860px){.rp{grid-template-columns:1fr}}
+/* цена и запись */
+.pr{background:var(--nv);color:#fff;border-radius:34px;padding:clamp(22px,4vw,56px)}
+.pr .hd h2{color:#fff}.pr .hd p{color:#A9B7BF}.pr .k{color:var(--mint)}
+.pg>*{min-width:0}.pg{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(20px,3vw,44px);align-items:start}
+.blk{padding:22px 0;border-top:1px solid rgba(255,255,255,.12)}
+.blk h3{font:500 12.5px Mono;letter-spacing:.06em;text-transform:uppercase;color:#8FA2AC;margin-bottom:14px}
+.cts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ct{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.06);font-size:17px}
+.st{display:flex;align-items:center;gap:14px}.st b{font:500 22px Mono;min-width:20px;text-align:center}
+.st button{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.1);font-size:20px;line-height:1}.st button:hover{background:rgba(255,255,255,.18)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg [data-v],.ex [data-x]{padding:14px 12px;border-radius:14px;background:rgba(255,255,255,.06);font:600 15px/1.25 Brico;text-align:left;transition:background .25s,color .25s}
+.seg [data-v] small,.ex [data-x] small{display:block;font:500 12.5px Mono;color:#8FA2AC;margin-top:4px}
+.seg [data-v].on,.ex [data-x][aria-pressed=true]{background:var(--mint);color:var(--nv)}.seg [data-v].on small,.ex [data-x][aria-pressed=true] small{color:var(--deep)}
+.ex{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.days [data-v]{flex:none;width:72px;padding:12px 0;border-radius:14px;background:rgba(255,255,255,.06);font:500 12px Mono;color:#8FA2AC;text-align:center}
+.days [data-v] b{display:block;font:700 24px/1.1 Brico;color:#fff}
+.days [data-v].on{background:var(--mint);color:var(--deep)}.days [data-v].on b{color:var(--nv)}
+.slots{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.slots [data-v]{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.06);font:500 14px Mono}.slots [data-v].on{background:var(--mint);color:var(--nv)}
+@media(max-width:600px){.cts,.seg,.ex{grid-template-columns:1fr}}
+.tot{position:sticky;top:96px;background:#fff;color:var(--nv);border-radius:26px;padding:28px;--lg-bg:#fff}
+.tot .big{font:800 clamp(56px,6vw,84px)/1 Brico;letter-spacing:-.05em;margin:10px 0 4px;display:flex;align-items:flex-start}
+.tot .big small{font-size:.42em;margin-top:.18em;margin-right:2px}
+.tot .per{font:500 13px Mono;color:var(--mut)}
+.tot ul{list-style:none;margin:20px 0;border-top:1px solid var(--line)}
+.tot li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}.tot li span{color:var(--mut)}
+.tot input{width:100%;font:400 16px Brico;padding:13px 14px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.tot input:focus{outline:none;border-color:var(--nv)}
+.tot .btn{width:100%;margin-top:4px}
+.tot .err{color:#B3412E;font-size:14px;min-height:20px}
+.tot .fine{font:500 12.5px Mono;color:var(--mut);margin-top:12px}
+.okb{display:none;text-align:center;padding:10px 0}.okb svg{width:120px;margin:0 auto 18px;color:var(--nv)}.okb h3{font-size:34px}.okb p{color:var(--mut);margin-top:8px}
+.tot.ok .okb{display:block}.tot.ok .q{display:none}
+@media(max-width:900px){.pg{grid-template-columns:1fr}.tot{position:relative;top:0}}
+.foot{padding:80px 0 120px}
+.foot .w{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:center}
+.foot svg{width:96px}.foot p{color:var(--mut);font-size:15.5px;line-height:1.8}.foot b{color:var(--nv)}
+.foot .tel2{font:500 22px Mono;color:var(--nv)}
+@media(max-width:760px){.foot .w{grid-template-columns:1fr}}
+</style></head><body>
+<header class="nav"><div class="w">
+  <a class="brand" href="#" aria-label="Brightside Cleaning, home"><svg class="logo-bs" aria-hidden="true" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Brightside Cleaning Co.">
+<defs><path id="nbst" d="M25,120 A95,95 0 0,1 215,120"/><path id="nbsb" d="M18,120 A102,102 0 0,0 222,120"/><clipPath id="nbsc"><circle cx="120" cy="120" r="76"/></clipPath></defs>
+<circle cx="120" cy="120" r="117" fill="currentColor"/><circle cx="120" cy="120" r="111" stroke="var(--lg-bg,#fff)" stroke-width=".8"/>
+<circle cx="120" cy="120" r="80" fill="var(--lg-bg,#fff)"/><circle cx="120" cy="120" r="75" stroke="currentColor" stroke-width=".6"/>
+<g fill="var(--lg-bg,#fff)" font-family="Brico, sans-serif" font-weight="700" font-size="14" letter-spacing="3.6">
+<text><textPath href="#nbst" startOffset="50%" text-anchor="middle">BRIGHTSIDE</textPath></text>
+<text><textPath href="#nbsb" startOffset="50%" text-anchor="middle" font-weight="500" font-size="11" letter-spacing="3">CLEANING CO · AUSTIN TX</textPath></text></g>
+<g fill="var(--lg-bg,#fff)"><polygon points="22,115 22.99,119.01 27,120 22.99,120.99 22,125 21.01,120.99 17,120 21.01,119.01"/><polygon points="218,115 218.99,119.01 223,120 218.99,120.99 218,125 217.01,120.99 213,120 217.01,119.01"/></g>
+<g clip-path="url(#nbsc)">
+<g stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="75.78" y1="119.32" x2="52.71" y2="112.71"/><line x1="79.38" y1="110.4" x2="58.19" y2="99.14"/><line x1="84.76" y1="102.43" x2="66.38" y2="87"/><line x1="91.68" y1="95.75" x2="76.9" y2="76.84"/><line x1="99.83" y1="90.66" x2="89.31" y2="69.08"/><line x1="108.87" y1="87.37" x2="103.07" y2="64.08"/><line x1="118.39" y1="86.03" x2="117.56" y2="62.04"/><line x1="127.99" y1="86.7" x2="132.16" y2="63.06"/><line x1="137.23" y1="89.35" x2="146.22" y2="67.1"/><line x1="145.72" y1="93.86" x2="159.14" y2="73.97"/><line x1="153.09" y1="100.05" x2="170.35" y2="83.37"/><line x1="159.01" y1="107.62" x2="179.36" y2="94.91"/><line x1="163.23" y1="116.27" x2="185.78" y2="108.06"/></g>
+<circle cx="120" cy="132" r="36" fill="currentColor"/>
+<path d="M60,200 L60,150 L120,108 L180,150 L180,200 Z" fill="var(--lg-bg,#fff)"/>
+<path d="M50,156 L120,106 L190,156" stroke="currentColor" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M72,200 L72,154 M168,200 L168,154" stroke="currentColor" stroke-width="4"/>
+<rect x="108" y="160" width="24" height="40" rx="2" fill="currentColor"/>
+<line x1="44" y1="198" x2="196" y2="198" stroke="currentColor" stroke-width="4"/></g>
+<path d="M164,75 C165.62,82.38 165.62,82.38 173,84 C165.62,85.62 165.62,85.62 164,93 C162.38,85.62 162.38,85.62 155,84 C162.38,82.38 162.38,82.38 164,75 Z" fill="currentColor"/><path d="M180,99 C180.9,103.1 180.9,103.1 185,104 C180.9,104.9 180.9,104.9 180,109 C179.1,104.9 179.1,104.9 175,104 C179.1,103.1 179.1,103.1 180,99 Z" fill="currentColor"/><path d="M78,84 C79.08,88.92 79.08,88.92 84,90 C79.08,91.08 79.08,91.08 78,96 C76.92,91.08 76.92,91.08 72,90 C76.92,88.92 76.92,88.92 78,84 Z" fill="currentColor"/>
+</svg>Brightside</a>
+  <nav aria-label="Sections"><a href="#included">What's included</a><a href="#price">Prices</a></nav>
+  <a class="tel" href="tel:+15125550147">(512) 555-0147</a><a class="btn" href="#price">Book a cleaning</a></div></header>
+<main>
+<section class="hero"><div class="wipe"><img src="../m/ph/en/b-kitchen2.jpg" alt="Bright, freshly cleaned kitchen"><canvas aria-hidden="true"></canvas>
+    <span class="pct" aria-hidden="true">0% clean</span><span class="tag"><i></i>Drag across the screen to clean it</span></div>
+  <div class="h-txt"><div class="w"><p class="k" data-r>House cleaning · Austin, TX</p>
+    <h1 data-r style="--d:80ms">Come home to <em>clean.</em></h1>
+    <p class="lead" data-r style="--d:160ms">See your price in 30 seconds and pick a time. Same cleaner every visit, all supplies included.</p>
+    <div class="acts" data-r style="--d:240ms"><a class="btn" href="#price">See my price <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="from">from <b>$129</b> per visit</span></div></div></div>
+</section>
+<div class="strip"><div class="w"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Same cleaner every time</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Supplies included</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Reschedule free up to 24h before</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pay after the visit</span></div></div>
+
+<section class="sec w" id="included" aria-labelledby="i-h">
+  <div class="hd"><div><p class="k" data-r>What's included</p><h2 id="i-h" data-split>Every room, every visit</h2></div><p data-r>A standard cleaning covers all of this. Add the inside of the oven, fridge or windows when you book.</p></div>
+  <div class="tabs pick" data-tabs data-r><button type="button" data-v="0" class=on aria-pressed=true>Kitchen</button><button type="button" data-v="1" aria-pressed=false>Bathrooms</button><button type="button" data-v="2" aria-pressed=false>Living areas</button><button type="button" data-v="3" aria-pressed=false>Bedrooms</button></div>
+  <div class="rps" data-r><div class="rp on" data-i="0"><img src="../m/ph/en/b-kitchen.jpg" alt="Kitchen" loading="lazy"><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Counters, sink and backsplash</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Stovetop and the outside of appliances</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Cabinet fronts wiped</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Floors vacuumed and mopped</li></ul></div><div class="rp" data-i="1"><img src="../m/ph/en/b-bath.jpg" alt="Bathrooms" loading="lazy"><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Shower, tub and tiles scrubbed</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Toilet cleaned inside and out</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mirrors and fixtures polished</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fresh towels folded, if you leave them out</li></ul></div><div class="rp" data-i="2"><img src="../m/ph/en/b-hero.jpg" alt="Living areas" loading="lazy"><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Dusting, including baseboards</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sofas vacuumed, cushions fluffed</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Glass tables and doors</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Trash taken out</li></ul></div><div class="rp" data-i="3"><img src="../m/ph/en/b-towels.jpg" alt="Bedrooms" loading="lazy"><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Beds made, sheets changed on request</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Surfaces and lamps dusted</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Mirrors cleaned</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Floors vacuumed under the bed</li></ul></div></div>
+</section>
+
+<section class="sec w" id="price" aria-labelledby="p-h"><div class="pr">
+  <div class="hd"><div><p class="k">Price &amp; booking</p><h2 id="p-h">Your price, right now</h2></div><p>No quotes, no calls. Change anything and the price updates.</p></div>
+  <div class="pg">
+    <div>
+      <div class="blk"><h3>Your home</h3><div class="cts"><div class="ct"><span>Bedrooms</span><div class="st"><button type="button" data-c="bed" data-d="-1" aria-label="Fewer bedrooms">−</button><b id="c-bed" data-min="1" data-max="6">2</b><button type="button" data-c="bed" data-d="1" aria-label="More bedrooms">+</button></div></div><div class="ct"><span>Bathrooms</span><div class="st"><button type="button" data-c="bath" data-d="-1" aria-label="Fewer bathrooms">−</button><b id="c-bath" data-min="1" data-max="5">2</b><button type="button" data-c="bath" data-d="1" aria-label="More bathrooms">+</button></div></div></div></div>
+      <div class="blk"><h3>How often</h3><div class="seg pick" data-freq><button type="button" data-v="1" aria-pressed="false">One time<small>full price</small></button><button type="button" data-v=".85" class="on" aria-pressed="true">Every 2 weeks<small>save 15%</small></button><button type="button" data-v=".8" aria-pressed="false">Weekly<small>save 20%</small></button></div></div>
+      <div class="blk"><h3>Extras</h3><div class="ex"><button type="button" data-x="35" aria-pressed="false">Inside oven<small>+$35</small></button><button type="button" data-x="35" aria-pressed="false">Inside fridge<small>+$35</small></button><button type="button" data-x="45" aria-pressed="false">Inside windows<small>+$45</small></button></div></div>
+      <div class="blk"><h3>Day and arrival window</h3><div class="days pick" data-day></div><div class="slots pick" data-slot></div></div>
+    </div>
+    <aside class="tot" aria-live="polite">
+      <div class="q"><p class="k">Per visit</p><p class="big"><small>$</small><span id="price-n">0</span></p><p class="per" id="per">every 2 weeks · first visit</p>
+        <ul><li><span>Home</span><b id="t-home">2 bed · 2 bath</b></li><li><span>When</span><b id="t-when">Pick a day</b></li><li><span>Time</span><b id="t-dur">about 3 hours</b></li></ul>
+        <input name="nm" autocomplete="name" placeholder="Your name" aria-label="Your name"><input name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="ZIP code" aria-label="ZIP code">
+        <p class="err" role="alert"></p><button class="btn" type="button" id="go">Book this cleaning <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><p class="fine">Nothing to pay now. We charge your card after the visit.</p></div>
+      <div class="okb"><svg class="logo-bs" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Brightside Cleaning Co.">
+<defs><path id="obst" d="M25,120 A95,95 0 0,1 215,120"/><path id="obsb" d="M18,120 A102,102 0 0,0 222,120"/><clipPath id="obsc"><circle cx="120" cy="120" r="76"/></clipPath></defs>
+<circle cx="120" cy="120" r="117" fill="currentColor"/><circle cx="120" cy="120" r="111" stroke="var(--lg-bg,#fff)" stroke-width=".8"/>
+<circle cx="120" cy="120" r="80" fill="var(--lg-bg,#fff)"/><circle cx="120" cy="120" r="75" stroke="currentColor" stroke-width=".6"/>
+<g fill="var(--lg-bg,#fff)" font-family="Brico, sans-serif" font-weight="700" font-size="14" letter-spacing="3.6">
+<text><textPath href="#obst" startOffset="50%" text-anchor="middle">BRIGHTSIDE</textPath></text>
+<text><textPath href="#obsb" startOffset="50%" text-anchor="middle" font-weight="500" font-size="11" letter-spacing="3">CLEANING CO · AUSTIN TX</textPath></text></g>
+<g fill="var(--lg-bg,#fff)"><polygon points="22,115 22.99,119.01 27,120 22.99,120.99 22,125 21.01,120.99 17,120 21.01,119.01"/><polygon points="218,115 218.99,119.01 223,120 218.99,120.99 218,125 217.01,120.99 213,120 217.01,119.01"/></g>
+<g clip-path="url(#obsc)">
+<g stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="75.78" y1="119.32" x2="52.71" y2="112.71"/><line x1="79.38" y1="110.4" x2="58.19" y2="99.14"/><line x1="84.76" y1="102.43" x2="66.38" y2="87"/><line x1="91.68" y1="95.75" x2="76.9" y2="76.84"/><line x1="99.83" y1="90.66" x2="89.31" y2="69.08"/><line x1="108.87" y1="87.37" x2="103.07" y2="64.08"/><line x1="118.39" y1="86.03" x2="117.56" y2="62.04"/><line x1="127.99" y1="86.7" x2="132.16" y2="63.06"/><line x1="137.23" y1="89.35" x2="146.22" y2="67.1"/><line x1="145.72" y1="93.86" x2="159.14" y2="73.97"/><line x1="153.09" y1="100.05" x2="170.35" y2="83.37"/><line x1="159.01" y1="107.62" x2="179.36" y2="94.91"/><line x1="163.23" y1="116.27" x2="185.78" y2="108.06"/></g>
+<circle cx="120" cy="132" r="36" fill="currentColor"/>
+<path d="M60,200 L60,150 L120,108 L180,150 L180,200 Z" fill="var(--lg-bg,#fff)"/>
+<path d="M50,156 L120,106 L190,156" stroke="currentColor" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M72,200 L72,154 M168,200 L168,154" stroke="currentColor" stroke-width="4"/>
+<rect x="108" y="160" width="24" height="40" rx="2" fill="currentColor"/>
+<line x1="44" y1="198" x2="196" y2="198" stroke="currentColor" stroke-width="4"/></g>
+<path d="M164,75 C165.62,82.38 165.62,82.38 173,84 C165.62,85.62 165.62,85.62 164,93 C162.38,85.62 162.38,85.62 155,84 C162.38,82.38 162.38,82.38 164,75 Z" fill="currentColor"/><path d="M180,99 C180.9,103.1 180.9,103.1 185,104 C180.9,104.9 180.9,104.9 180,109 C179.1,104.9 179.1,104.9 175,104 C179.1,103.1 179.1,103.1 180,99 Z" fill="currentColor"/><path d="M78,84 C79.08,88.92 79.08,88.92 84,90 C79.08,91.08 79.08,91.08 78,96 C76.92,91.08 76.92,91.08 72,90 C76.92,88.92 76.92,88.92 78,84 Z" fill="currentColor"/>
+</svg><h3>You're booked</h3><p id="ok-t"></p><p>We'll text you the name of your cleaner the day before.</p></div>
+    </aside>
+  </div></div></section>
+</main>
+<footer class="foot"><div class="w">
+  <svg class="logo-bs" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Brightside Cleaning Co.">
+<defs><path id="fbst" d="M25,120 A95,95 0 0,1 215,120"/><path id="fbsb" d="M18,120 A102,102 0 0,0 222,120"/><clipPath id="fbsc"><circle cx="120" cy="120" r="76"/></clipPath></defs>
+<circle cx="120" cy="120" r="117" fill="currentColor"/><circle cx="120" cy="120" r="111" stroke="var(--lg-bg,#fff)" stroke-width=".8"/>
+<circle cx="120" cy="120" r="80" fill="var(--lg-bg,#fff)"/><circle cx="120" cy="120" r="75" stroke="currentColor" stroke-width=".6"/>
+<g fill="var(--lg-bg,#fff)" font-family="Brico, sans-serif" font-weight="700" font-size="14" letter-spacing="3.6">
+<text><textPath href="#fbst" startOffset="50%" text-anchor="middle">BRIGHTSIDE</textPath></text>
+<text><textPath href="#fbsb" startOffset="50%" text-anchor="middle" font-weight="500" font-size="11" letter-spacing="3">CLEANING CO · AUSTIN TX</textPath></text></g>
+<g fill="var(--lg-bg,#fff)"><polygon points="22,115 22.99,119.01 27,120 22.99,120.99 22,125 21.01,120.99 17,120 21.01,119.01"/><polygon points="218,115 218.99,119.01 223,120 218.99,120.99 218,125 217.01,120.99 213,120 217.01,119.01"/></g>
+<g clip-path="url(#fbsc)">
+<g stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="75.78" y1="119.32" x2="52.71" y2="112.71"/><line x1="79.38" y1="110.4" x2="58.19" y2="99.14"/><line x1="84.76" y1="102.43" x2="66.38" y2="87"/><line x1="91.68" y1="95.75" x2="76.9" y2="76.84"/><line x1="99.83" y1="90.66" x2="89.31" y2="69.08"/><line x1="108.87" y1="87.37" x2="103.07" y2="64.08"/><line x1="118.39" y1="86.03" x2="117.56" y2="62.04"/><line x1="127.99" y1="86.7" x2="132.16" y2="63.06"/><line x1="137.23" y1="89.35" x2="146.22" y2="67.1"/><line x1="145.72" y1="93.86" x2="159.14" y2="73.97"/><line x1="153.09" y1="100.05" x2="170.35" y2="83.37"/><line x1="159.01" y1="107.62" x2="179.36" y2="94.91"/><line x1="163.23" y1="116.27" x2="185.78" y2="108.06"/></g>
+<circle cx="120" cy="132" r="36" fill="currentColor"/>
+<path d="M60,200 L60,150 L120,108 L180,150 L180,200 Z" fill="var(--lg-bg,#fff)"/>
+<path d="M50,156 L120,106 L190,156" stroke="currentColor" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M72,200 L72,154 M168,200 L168,154" stroke="currentColor" stroke-width="4"/>
+<rect x="108" y="160" width="24" height="40" rx="2" fill="currentColor"/>
+<line x1="44" y1="198" x2="196" y2="198" stroke="currentColor" stroke-width="4"/></g>
+<path d="M164,75 C165.62,82.38 165.62,82.38 173,84 C165.62,85.62 165.62,85.62 164,93 C162.38,85.62 162.38,85.62 155,84 C162.38,82.38 162.38,82.38 164,75 Z" fill="currentColor"/><path d="M180,99 C180.9,103.1 180.9,103.1 185,104 C180.9,104.9 180.9,104.9 180,109 C179.1,104.9 179.1,104.9 175,104 C179.1,103.1 179.1,103.1 180,99 Z" fill="currentColor"/><path d="M78,84 C79.08,88.92 79.08,88.92 84,90 C79.08,91.08 79.08,91.08 78,96 C76.92,91.08 76.92,91.08 72,90 C76.92,88.92 76.92,88.92 78,84 Z" fill="currentColor"/>
+</svg>
+  <p><b>Brightside Cleaning Co.</b><br>Homes in Austin, Round Rock and Cedar Park<br>Mon–Sat, 7am–7pm · <a href="mailto:hello@brightsidecleaning.com">hello@brightsidecleaning.com</a></p>
+  <a class="tel2" href="tel:+15125550147">(512) 555-0147</a>
+</div></footer>
+<div class="concept" lang="en"><span>Concept · fictional business · site by Seinokojii</span><a href="../../en/#works">All examples</a></div>
+<script src="../m/kit.js?v=7"></script>
+<script>
+(() => {
+  // «пыльная» плёнка поверх фото: стирается указателем; при загрузке сама проходит несколько полос
+  const box = $('.wipe'), cv = $('.wipe canvas'), img = $('.wipe img'), ctx = cv.getContext('2d'), pct = $('.wipe .pct');
+  let W = 0, H = 0, dpr = 1, last = null, done = false;
+  function cover() {
+    const r = box.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over'; const s = Math.max(W / img.naturalWidth, H / img.naturalHeight), iw = img.naturalWidth * s, ih = img.naturalHeight * s;
+    ctx.filter = 'blur(14px) grayscale(.35) brightness(1.04) contrast(.8)'; ctx.drawImage(img, (W - iw) / 2, (H - ih) / 2, iw, ih); ctx.filter = 'none';
+    ctx.fillStyle = 'rgba(236,240,238,.62)'; ctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < 1400; i++) { const x = (i * 7919 % 1000) / 1000 * W, y = (i * 104729 % 997) / 997 * H; ctx.fillStyle = `rgba(120,130,128,${.05 + (i % 7) * .015})`; ctx.fillRect(x, y, 1 + i % 3, 1 + i % 2); }
+    ctx.globalCompositeOperation = 'destination-out'; ctx.lineCap = ctx.lineJoin = 'round';
+  }
+  const wipe = (x, y) => { ctx.lineWidth = Math.max(70, W * .12); ctx.beginPath(); ctx.moveTo(last ? last[0] : x, last ? last[1] : y); ctx.lineTo(x, y); ctx.stroke(); last = [x, y]; };
+  let tick = 0; const measure = () => { if (++tick % 6) return; const d = ctx.getImageData(0, 0, cv.width, cv.height).data; let c = 0, n = 0; for (let i = 3; i < d.length; i += 4 * 97) { n++; if (d[i] < 40) c++; }
+    const p = Math.round(c / n * 100); pct.textContent = Math.min(100, Math.round(p / .9)) + '% clean'; if (p > 88 && !done) { done = true; cv.style.transition = 'opacity .8s'; cv.style.opacity = 0; pct.textContent = '100% clean'; } };
+  const at = (e) => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener('pointerdown', (e) => { last = null; wipe(...at(e)); });
+  cv.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.buttons) { wipe(...at(e)); measure(); } });
+  cv.addEventListener('pointerleave', () => last = null);
+  let lw = 0; const fit = () => { const w = box.getBoundingClientRect().width; if (Math.abs(w - lw) < 2) return; lw = w; done = false; cv.style.opacity = 1; cover(); };
+  const start = () => { fit(); if (RM) return; const t0 = performance.now(), D = 2200;
+    (function auto(t) { const k = Math.min(1, (t - t0) / D); const x = W * (.5 + k * .45), y = H * (.25 + Math.sin(k * Math.PI * 3) * .18 + k * .3); wipe(x, y); measure(); if (k < 1) requestAnimationFrame(auto); else last = null; })(t0); };
+  img.complete ? setTimeout(start, 500) : img.addEventListener('load', () => setTimeout(start, 500));
+  addEventListener('resize', fit);
+  // что входит
+  $('[data-tabs]').addEventListener('pick', (e) => $$('.rp').forEach(p => p.classList.toggle('on', p.dataset.i === e.detail)));
+  // калькулятор
+  const st = { bed: 2, bath: 2, f: .85, ex: 0, day: null, slot: null };
+  $$('[data-c]').forEach(b => b.addEventListener('click', () => { const el = $('#c-' + b.dataset.c), v = Math.max(+el.dataset.min, Math.min(+el.dataset.max, st[b.dataset.c] + +b.dataset.d)); st[b.dataset.c] = v; el.textContent = v; calc(); }));
+  $('[data-freq]').addEventListener('pick', (e) => { st.f = +e.detail; calc(); });
+  $$('[data-x]').forEach(b => b.addEventListener('click', () => { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); st.ex = $$('[data-x][aria-pressed=true]').reduce((s, x) => s + +x.dataset.x, 0); calc(); }));
+  const FQ = { '1': 'one time', '.85': 'every 2 weeks', '.8': 'weekly' };
+  let shown = 0;
+  function calc() {
+    const base = 89 + st.bed * 20 + st.bath * 25, total = Math.round(base * st.f + st.ex), hrs = 1.5 + st.bed * .5 + st.bath * .5 + (st.ex ? .5 : 0);
+    const el = $('#price-n'), from = shown, t0 = performance.now(); shown = total;
+    (function run(t) { const k = Math.min(1, (t - t0) / 500), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(from + (total - from) * e); if (k < 1) requestAnimationFrame(run); })(t0);
+    $('#per').textContent = FQ[String(st.f).replace(/^0/, '')] + (st.f < 1 ? ' · price per visit' : ' · deep clean');
+    $('#t-home').textContent = `${st.bed} bed · ${st.bath} bath`; $('#t-dur').textContent = `about ${hrs % 1 ? hrs.toFixed(1) : hrs} hours`;
+  }
+  // дни и окна прибытия
+  const D = $('[data-day]'), S = $('[data-slot]'), days = [], d0 = new Date(); d0.setHours(12);
+  while (days.length < 12) { d0.setDate(d0.getDate() + 1); if (d0.getDay()) days.push(new Date(d0)); }
+  const fmt = (d) => d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  D.innerHTML = days.map((d, i) => `<button type="button" data-v="${i}" aria-pressed="false">${d.toLocaleDateString('en-US', { weekday: 'short' })}<b>${d.getDate()}</b>${d.toLocaleDateString('en-US', { month: 'short' })}</button>`).join('');
+  const SL = ['8–10 am', '10–12 pm', '12–2 pm', '2–4 pm'];
+  D.addEventListener('pick', (e) => { st.day = +e.detail; st.slot = null; S.innerHTML = SL.map((s, j) => `<button type="button" data-v="${s}" aria-pressed="false" class="${(st.day + j) % 3 === 2 ? 'x' : ''}">${s}</button>`).join(''); $('#t-when').textContent = fmt(days[st.day]); });
+  S.addEventListener('pick', (e) => { st.slot = e.detail; $('#t-when').textContent = fmt(days[st.day]) + ', ' + st.slot; });
+  $('#go').addEventListener('click', () => {
+    const nm = $('[name=nm]').value.trim(), zip = $('[name=zip]').value.trim(), err = $('.tot .err');
+    err.textContent = st.day === null || !st.slot ? 'Pick a day and an arrival window.' : !nm ? 'Add your name.' : !/^\d{5}$/.test(zip) ? 'Add your 5-digit ZIP code.' : '';
+    if (err.textContent) return;
+    $('#ok-t').textContent = `${fmt(days[st.day])}, arriving ${st.slot}. $${shown} per visit, ${FQ[String(st.f).replace(/^0/, '')]}.`;
+    $('.tot').classList.add('ok'); toast("You're booked", `${fmt(days[st.day])} · ${st.slot}`);
+  });
+  calc();
+})();
+</script>
+</body></html>

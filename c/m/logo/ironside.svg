@@ -1,0 +1,13 @@
+<svg class="logo-ir" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ironside Barbers">
+<defs><path id="irt" d="M26,120 A94,94 0 0,1 214,120"/><path id="irb" d="M19,120 A101,101 0 0,0 221,120"/></defs>
+<circle cx="120" cy="120" r="117" fill="currentColor"/><circle cx="120" cy="120" r="110" stroke="var(--lg-bg,#fff)" stroke-width="1"/>
+<circle cx="120" cy="120" r="78" fill="var(--lg-bg,#fff)"/><circle cx="120" cy="120" r="72" stroke="currentColor" stroke-width="1"/>
+<g fill="var(--lg-bg,#fff)" font-family="Shoulders, sans-serif" font-weight="800" font-size="19" letter-spacing="5">
+<text><textPath href="#irt" startOffset="50%" text-anchor="middle">IRONSIDE BARBERS</textPath></text>
+<text><textPath href="#irb" startOffset="50%" text-anchor="middle" font-size="14" letter-spacing="5">BROOKLYN · NEW YORK</textPath></text></g>
+<g fill="var(--lg-bg,#fff)"><polygon points="22,114 23.19,118.81 28,120 23.19,121.19 22,126 20.81,121.19 16,120 20.81,118.81"/><polygon points="218,114 219.19,118.81 224,120 219.19,121.19 218,126 216.81,121.19 212,120 216.81,118.81"/></g>
+<g transform="rotate(-35 120 120)"><path d="M58,114 L150,114 C160,114 166,118 166,124 L166,127 C140,130 96,131 58,128 Z" fill="currentColor"/><path d="M66,119 L150,119" stroke="var(--lg-bg,#fff)" stroke-width="1"/>
+<path d="M58,114 L40,116 L38,126 L58,128" fill="currentColor"/><circle cx="46" cy="121" r="2.6" fill="var(--lg-bg,#fff)"/></g>
+<rect x="104" y="72" width="32" height="96" fill="var(--lg-bg,#fff)"/>
+<text x="120" y="160" text-anchor="middle" fill="currentColor" font-family="Shoulders, sans-serif" font-weight="900" font-size="104">I</text>
+</svg>
